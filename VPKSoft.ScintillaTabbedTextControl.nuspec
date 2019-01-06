@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</projectUrl>
+    <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Inititial NuGet release.</releaseNotes>
+    <copyright>Copyright © 2019 VPKSoft</copyright>
+    <tags>wrapper scintilla ScintillaNET winforms control</tags>
+  </metadata>
+</package>
