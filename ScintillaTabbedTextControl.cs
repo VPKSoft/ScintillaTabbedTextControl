@@ -1013,6 +1013,22 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Gets or sets the type of the lexer.
         /// </summary>
         public ScintillaLexers.LexerType LexerType { get; set; } = ScintillaLexers.LexerType.Unknown;
+
+        /// <summary>
+        /// Gets or sets the object that contains data about the class.
+        /// </summary>
+        /// <value>
+        /// An System.Object that contains data about the class. The default is null.
+        /// </value>
+        public object Tag { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the list of objects that contains data about the class.
+        /// </summary>
+        /// <value>
+        /// A list of System.Object's that contains data about the class. The default is an empty list.
+        /// </value>
+        public List<object> Tags { get; set; } = new List<object>();
     }
     #endregion
 }
