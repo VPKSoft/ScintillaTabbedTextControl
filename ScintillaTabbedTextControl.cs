@@ -359,6 +359,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         /// <summary>
+        /// Gets the latest added document to the control.
+        /// </summary>
+        [Browsable(false)]
+        public ScintillaTabbedDocument LastAddedDocument { get; private set; } = null;
+
+        /// <summary>
         /// Add a document to the control.
         /// </summary>
         /// <param name="fileName">A file name of a document to be added.</param>
@@ -371,6 +377,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             // return true (success)..
             if (DocumentExists(fileName, true))
             {
+                LastAddedDocument = null;
                 return true;
             }
 
@@ -434,10 +441,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     LayoutTabs(DocumentsCount - 1); // perform the layout..
 
                     // TODO::More Lexers..
+
+                    LastAddedDocument = document;
                     return true;
                 }
                 catch
                 {
+                    LastAddedDocument = null;
                     return false;
                 }
             }
@@ -479,11 +489,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents.Add(document);
 
                 LayoutTabs(DocumentsCount - 1); // perform the layout..
-
+                LastAddedDocument = document;
                 return true;
             }
             else
             {
+                LastAddedDocument = null;
                 return false;
             }
         }
