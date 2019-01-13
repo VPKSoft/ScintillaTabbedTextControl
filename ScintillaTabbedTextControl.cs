@@ -188,7 +188,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         // an image used on tab's close button..
-        private Image _CloseButtonImage = Properties.Resources.Save_Red;
+        private Image _CloseButtonImage = Properties.Resources.Cancel;
 
         /// <summary>
         /// Gets or sets the close button image.
@@ -386,6 +386,31 @@ namespace VPKSoft.ScintillaTabbedTextControl
             {
                 try
                 {
+                    string docText = string.Empty;
+                    // if a stream was gotten as a parameter..
+                    if (stream != null)
+                    {
+                        // ..read the Scintilla instance's text from the stream..
+                        stream.Position = 0;
+                        using (StreamReader streamReader = new StreamReader(stream))
+                        {
+                            docText = streamReader.ReadToEnd();
+                        }
+                    }
+                    else
+                    {
+                        // read the Scintilla instance's text from a file..
+
+                        using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                        {
+                            using (StreamReader streamReader = new StreamReader(fileStream))
+                            {
+                                docText = streamReader.ReadToEnd();
+                            }
+                        }
+                    }
+
+
                     ScintillaLexers.LexerType lexerType = ScintillaLexers.ScintillaLexers.LexerTypeFromFileName(fileName);
 
                     // create a new ScintillaTabbedDocument class instance..
@@ -414,23 +439,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                     document.Scintilla.Tag = -1;
                     suspendChanges = true;
-
-                    // if a stream was gotten as a parameter..
-                    if (stream != null)
-                    {
-                        // ..read the Scintilla instance's text from the stream..
-                        stream.Position = 0;
-                        using (StreamReader streamReader = new StreamReader(stream))
-                        {
-                            document.Scintilla.Text = streamReader.ReadToEnd();
-                        }                                                   
-                    }
-                    else
-                    {
-                        // read the Scintilla instance's text from a file..
-                        document.Scintilla.Text = File.ReadAllText(fileName);
-                    }
-
+                    document.Scintilla.Text = docText;
                     suspendChanges = false;
 
                     // set the lexer for the Scintilla..

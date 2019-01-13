@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VPKSoft.ScintillaTabbedTextControl", "VPKSoft.ScintillaTabbedTextControl.csproj", "{7522F687-CE76-4AF0-B3CD-9C027EDB5D5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{33F3701A-FEFE-4BD9-822C-55F80541E797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7522F687-CE76-4AF0-B3CD-9C027EDB5D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7522F687-CE76-4AF0-B3CD-9C027EDB5D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7522F687-CE76-4AF0-B3CD-9C027EDB5D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33F3701A-FEFE-4BD9-822C-55F80541E797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33F3701A-FEFE-4BD9-822C-55F80541E797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33F3701A-FEFE-4BD9-822C-55F80541E797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33F3701A-FEFE-4BD9-822C-55F80541E797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
