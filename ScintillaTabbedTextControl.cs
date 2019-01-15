@@ -438,9 +438,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.FileTabButton.TabClosing += FileTabButton_TabClosing;
 
                     document.Scintilla.Tag = -1;
-                    suspendChanges = true;
+                    SuspendTextChangedEvents = true;
                     document.Scintilla.Text = docText;
-                    suspendChanges = false;
+                    SuspendTextChangedEvents = false;
 
                     // set the lexer for the Scintilla..
                     ScintillaLexers.ScintillaLexers.CreateLexer(document.Scintilla, lexerType);
@@ -661,8 +661,14 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
         #endregion
 
+        
+
         #region https://github.com/jacobslusser/ScintillaNET/wiki/Displaying-Line-Numbers
-        private bool suspendChanges = false;
+        /// <summary>
+        /// Gets or set the value if text changed events should be raised by the control or not.
+        /// </summary>
+        [Browsable(false)]
+        public bool SuspendTextChangedEvents { get; set; } = false;
 
         private void scintilla_TextChanged(object sender, EventArgs e)
         {
@@ -672,7 +678,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
             int maxLineNumberCharLengthFromTag = (int)scintilla.Tag;
 
-            if (!suspendChanges)
+            if (!SuspendTextChangedEvents)
             {
                 foreach (ScintillaTabbedDocument document in Documents)
                 {
