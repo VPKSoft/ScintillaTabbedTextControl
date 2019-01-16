@@ -77,6 +77,7 @@
             this.sttcMain.NewFilenameStart = "new ";
             this.sttcMain.SavedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.SavedImage")));
             this.sttcMain.Size = new System.Drawing.Size(800, 426);
+            this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
             // 
             // FormMain

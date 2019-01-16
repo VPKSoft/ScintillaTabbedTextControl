@@ -429,7 +429,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     //                document.FileTabButton.Parent = pnScrollingTabContainer;
                     document.FileTabButton.Location = new Point(0, 0);
                     document.FileTabButton.Text = Path.GetFileName(fileName);
-                    document.Scintilla.TextChanged += scintilla_TextChanged;
+
+
+                    // scintilla events..
+                    document.Scintilla.TextChanged += Scintilla_TextChanged;
+                    document.Scintilla.UpdateUI += Scintilla_UpdateUI;
 
                     document.FileTabButton.Click += FileTabButton_Click;
                     document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -483,7 +487,10 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 pnScrollingTabContainer.Controls.Add(document.FileTabButton);
                 document.FileTabButton.Location = new Point(0, 0);
                 document.FileTabButton.Text = fileName;
-                document.Scintilla.TextChanged += scintilla_TextChanged;
+
+                // scintilla events..
+                document.Scintilla.TextChanged += Scintilla_TextChanged;
+                document.Scintilla.UpdateUI += Scintilla_UpdateUI;
 
                 document.FileTabButton.Click += FileTabButton_Click;
                 document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -542,6 +549,32 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The <see cref="ScintillaTextChangedEventArgs"/> instance containing the event data.</param>
         public delegate void OnDocumentTextChanged(object sender, ScintillaTextChangedEventArgs e);
+
+        /// <summary>
+        /// A delegate for the CaretPositionChanged event.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="ScintillaTabbedDocumentEventArgsExt"/> instance containing the event data.</param>
+        public delegate void OnCaretPositionChanged(object sender, ScintillaTabbedDocumentEventArgsExt e);
+
+        /// <summary>
+        /// Occurs when the caret position has been changed on the <see cref="ScintillaTabbedDocument"/>.
+        /// </summary>
+        [Browsable(true)]
+        public event OnCaretPositionChanged CaretPositionChanged = null;
+
+        /// <summary>
+        /// A delegate for the SelectionChanged event.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="ScintillaTabbedDocumentEventArgsExt"/> instance containing the event data.</param>
+        public delegate void OnSelectionChanged(object sender, ScintillaTabbedDocumentEventArgsExt e);
+
+        /// <summary>
+        /// Occurs when the selection has been changed on the <see cref="ScintillaTabbedDocument"/>.
+        /// </summary>
+        [Browsable(true)]
+        public event OnSelectionChanged SelectionChanged = null;
 
         /// <summary>
         /// Occurs when the contents of a tabbed document has been changed.
@@ -641,7 +674,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
 
                 // do some cleanup (unsubscribe the events)..
-                Documents[docIndex].Scintilla.TextChanged -= scintilla_TextChanged;
+                Documents[docIndex].Scintilla.TextChanged -= Scintilla_TextChanged;
+                Documents[docIndex].Scintilla.UpdateUI -= Scintilla_UpdateUI;
+
 
                 Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
                 Documents[docIndex].FileTabButton.MouseMove -= FileTabButton_MouseMove;
@@ -659,9 +694,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 LayoutTabs(); // perform the layout..
             }
         }
-        #endregion
-
-        
+        #endregion        
 
         #region https://github.com/jacobslusser/ScintillaNET/wiki/Displaying-Line-Numbers
         /// <summary>
@@ -670,7 +703,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(false)]
         public bool SuspendTextChangedEvents { get; set; } = false;
 
-        private void scintilla_TextChanged(object sender, EventArgs e)
+        private void Scintilla_TextChanged(object sender, EventArgs e)
         {
             // save the time when the document was changed..
             DateTime timeStamp = DateTime.Now;
@@ -921,6 +954,44 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
 
         }
+
+        /// <summary>
+        /// Gets a ScintillaTabbedDocument with a given object which is assumed to be a <see cref="Scintilla"/> document from the documents collection.
+        /// </summary>
+        /// <param name="obj">An object of the of type of <see cref="Scintilla"/>.</param>
+        /// <returns>A ScintillaTabbedDocument instance if successful; otherwise null.</returns>
+        private ScintillaTabbedDocument GetDocument(object obj)
+        {
+            int idx = GetDocumentIndex(obj);
+            return idx == -1 ? null : Documents[idx];
+        }
+
+        /// <summary>
+        /// Gets an index for a document with a given object which is assumed to be a <see cref="Scintilla"/> document from the documents collection.
+        /// </summary>
+        /// <param name="obj">An object of the of type of <see cref="Scintilla"/>.</param>
+        /// <returns>A non-negative index for the document if successful; otherwise -1.</returns>
+        private int GetDocumentIndex(object obj)
+        {
+            if (obj != null && obj.GetType() == typeof(Scintilla))
+            {
+                return Documents.FindIndex(f => f.Scintilla.Equals((Scintilla)obj));
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Gets an index for a document with a given <see cref="Scintilla"/> document from the documents collection.
+        /// </summary>
+        /// <param name="scintilla">A Scintilla which index to find.</param>
+        /// <returns>A non-negative index for the document if successful; otherwise -1.</returns>
+        private int GetDocumentIndex(Scintilla scintilla)
+        {
+            return scintilla == null ? -1 : Documents.FindIndex(f => f.Scintilla.Equals(scintilla));
+        }
         #endregion
 
         #region InternalEvents
@@ -950,7 +1021,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
             // clean up the event subscriptions..
             for (int i = 0; i < DocumentsCount; i++)
             {
-                Documents[i].Scintilla.TextChanged -= scintilla_TextChanged;
+                Documents[i].Scintilla.TextChanged -= Scintilla_TextChanged;
+                Documents[i].Scintilla.UpdateUI -= Scintilla_UpdateUI;
 
                 Documents[i].FileTabButton.Click -= FileTabButton_Click;
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
@@ -959,6 +1031,59 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
             // ..and clean up the cleanup event subscription..
             Disposed -= ScintillaTabbedTextControl_Disposed;
+        }
+
+        private void Scintilla_UpdateUI(object sender, UpdateUIEventArgs e)
+        {
+            ScintillaTabbedDocument document = GetDocument(sender);
+            if (document != null)
+            {
+                int currentLine = document.Scintilla.CurrentLine;
+                int currentPosition = document.Scintilla.CurrentPosition;
+                int column = document.Scintilla.GetColumn(currentPosition);
+
+                int selectionStartLine = document.Scintilla.LineFromPosition(document.Scintilla.SelectionStart);
+                int selectionEndLine = document.Scintilla.LineFromPosition(document.Scintilla.SelectionEnd);
+                int selectionLength = document.Scintilla.SelectedText.Length;
+                int selectionStartColumn = document.Scintilla.GetColumn(document.Scintilla.SelectionStart);
+                int selectionEndColumn = document.Scintilla.GetColumn(document.Scintilla.SelectionEnd);
+
+                bool changed = false;
+                bool selectionChanged = false;
+                if (currentLine != document.LineNumber ||
+                    currentPosition != document.Position ||
+                    column != document.Column)
+                {
+                    document.LineNumber = currentLine;
+                    document.Position = currentPosition;
+                    document.Column = column;
+                    changed = true;
+                }
+
+                if (selectionStartLine != document.SelectionStartLine ||
+                    selectionEndLine != document.SelectionEndLine ||
+                    selectionLength != document.SelectionLength ||
+                    selectionStartColumn != document.SelectionStartColumn ||
+                    selectionEndColumn != document.SelectionEndColumn)
+                {
+                    document.SelectionStartLine = selectionStartLine;
+                    document.SelectionEndLine = selectionEndLine;
+                    document.SelectionStartColumn = selectionStartColumn;
+                    document.SelectionEndColumn = selectionEndColumn;
+                    document.SelectionRows = selectionEndLine - selectionStartLine;
+                    selectionChanged = selectionLength != document.SelectionLength;
+                }
+
+                if (changed && document.FileTabButton.IsActive)
+                {
+                    CaretPositionChanged?.Invoke(this, new ScintillaTabbedDocumentEventArgsExt() { ScintillaTabbedDocument = document });
+                }
+
+                if (selectionChanged && document.FileTabButton.IsActive)
+                {
+                    SelectionChanged?.Invoke(this, new ScintillaTabbedDocumentEventArgsExt() { ScintillaTabbedDocument = document });
+                }
+            }
         }
     }
     #endregion
@@ -975,6 +1100,19 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
     }
+
+    /// <summary>
+    /// A class which instance is passed via a to a numerous events.
+    /// </summary>
+    /// <seealso cref="EventArgs" />
+    public class ScintillaTabbedDocumentEventArgsExt : EventArgs
+    {
+        /// <summary>
+        /// Gets or sets an instance to a ScintillaTabbedDocument to which the event is related to.
+        /// </summary>
+        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
+    }
+
 
     /// <summary>
     /// A class which instance is passed via a parameter to the TabActivated event.
@@ -1010,6 +1148,51 @@ namespace VPKSoft.ScintillaTabbedTextControl
     /// </summary>
     public class ScintillaTabbedDocument
     {
+        /// <summary>
+        /// Gets a column where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int Column { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets a line number where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int LineNumber { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets a position in character number where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int Position { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the length of the selection in characters of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionLength { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the count of rows in the selection of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionRows { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the starting row in the selection of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionStartLine { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the ending row in the selection of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionEndLine { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the starting column in the selection of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionStartColumn { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the ending column in the selection of the <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        public int SelectionEndColumn { get; internal set; } = -1;
+
         /// <summary>
         /// Gets or sets the identifier (database) for the document.
         /// </summary>
