@@ -1071,7 +1071,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.SelectionStartColumn = selectionStartColumn;
                     document.SelectionEndColumn = selectionEndColumn;
                     document.SelectionRows = selectionEndLine - selectionStartLine;
-                    selectionChanged = selectionLength != document.SelectionLength;
+                    document.SelectionLength = document.SelectionLength;
+                    selectionChanged = true;
                 }
 
                 if (changed && document.FileTabButton.IsActive)
