@@ -31,6 +31,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ScintillaNET; // (C)::https://github.com/jacobslusser/ScintillaNET
 using System.IO;
+using System.Text;
 
 namespace VPKSoft.ScintillaTabbedTextControl
 {
@@ -305,6 +306,20 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <returns>True if the operation was successful; otherwise false.</returns>
         public bool ReloadDocumentFileSys(int index, Stream stream = null)
         {
+            return ReloadDocumentFileSys(index, Encoding.UTF8, stream);
+        }
+
+
+        /// <summary>
+        /// Reloads the document from the file system with a given index.
+        /// <note type="note">A DocumentTextChanged event is also raised if the document is successfully reloaded.</note>
+        /// </summary>
+        /// <param name="index">The index of the document to reload.</param>
+        /// <param name="encoding">An encoding to be used to reload the document.</param>
+        /// <param name="stream">An optional stream to load the documents contents from.</param>
+        /// <returns>True if the operation was successful; otherwise false.</returns>
+        public bool ReloadDocumentFileSys(int index, Encoding encoding, Stream stream = null)
+        {
             // check the validity of the given index..
             if (index >= 0 && index < DocumentsCount)
             {
@@ -313,7 +328,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     stream.Position = 0;
                     // ..read the Scintilla instance's text from the stream..
                     stream.Position = 0;
-                    using (StreamReader streamReader = new StreamReader(stream))
+                    using (StreamReader streamReader = new StreamReader(stream, encoding))
                     {
                         Documents[index].Scintilla.Text = streamReader.ReadToEnd();
                     }
@@ -373,6 +388,20 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <returns>True if the document was successfully added; otherwise false.</returns>
         public bool AddDocument(string fileName, int ID, Stream stream = null)
         {
+            return AddDocument(fileName, ID, Encoding.UTF8, stream);
+        }
+
+
+        /// <summary>
+        /// Add a document to the control.
+        /// </summary>
+        /// <param name="fileName">A file name of a document to be added.</param>
+        /// <param name="ID">An unique identifier for the document. A value of -1 indicates that the document has no ID.</param>
+        /// <param name="encoding">An encoding to be used to load the document.</param>
+        /// <param name="stream">An optional stream to load the contents for the document.</param>
+        /// <returns>True if the document was successfully added; otherwise false.</returns>
+        public bool AddDocument(string fileName, int ID, Encoding encoding, Stream stream = null)
+        {
             // if the document already exists with a given file name, just activate it and
             // return true (success)..
             if (DocumentExists(fileName, true))
@@ -392,7 +421,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     {
                         // ..read the Scintilla instance's text from the stream..
                         stream.Position = 0;
-                        using (StreamReader streamReader = new StreamReader(stream))
+                        using (StreamReader streamReader = new StreamReader(stream, encoding))
                         {
                             docText = streamReader.ReadToEnd();
                         }
@@ -403,7 +432,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                         using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                         {
-                            using (StreamReader streamReader = new StreamReader(fileStream))
+                            using (StreamReader streamReader = new StreamReader(fileStream, encoding))
                             {
                                 docText = streamReader.ReadToEnd();
                             }
