@@ -49,8 +49,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="VPKSoft.ScintillaLexers, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\VPKSoft.ScintillaLexers.1.0.0.4\lib\net45\VPKSoft.ScintillaLexers.dll</HintPath>
+    <Reference Include="VPKSoft.ScintillaLexers, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\VPKSoft.ScintillaLexers.1.0.0.5\lib\net45\VPKSoft.ScintillaLexers.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</projectUrl>
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,5 +13,6 @@
     <releaseNotes>Update NuGet dependency.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
+    <license type="expression">MIT</license>
   </metadata>
 </package>
