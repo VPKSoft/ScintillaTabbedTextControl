@@ -429,12 +429,26 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     else
                     {
                         // read the Scintilla instance's text from a file..
-
-                        using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                        try
                         {
-                            using (StreamReader streamReader = new StreamReader(fileStream, encoding))
+                            using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                             {
-                                docText = streamReader.ReadToEnd();
+                                using (StreamReader streamReader = new StreamReader(fileStream, encoding))
+                                {
+                                    docText = streamReader.ReadToEnd();
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // this is somewhat ridiculous, but the read+write seems to give an access to some files..
+                            // (EXCEPTION: The process cannot access the file 'xxx.yyy' because it is being used by another process.)
+                            using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                            {
+                                using (StreamReader streamReader = new StreamReader(fileStream, encoding))
+                                {
+                                    docText = streamReader.ReadToEnd();
+                                }
                             }
                         }
                     }
