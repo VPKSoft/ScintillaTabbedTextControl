@@ -477,6 +477,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     // scintilla events..
                     document.Scintilla.TextChanged += Scintilla_TextChanged;
                     document.Scintilla.UpdateUI += Scintilla_UpdateUI;
+                    document.Scintilla.MouseDown += Scintilla_MouseDown;
+                    document.Scintilla.MouseUp += Scintilla_MouseUp;
+                    document.Scintilla.MouseMove += Scintilla_MouseMove;
+                    document.Scintilla.MouseWheel += Scintilla_MouseWheel;
+                    document.Scintilla.MouseClick += Scintilla_MouseClick;
+                    document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
 
                     document.FileTabButton.Click += FileTabButton_Click;
                     document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -534,6 +540,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 // scintilla events..
                 document.Scintilla.TextChanged += Scintilla_TextChanged;
                 document.Scintilla.UpdateUI += Scintilla_UpdateUI;
+                document.Scintilla.MouseDown += Scintilla_MouseDown;
+                document.Scintilla.MouseUp += Scintilla_MouseUp;
+                document.Scintilla.MouseMove += Scintilla_MouseMove;
+                document.Scintilla.MouseWheel += Scintilla_MouseWheel;
+                document.Scintilla.MouseClick += Scintilla_MouseClick;
+                document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
 
                 document.FileTabButton.Click += FileTabButton_Click;
                 document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -612,6 +624,54 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The <see cref="ScintillaTabbedDocumentEventArgsExt"/> instance containing the event data.</param>
         public delegate void OnSelectionChanged(object sender, ScintillaTabbedDocumentEventArgsExt e);
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control <see cref="Scintilla"/> and a mouse button is pressed.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Mouse")]
+        [Description("Occurs when the mouse pointer is over the control (Scintilla) and a mouse button is pressed.")]
+        public event MouseEventHandler DocumentMouseDown = null;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the control <see cref="Scintilla"/> and a mouse button is released.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Mouse")]
+        [Description("Occurs when the mouse pointer is over the control (Scintilla) and a mouse button is released.")]
+        public event MouseEventHandler DocumentMouseUp = null;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is moved over the control <see cref="Scintilla"/>).
+        /// </summary>
+        [Browsable(true)]
+        [Category("Mouse")]
+        [Description("Occurs when the mouse pointer is moved over the control (Scintilla).")]
+        public event MouseEventHandler DocumentMouseMove = null;
+
+        /// <summary>
+        /// Occurs when the mouse wheel moves while the control <see cref="Scintilla"/> has focus.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Mouse")]
+        [Description("Occurs when the mouse wheel moves while the control (Scintilla) has focus.")]
+        public event MouseEventHandler DocumentMouseWheel = null;
+
+        /// <summary>
+        /// Occurs when the control <see cref="Scintilla"/> is clicked by the mouse.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Action")]
+        [Description("Occurs when the control (Scintilla) is clicked by the mouse.")]
+        public event MouseEventHandler DocumentMouseClick = null;
+
+        /// <summary>
+        /// Occurs when the control <see cref="Scintilla"/> is double clicked by the mouse.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Action")]
+        [Description("Occurs when the control (Scintilla) is double clicked by the mouse.")]
+        public event MouseEventHandler DocumentMouseDoubleClick;
 
         /// <summary>
         /// Occurs when the selection has been changed on the <see cref="ScintillaTabbedDocument"/>.
@@ -719,6 +779,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 // do some cleanup (unsubscribe the events)..
                 Documents[docIndex].Scintilla.TextChanged -= Scintilla_TextChanged;
                 Documents[docIndex].Scintilla.UpdateUI -= Scintilla_UpdateUI;
+                Documents[docIndex].Scintilla.MouseDown -= Scintilla_MouseDown;
+                Documents[docIndex].Scintilla.MouseUp -= Scintilla_MouseUp;
+                Documents[docIndex].Scintilla.MouseMove -= Scintilla_MouseMove;
+                Documents[docIndex].Scintilla.MouseWheel -= Scintilla_MouseWheel;
+                Documents[docIndex].Scintilla.MouseClick -= Scintilla_MouseClick;
+                Documents[docIndex].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
 
 
                 Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
@@ -1038,6 +1104,36 @@ namespace VPKSoft.ScintillaTabbedTextControl
         #endregion
 
         #region InternalEvents
+        private void Scintilla_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            DocumentMouseDoubleClick?.Invoke(sender, e);
+        }
+
+        private void Scintilla_MouseClick(object sender, MouseEventArgs e)
+        {
+            DocumentMouseClick?.Invoke(sender, e);
+        }
+
+        private void Scintilla_MouseWheel(object sender, MouseEventArgs e)
+        {
+            DocumentMouseWheel?.Invoke(sender, e);
+        }
+
+        private void Scintilla_MouseMove(object sender, MouseEventArgs e)
+        {
+            DocumentMouseMove?.Invoke(sender, e);
+        }
+
+        private void Scintilla_MouseUp(object sender, MouseEventArgs e)
+        {
+            DocumentMouseUp?.Invoke(sender, e);
+        }
+
+        private void Scintilla_MouseDown(object sender, MouseEventArgs e)
+        {
+            DocumentMouseDown?.Invoke(sender, e);
+        }
+
         private void btPrevious_Click(object sender, EventArgs e)
         {
             if (LeftFileIndex > 0)
@@ -1066,6 +1162,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
             {
                 Documents[i].Scintilla.TextChanged -= Scintilla_TextChanged;
                 Documents[i].Scintilla.UpdateUI -= Scintilla_UpdateUI;
+                Documents[i].Scintilla.MouseDown -= Scintilla_MouseDown;
+                Documents[i].Scintilla.MouseUp -= Scintilla_MouseUp;
+                Documents[i].Scintilla.MouseMove -= Scintilla_MouseMove;
+                Documents[i].Scintilla.MouseWheel -= Scintilla_MouseWheel;
+                Documents[i].Scintilla.MouseClick -= Scintilla_MouseClick;
+                Documents[i].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
 
                 Documents[i].FileTabButton.Click -= FileTabButton_Click;
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
