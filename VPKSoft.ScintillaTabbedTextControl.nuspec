@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixed "weird" file open issue.</releaseNotes>
+    <releaseNotes>Added ContextMenuStrip property to the FileTabButton control.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>

@@ -186,6 +186,27 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         /// <summary>
+        /// Gets or sets the System.Windows.Forms.ContextMenuStrip associated with this control.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets the System.Windows.Forms.ContextMenuStrip associated with this control.")]
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get => base.ContextMenuStrip;
+
+            set
+            {
+                // set the context menu strip to all child controls and for the base control..
+                btClose.ContextMenuStrip = value;
+                pnSaveIndicator.ContextMenuStrip = value;
+                tlpMain.ContextMenuStrip = value;
+                lbCaption.ContextMenuStrip = value;
+                base.ContextMenuStrip = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the cursor that is displayed when the mouse pointer is over the control.
         /// </summary>
         /// <PermissionSet>
