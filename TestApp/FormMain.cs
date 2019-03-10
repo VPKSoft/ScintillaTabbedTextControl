@@ -39,7 +39,10 @@ namespace TestApp
         {
             if (odAnyFile.ShowDialog() == DialogResult.OK)
             {
-                sttcMain.AddDocument(odAnyFile.FileName, -1);
+                if (sttcMain.AddDocument(odAnyFile.FileName, -1))
+                {
+                    sttcMain.LastAddedDocument.FileTabButton.ContextMenuStrip = contextMenuStrip1;
+                }                
             }
         }
     }

@@ -65,8 +65,17 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         [Browsable(true)]
         [Category("Behavior")]
-        [Description("")]
+        [Description("Gets or sets a value indicating whether the right mouse button also activates a tab on to control.")]
         public bool RightButtonTabActivation { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the right mouse button is also used to drag the tabs in the control.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets a value indicating whether the right mouse button is also used to drag the tabs in the control.")]
+        public bool RightButtonTabDragging { get; set; } = false;
+
 
         /// <summary>
         /// Gets the active ScintillaTabbedDocument class instance from the control.
@@ -710,7 +719,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         private void FileTabButton_MouseMove(object sender, MouseEventArgs e)
         {
             // check if the left mouse button is 
-            if ((e.Button == MouseButtons.Left || (e.Button == MouseButtons.Right && RightButtonTabActivation)) && tabDragging)
+            if ((e.Button == MouseButtons.Left || (e.Button == MouseButtons.Right && RightButtonTabDragging)) && tabDragging)
             {
                 FileTabButton senderTab = (FileTabButton)sender; // get the sender tab..
 
@@ -741,6 +750,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
         private void FileTabButton_MouseUp(object sender, MouseEventArgs e)
         {
             tabDragging = false; // ..so do set the flag..
+
+            //
+            if (e.Button == MouseButtons.Right && RightButtonTabActivation && sender.GetType() == typeof(FileTabButton))
+            {
+                LeftFileIndex = (int)((FileTabButton)sender).Tag; // activate the clicked tab / document..
+            }
         }
 
         // a tab was clicked, i.e. activated..
