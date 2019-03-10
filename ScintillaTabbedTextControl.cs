@@ -713,6 +713,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
         private void FileTabButton_MouseDown(object sender, MouseEventArgs e)
         {
             tabDragging = true; // ..so do set the flag..
+
+            if (e.Button == MouseButtons.Right && RightButtonTabActivation && sender.GetType() == typeof(FileTabButton))
+            {
+                LeftFileIndex = (int)((FileTabButton)sender).Tag; // activate the clicked tab / document..
+            }
         }
 
         // tab is being "dragged"..
@@ -751,7 +756,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             tabDragging = false; // ..so do set the flag..
 
-            //
             if (e.Button == MouseButtons.Right && RightButtonTabActivation && sender.GetType() == typeof(FileTabButton))
             {
                 LeftFileIndex = (int)((FileTabButton)sender).Tag; // activate the clicked tab / document..

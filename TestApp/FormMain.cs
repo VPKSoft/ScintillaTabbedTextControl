@@ -45,5 +45,16 @@ namespace TestApp
                 }                
             }
         }
+
+        private void testToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            if (sttcMain.CurrentDocument != null) // the first null check..
+            {
+                var document = sttcMain.CurrentDocument; // get the active document..
+
+                MessageBox.Show(document.FileName);
+
+            }
+        }
     }
 }
