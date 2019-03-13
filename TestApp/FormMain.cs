@@ -56,5 +56,10 @@ namespace TestApp
 
             }
         }
+
+        private void mnuCloseActiveTab_Click(object sender, System.EventArgs e)
+        {
+            sttcMain.CloseDocument(sttcMain.CurrentDocument);
+        }
     }
 }

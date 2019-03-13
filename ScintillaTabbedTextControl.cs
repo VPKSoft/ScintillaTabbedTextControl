@@ -230,7 +230,101 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
         #endregion
 
-        #region PublicMethods
+        #region PublicMethods        
+        /// <summary>
+        /// Closes the document with a given index.
+        /// <note type="note">No events will be raised with this call.</note>
+        /// </summary>
+        /// <param name="index">The index of the document within the control.</param>
+        public void CloseDocument(int index)
+        {
+            CloseDocument(index, false);
+        }
+
+        /// <summary>
+        /// Closes the given <see cref="ScintillaTabbedDocument"/> document.
+        /// <note type="note">No events will be raised with this call.</note>
+        /// </summary>
+        /// <param name="document">The document to be closed.</param>
+        public void CloseDocument(ScintillaTabbedDocument document)
+        {
+            int index = Documents.IndexOf(document);
+            CloseDocument(index, false);
+        }
+
+        /// <summary>
+        /// Closes the given <see cref="ScintillaTabbedDocument"/> document.
+        /// </summary>
+        /// <param name="document">The document to be closed.</param>
+        /// <param name="raiseEvent">A flag indicating if a <see cref="TabClosing"/> event should be raised upon the closing of the tab in question.</param>
+        public void CloseDocument(ScintillaTabbedDocument document, bool raiseEvent)
+        {
+            int index = Documents.IndexOf(document);
+            CloseDocument(index, raiseEvent);
+        }
+
+        /// <summary>
+        /// Closes the document with a given index.
+        /// </summary>
+        /// <param name="index">The index of the document within the control.</param>
+        /// <param name="raiseEvent">A flag indicating if a <see cref="TabClosing"/> event should be raised upon the closing of the tab in question.</param>
+        public void CloseDocument(int index, bool raiseEvent)
+        {
+            // avoid an invalid index error by validating the index first..
+            if (index < 0 || index >= DocumentsCount)
+            {
+                return;
+            }
+
+            ScintillaTabbedDocument document = Documents[index];
+
+            TabClosingEventArgsExt e = new TabClosingEventArgsExt() { Cancel = false, ScintillaTabbedDocument = document };
+
+            // raise the event based on the given raiseEvent flag..
+            if (raiseEvent)
+            {
+                // ..and if the event is subscribed..
+                TabClosing?.Invoke(this, e);
+            }
+
+            if (!e.Cancel)
+            {
+                pnScrollingTabContainer.Controls.Remove(document.FileTabButton);
+
+                if (LeftFileIndex >= (int)(document.FileTabButton).Tag)
+                {
+                    _LeftFileIndex--;
+                }
+
+                // do some cleanup (unsubscribe the events)..
+                document.Scintilla.TextChanged -= Scintilla_TextChanged;
+                document.Scintilla.UpdateUI -= Scintilla_UpdateUI;
+                document.Scintilla.MouseDown -= Scintilla_MouseDown;
+                document.Scintilla.MouseUp -= Scintilla_MouseUp;
+                document.Scintilla.MouseMove -= Scintilla_MouseMove;
+                document.Scintilla.MouseWheel -= Scintilla_MouseWheel;
+                document.Scintilla.MouseClick -= Scintilla_MouseClick;
+                document.Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
+
+
+                document.FileTabButton.Click -= FileTabButton_Click;
+                document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
+                document.FileTabButton.MouseUp -= FileTabButton_MouseUp;
+                document.FileTabButton.MouseDown -= FileTabButton_MouseDown;
+                Documents.RemoveAt(index);
+
+                // in case there are documents still open and the left index has been set to a negative value
+                // set the left index to zero.
+                if (_LeftFileIndex == -1 && DocumentsCount > 0)
+                {
+                    _LeftFileIndex = 0;
+                }
+
+                LayoutTabs(); // perform the layout..
+            }
+        }
+
+
         // a counter for naming new tabs, hopefully ulong.MaxValue will be enough (18446744073709551615)..
         private ulong docNameCounter = 0;
 
