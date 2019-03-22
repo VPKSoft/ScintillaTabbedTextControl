@@ -61,5 +61,18 @@ namespace TestApp
         {
             sttcMain.CloseDocument(sttcMain.CurrentDocument);
         }
+
+        private void sttcMain_AcceptNewFileName(object sender, VPKSoft.ScintillaTabbedTextControl.AcceptNewFileNameEventArgs e)
+        {
+            if (e.FileName == "new 2")
+            {
+                e.Accept = false;
+            }
+        }
+
+        private void mnuNew_Click(object sender, System.EventArgs e)
+        {
+            sttcMain.AddNewDocument();
+        }
     }
 }

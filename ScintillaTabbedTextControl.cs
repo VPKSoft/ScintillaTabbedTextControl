@@ -78,6 +78,14 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
 
         /// <summary>
+        /// Gets or sets a value indicating what is the next number appended to a new file name.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets a value indicating what is the next number appended to a new file name.")]
+        public long NewFileCounter { get; internal set; } = 1;
+
+        /// <summary>
         /// Gets the active ScintillaTabbedDocument class instance from the control.
         /// </summary>
         [Browsable(false)]
@@ -624,13 +632,40 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
             else if (fileName.Trim() == string.Empty) // a new document is to be created..
-            {
-                int counter = 1;
-                fileName = NewFilenameStart + counter++;
+            {                
+                fileName = NewFilenameStart + NewFileCounter++;
+
+                // loop while there is no existing file name with the generated file name within the control..
                 while (Documents.Exists(f => f.FileNameNotPath == fileName))
                 {
-                    fileName = NewFilenameStart + counter++;
+                    fileName = NewFilenameStart + NewFileCounter++;
                 }
+
+                // create a new instance of AcceptNewFileNameEventArgs class with Accept property assumed to true..
+                AcceptNewFileNameEventArgs acceptNewFileNameEventArgs = new AcceptNewFileNameEventArgs { Accept = true, FileName = fileName };
+
+                // loop with the external file name validation if the event is subscribed..
+                while (AcceptNewFileName != null)
+                {
+                    // raise the event for an external validation for the new file name if subscribed..
+                    AcceptNewFileName(this, acceptNewFileNameEventArgs);
+
+                    // the external validation didn't accept the suggested file name, so create a new file name..
+                    if (!acceptNewFileNameEventArgs.Accept)
+                    {
+                        fileName = NewFilenameStart + NewFileCounter++;
+
+                        // re-set the values for the AcceptNewFileNameEventArgs class instance..
+                        acceptNewFileNameEventArgs.FileName = fileName;
+                        acceptNewFileNameEventArgs.Accept = true;
+                    }
+                    else
+                    {
+                        // the external validation succeeded, so break to loop..
+                        break;
+                    }
+                }
+
 
                 // create a new ScintillaTabbedDocument class instance..
                 ScintillaTabbedDocument document =
@@ -721,6 +756,20 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The <see cref="ScintillaTabbedDocumentEventArgsExt"/> instance containing the event data.</param>
         public delegate void OnCaretPositionChanged(object sender, ScintillaTabbedDocumentEventArgsExt e);
+
+        /// <summary>
+        /// A delegate for the AcceptNewFileName event.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="AcceptNewFileNameEventArgs"/> instance containing the event data.</param>
+        public delegate void OnAcceptNewFileName(object sender, AcceptNewFileNameEventArgs e);
+
+        /// <summary>
+        /// Occurs when the control is requested to add a new file tab to the control and is requiring for the suggested file name to be accepted.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        public event OnAcceptNewFileName AcceptNewFileName = null;
 
         /// <summary>
         /// Occurs when the caret position has been changed on the <see cref="ScintillaTabbedDocument"/>.
@@ -1379,6 +1428,22 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
     }
 
+    /// <summary>
+    /// A class which is passed to via the AcceptNewFileName event.
+    /// </summary>
+    /// <seealso cref="EventArgs" />
+    public class AcceptNewFileNameEventArgs: EventArgs
+    {
+        /// <summary>
+        /// Gets a file name which the control is proposing for a new file name.
+        /// </summary>
+        public string FileName { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether a new file name should be proposed.
+        /// </summary>
+        public bool Accept { get; set; }
+    }
 
     /// <summary>
     /// A class which instance is passed via a parameter to the TabActivated event.
