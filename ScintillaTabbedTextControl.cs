@@ -32,6 +32,8 @@ using System.Windows.Forms;
 using ScintillaNET; // (C)::https://github.com/jacobslusser/ScintillaNET
 using System.IO;
 using System.Text;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace VPKSoft.ScintillaTabbedTextControl
 {
@@ -76,14 +78,49 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("Gets or sets a value indicating whether the right mouse button is also used to drag the tabs in the control.")]
         public bool RightButtonTabDragging { get; set; } = false;
 
+        // a list of reject files by the AcceptNewFileName event..
+        private List<string> _rejectedFileNames = new List<string>();
 
         /// <summary>
-        /// Gets or sets a value indicating what is the next number appended to a new file name.
+        /// Gets a value indicating what is the next number appended to a new file name.
         /// </summary>
         [Browsable(true)]
         [Category("Behavior")]
-        [Description("Gets or sets a value indicating what is the next number appended to a new file name.")]
-        public long NewFileCounter { get; internal set; } = 1;
+        [Description("Gets or a value indicating what is the next number appended to a new file name.")]
+        public int NewFileCounter
+        {
+            get
+            {
+                // create a regular expression to match the new file naming pattern..
+                Regex regex = new Regex(@"(\d+)$", RegexOptions.CultureInvariant);
+
+                // select all the matching files from the documents collection..
+                List<string> fileNames =
+                    Documents.
+                        Where(f => regex.IsMatch(f.FileName)). // check for the match..
+                        Select(f => f.FileName).ToList(); // select the full file name..
+
+                // add the rejected file names rejected externally by the AcceptNewFileName event..
+                fileNames.AddRange(_rejectedFileNames);
+
+                // start the counter from the default value of one..
+                int counter = 1;
+
+                // generate a new file..
+                string fileName = NewFilenameStart + counter;
+
+                // while the generated new file name exits within the control's documents..
+                while (fileNames.Exists(f => f == fileName))
+                {
+                    counter++;
+                    // ..keep on generating..
+                    fileName = NewFilenameStart + counter;
+                }
+
+                // return the result..
+                return counter;
+            }
+        }
 
         /// <summary>
         /// Gets the active ScintillaTabbedDocument class instance from the control.
@@ -633,13 +670,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
             else if (fileName.Trim() == string.Empty) // a new document is to be created..
             {                
-                fileName = NewFilenameStart + NewFileCounter++;
+                // create a generated file name which doesn't exist in within the control..
+                fileName = NewFilenameStart + NewFileCounter;
 
-                // loop while there is no existing file name with the generated file name within the control..
-                while (Documents.Exists(f => f.FileNameNotPath == fileName))
-                {
-                    fileName = NewFilenameStart + NewFileCounter++;
-                }
+                // clear the list of new file names rejected by the AcceptNewFileName event..
+                _rejectedFileNames.Clear();
 
                 // create a new instance of AcceptNewFileNameEventArgs class with Accept property assumed to true..
                 AcceptNewFileNameEventArgs acceptNewFileNameEventArgs = new AcceptNewFileNameEventArgs { Accept = true, FileName = fileName };
@@ -653,7 +688,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     // the external validation didn't accept the suggested file name, so create a new file name..
                     if (!acceptNewFileNameEventArgs.Accept)
                     {
-                        fileName = NewFilenameStart + NewFileCounter++;
+                        _rejectedFileNames.Add(acceptNewFileNameEventArgs.FileName);
+                        fileName = NewFilenameStart + NewFileCounter;
 
                         // re-set the values for the AcceptNewFileNameEventArgs class instance..
                         acceptNewFileNameEventArgs.FileName = fileName;
@@ -666,6 +702,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     }
                 }
 
+                // clear the list of new file names rejected by the AcceptNewFileName event..
+                _rejectedFileNames.Clear();
 
                 // create a new ScintillaTabbedDocument class instance..
                 ScintillaTabbedDocument document =
