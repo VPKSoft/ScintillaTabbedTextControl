@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added some "wisdom" for the new file name generation procedure.</releaseNotes>
+    <releaseNotes>Updated NuGet dependencies to support the Python programming language.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>
