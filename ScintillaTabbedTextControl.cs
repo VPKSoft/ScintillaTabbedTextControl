@@ -287,6 +287,40 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         /// <summary>
+        /// Closes all the documents on the control without raising any events.
+        /// </summary>
+        public void CloseAllDocuments()
+        {
+            CloseAllDocuments(false);
+        }
+
+        /// <summary>
+        /// Closes all the documents on the control.
+        /// </summary>
+        /// <param name="raiseEvent">A flag indicating if a <see cref="TabClosing"/> event should be raised upon the closing of all the tabbed documents.</param>
+        public void CloseAllDocuments(bool raiseEvent)
+        {
+            // set the preventTabActivatedEvent flag based on the parameter..
+            preventTabActivatedEvent = !raiseEvent;
+
+            try
+            {
+                // reverse-loop though all the documents and close them..
+                for (int i = DocumentsCount - 1; i >= 0; i--)
+                {
+                    CloseDocument(i, raiseEvent);
+                }
+            }
+            catch
+            {
+                // something went wrong..
+            }
+
+            // set the preventTabActivatedEvent to it's default value..
+            preventTabActivatedEvent = false;
+        }
+
+        /// <summary>
         /// Closes the given <see cref="ScintillaTabbedDocument"/> document.
         /// <note type="note">No events will be raised with this call.</note>
         /// </summary>
@@ -1100,6 +1134,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
         private Scintilla previousDocument = null;
 
         /// <summary>
+        /// A flag indicating whether the <see cref="TabActivated"/> event should be suspended.
+        /// </summary>
+        private bool preventTabActivatedEvent = false;
+
+        /// <summary>
         /// Perform layout for the tabbed documents on the control.
         /// </summary>
         /// <param name="index">An index for the first document to be shown on the tab panel.</param>
@@ -1192,9 +1231,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 leftAt += pnScrollingTabContainer.Controls[i].Width;
             }
 
-            // if subscribed, raise the TabActivated event and give it the active ScintillaTabbedDocument class instance
-            // as a parameter..
-            TabActivated?.Invoke(this, new TabActivatedEventArgs() { ScintillaTabbedDocument = Documents[activeTabIndex] });
+            // only try to raise the TabActivated event if it's not suspended via the preventTabActivatedEvent flag..
+            if (!preventTabActivatedEvent)
+            {
+                // if subscribed, raise the TabActivated event and give it the active ScintillaTabbedDocument class instance
+                // as a parameter..
+                TabActivated?.Invoke(this, new TabActivatedEventArgs() { ScintillaTabbedDocument = Documents[activeTabIndex] });
+            }
 
             // increase the width of the tab container control to match
             // the size of all the tabs..
