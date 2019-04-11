@@ -39,6 +39,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
+            this.mnuOpenWithDef = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuNew,
             this.mnuOpen,
+            this.mnuOpenWithDef,
             this.mnuCloseActiveTab});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
@@ -66,21 +68,21 @@
             // mnuNew
             // 
             this.mnuNew.Name = "mnuNew";
-            this.mnuNew.Size = new System.Drawing.Size(180, 22);
+            this.mnuNew.Size = new System.Drawing.Size(275, 22);
             this.mnuNew.Text = "New";
             this.mnuNew.Click += new System.EventHandler(this.mnuNew_Click);
             // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(180, 22);
+            this.mnuOpen.Size = new System.Drawing.Size(275, 22);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
             // mnuCloseActiveTab
             // 
             this.mnuCloseActiveTab.Name = "mnuCloseActiveTab";
-            this.mnuCloseActiveTab.Size = new System.Drawing.Size(180, 22);
+            this.mnuCloseActiveTab.Size = new System.Drawing.Size(275, 22);
             this.mnuCloseActiveTab.Text = "Close active tab";
             this.mnuCloseActiveTab.Click += new System.EventHandler(this.mnuCloseActiveTab_Click);
             // 
@@ -119,6 +121,13 @@
             this.sttcMain.TabIndex = 2;
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
             // 
+            // mnuOpenWithDef
+            // 
+            this.mnuOpenWithDef.Name = "mnuOpenWithDef";
+            this.mnuOpenWithDef.Size = new System.Drawing.Size(275, 22);
+            this.mnuOpenWithDef.Text = "Open with Notepad++ lexer definition";
+            this.mnuOpenWithDef.Click += new System.EventHandler(this.MnuOpenWithDef_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,6 +157,7 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuCloseActiveTab;
         private System.Windows.Forms.ToolStripMenuItem mnuNew;
+        private System.Windows.Forms.ToolStripMenuItem mnuOpenWithDef;
     }
 }
 

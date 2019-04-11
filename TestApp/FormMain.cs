@@ -25,6 +25,7 @@ SOFTWARE.
 #endregion
 
 using System.Windows.Forms;
+using static VPKSoft.ScintillaLexers.LexerEnumerations;
 
 namespace TestApp
 {
@@ -73,6 +74,19 @@ namespace TestApp
         private void mnuNew_Click(object sender, System.EventArgs e)
         {
             sttcMain.AddNewDocument();
+        }
+
+        private void MnuOpenWithDef_Click(object sender, System.EventArgs e)
+        {
+            if (odAnyFile.ShowDialog() == DialogResult.OK)
+            {
+                if (sttcMain.AddDocument(odAnyFile.FileName, -1))
+                {
+                    string xmlLexerDefinitionFileName = @"C:\Program Files (x86)\Notepad++\themes\Monokai.xml";
+                    sttcMain.LastAddedDocument.FileTabButton.ContextMenuStrip = contextMenuStrip1;
+                    sttcMain.SetLexer(odAnyFile.FileName, LexerType.Cs, xmlLexerDefinitionFileName);
+                }
+            }
         }
     }
 }

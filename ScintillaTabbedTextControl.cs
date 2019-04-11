@@ -150,6 +150,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         /// <summary>
+        /// Gets the index of the current document.
+        /// </summary>
+        [Browsable(false)] // not in designer time..
+        public int CurrentDocumentIndex => LeftFileIndex;
+
+        /// <summary>
         /// Gets the document count value.
         /// </summary>
         [Browsable(false)] // no designer..
@@ -539,6 +545,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             return false;
         }
 
+        #region SetLexers
         /// <summary>
         /// Sets the lexer type for a document with a given file name.
         /// </summary>
@@ -562,11 +569,229 @@ namespace VPKSoft.ScintillaTabbedTextControl
             if (index >= 0 && index < DocumentsCount)
             {
                 ScintillaLexers.ScintillaLexers.CreateLexer(Documents[index].Scintilla, lexerType);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <param name="useSelectionColors">A flag indicating whether to color the selection.</param>
+        /// <param name="useMarginColors">A flag indicating whether to color the margin.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace, bool useSelectionColors,
+            bool useMarginColors)
+        {
+            if (index >= 0 && index < DocumentsCount)
+            {
+                ScintillaLexers.ScintillaLexers.CreateLexerFromFile(Documents[index].Scintilla, lexerType, fileName,
+                    useGlobalOverride, font, useWhiteSpace, useSelectionColors, useMarginColors);
                 Documents[index].LexerType = lexerType;
                 return true;
             }
             return false;
         }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <param name="useSelectionColors">A flag indicating whether to color the selection.</param>
+        /// <param name="useMarginColors">A flag indicating whether to color the margin.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType, 
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace, bool useSelectionColors,
+            bool useMarginColors)
+        {
+            int index = Documents.FindIndex(f => f.FileName == scintillaFileName);
+            if (index >= 0 && index < DocumentsCount)
+            {
+                ScintillaLexers.ScintillaLexers.CreateLexerFromFile(Documents[index].Scintilla, lexerType, fileName,
+                    useGlobalOverride, font, useWhiteSpace, useSelectionColors, useMarginColors);
+                Documents[index].LexerType = lexerType;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <param name="useSelectionColors">A flag indicating whether to color the selection.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType,
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace, bool useSelectionColors)
+        {
+            return SetLexer(Documents.FindIndex(f => f.FileName == scintillaFileName), lexerType, fileName,
+                useGlobalOverride, font, useWhiteSpace, useSelectionColors,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType,
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace)
+        {
+            return SetLexer(Documents.FindIndex(f => f.FileName == scintillaFileName), lexerType, fileName,
+                useGlobalOverride, font, useWhiteSpace, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType,
+            string fileName, bool useGlobalOverride, bool font)
+        {
+            return SetLexer(Documents.FindIndex(f => f.FileName == scintillaFileName), lexerType, fileName,
+                useGlobalOverride, font, true, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType,
+            string fileName, bool useGlobalOverride)
+        {
+            return SetLexer(Documents.FindIndex(f => f.FileName == scintillaFileName), lexerType, fileName,
+                useGlobalOverride, true, true, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given scintilla file name using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="scintillaFileName">The file name opened in the <see cref="ScintillaTabbedTextControl"/>.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(string scintillaFileName, LexerType lexerType,
+            string fileName)
+        {
+            return SetLexer(Documents.FindIndex(f => f.FileName == scintillaFileName), lexerType, fileName,
+                true, true, true, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <param name="useSelectionColors">A flag indicating whether to color the selection.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace, bool useSelectionColors)
+        {
+            return SetLexer(index, lexerType, fileName, useGlobalOverride, font, useWhiteSpace, useSelectionColors,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <param name="useWhiteSpace">A flag indicating whether to color the white space symbol.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName, bool useGlobalOverride, bool font, bool useWhiteSpace)
+        {
+            return SetLexer(index, lexerType, fileName, useGlobalOverride, font, useWhiteSpace, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <param name="font">A flag indicating whether to use the defined font name from the XML document or not.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName, bool useGlobalOverride, bool font)
+        {
+            return SetLexer(index, lexerType, fileName, useGlobalOverride, font, true, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <param name="useGlobalOverride">A flag indicating whether the style "Global override" should be set for the lexer from the XML document.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName, bool useGlobalOverride)
+        {
+            return SetLexer(index, lexerType, fileName, useGlobalOverride, true, true, true,
+                true);
+        }
+
+        /// <summary>
+        /// Sets the lexer type for a document with a given index using lexer from XML file used by the Notepad++ software.
+        /// </summary>
+        /// <param name="index">The index of the document which lexer type to set.</param>
+        /// <param name="lexerType">Type of the lexer.</param>
+        /// <param name="fileName">A file name to get the lexer type from.</param>
+        /// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise.</returns>
+        public bool SetLexer(int index, LexerType lexerType, 
+            string fileName)
+        {
+            return SetLexer(index, lexerType, fileName, true, true, true, true,
+                true);
+        }
+        #endregion
 
         /// <summary>
         /// Gets the latest added document to the control.
@@ -585,7 +810,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             return AddDocument(fileName, ID, Encoding.UTF8, stream);
         }
-
 
         /// <summary>
         /// Add a document to the control.
@@ -1490,172 +1714,4 @@ namespace VPKSoft.ScintillaTabbedTextControl
     }
     #endregion
 
-    #region RequiredClasses
-    /// <summary>
-    /// A class which instance is passed via a parameter to the TabClosing event.
-    /// </summary>
-    /// <seealso cref="VPKSoft.ScintillaTabbedTextControl.TabClosingEventArgs" />
-    public class TabClosingEventArgsExt : TabClosingEventArgs
-    {
-        /// <summary>
-        /// Gets or sets an instance to a ScintillaTabbedDocument class which is to be closed.
-        /// </summary>
-        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
-    }
-
-    /// <summary>
-    /// A class which instance is passed via a to a numerous events.
-    /// </summary>
-    /// <seealso cref="EventArgs" />
-    public class ScintillaTabbedDocumentEventArgsExt : EventArgs
-    {
-        /// <summary>
-        /// Gets or sets an instance to a ScintillaTabbedDocument to which the event is related to.
-        /// </summary>
-        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
-    }
-
-    /// <summary>
-    /// A class which is passed to via the AcceptNewFileName event.
-    /// </summary>
-    /// <seealso cref="EventArgs" />
-    public class AcceptNewFileNameEventArgs: EventArgs
-    {
-        /// <summary>
-        /// Gets a file name which the control is proposing for a new file name.
-        /// </summary>
-        public string FileName { get; internal set; }
-
-        /// <summary>
-        /// Gets or sets a flag indicating whether a new file name should be proposed.
-        /// </summary>
-        public bool Accept { get; set; }
-    }
-
-    /// <summary>
-    /// A class which instance is passed via a parameter to the TabActivated event.
-    /// </summary>
-    /// <seealso cref="System.EventArgs" />
-    public class TabActivatedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Gets or sets an instance to a ScintillaTabbedDocument class which is to be closed.
-        /// </summary>
-        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
-    }
-
-    /// <summary>
-    /// A class which instance is passed via a parameter to the DocumentTextChanged event.
-    /// </summary>
-    /// <seealso cref="System.EventArgs" />
-    public class ScintillaTextChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Gets or sets an instance to a ScintillaTabbedDocument which contents did change.
-        /// </summary>
-        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
-
-        /// <summary>
-        /// Gets or sets the time stamp when document in question was changed..
-        /// </summary>
-        public DateTime TimeStamp { get; set; }
-    }
-
-    /// <summary>
-    /// A container class for a single tabbed document on the control.
-    /// </summary>
-    public class ScintillaTabbedDocument
-    {
-        /// <summary>
-        /// Gets a column where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int Column { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets a line number where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int LineNumber { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets a position in character number where the caret is in the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int Position { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the length of the selection in characters of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionLength { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the count of rows in the selection of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionRows { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the starting row in the selection of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionStartLine { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the ending row in the selection of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionEndLine { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the starting column in the selection of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionStartColumn { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets the ending column in the selection of the <see cref="ScintillaTabbedDocument"/> document.
-        /// </summary>
-        public int SelectionEndColumn { get; internal set; } = -1;
-
-        /// <summary>
-        /// Gets or sets the identifier (database) for the document.
-        /// </summary>
-        public int ID { get; set; } = -1;
-
-        /// <summary>
-        /// Gets or sets the name of the file.
-        /// </summary>
-        public string FileName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the file name without a path.
-        /// </summary>
-        public string FileNameNotPath { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the an instance of the file FileTabButton class indicating this document as a tab.
-        /// </summary>
-        public FileTabButton FileTabButton { get; set; } = new FileTabButton();
-
-        /// <summary>
-        /// Gets or sets the Scintilla control associated with the tab in the control.
-        /// </summary>
-        public Scintilla Scintilla { get; set; } = new Scintilla();
-
-        /// <summary>
-        /// Gets or sets the type of the lexer.
-        /// </summary>
-        public LexerType LexerType { get; set; } = LexerType.Unknown;
-
-        /// <summary>
-        /// Gets or sets the object that contains data about the class.
-        /// </summary>
-        /// <value>
-        /// An System.Object that contains data about the class. The default is null.
-        /// </value>
-        public object Tag { get; set; } = null;
-
-        /// <summary>
-        /// Gets or sets the list of objects that contains data about the class.
-        /// </summary>
-        /// <value>
-        /// A list of System.Object's that contains data about the class. The default is an empty list.
-        /// </value>
-        public List<object> Tags { get; set; } = new List<object>();
-    }
-    #endregion
 }
