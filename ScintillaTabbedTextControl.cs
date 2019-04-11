@@ -34,6 +34,7 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static VPKSoft.ScintillaLexers.LexerEnumerations;
 
 namespace VPKSoft.ScintillaTabbedTextControl
 {
@@ -79,7 +80,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public bool RightButtonTabDragging { get; set; } = false;
 
         // a list of reject files by the AcceptNewFileName event..
-        private List<string> _rejectedFileNames = new List<string>();
+        private readonly List<string> _rejectedFileNames = new List<string>();
 
         /// <summary>
         /// Gets a value indicating what is the next number appended to a new file name.
@@ -430,6 +431,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
             {
                 if (document.FileName == fileName)
                 {
+                    if (activate)
+                    {
+                        ActivateDocument(document.FileName);
+                    }
+
                     return true;
                 }
             }
@@ -539,7 +545,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="fileName">The name of the file of which document's lexer type to set.</param>
         /// <param name="lexerType">Type of the lexer.</param>
         /// <returns>True if the operation was successful; otherwise false.</returns>
-        public bool SetLexer(string fileName, ScintillaLexers.LexerType lexerType)
+        public bool SetLexer(string fileName, LexerType lexerType)
         {
             // just call the overload..
             return SetLexer(Documents.FindIndex(f => f.FileName == fileName), lexerType);
@@ -551,7 +557,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="index">The index of the document which lexer type to set.</param>
         /// <param name="lexerType">Type of the lexer.</param>
         /// <returns>True if the operation was successful; otherwise false.</returns>
-        public bool SetLexer(int index, ScintillaLexers.LexerType lexerType)
+        public bool SetLexer(int index, LexerType lexerType)
         {
             if (index >= 0 && index < DocumentsCount)
             {
@@ -643,7 +649,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     }
 
 
-                    ScintillaLexers.LexerType lexerType = ScintillaLexers.ScintillaLexers.LexerTypeFromFileName(fileName);
+                    LexerType lexerType = ScintillaLexers.HelperClasses.LexerFileExtensions.LexerTypeFromFileName(fileName);
 
                     // create a new ScintillaTabbedDocument class instance..
                     ScintillaTabbedDocument document =
@@ -747,7 +753,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                         FileNameNotPath = fileName,
                         FileTabButton = new FileTabButton() { Top = 0, Name = "doc_tab" + docNameCounter++, IsSaved = false },
                         Scintilla = new Scintilla() { Dock = DockStyle.Fill },
-                        LexerType = ScintillaLexers.LexerType.Unknown
+                        LexerType = LexerType.Unknown
                     };
 
                 pnScrollingTabContainer.Controls.Add(document.FileTabButton);
@@ -772,7 +778,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 document.Scintilla.Tag = -1;
 
-                ScintillaLexers.ScintillaLexers.CreateLexer(document.Scintilla, ScintillaLexers.LexerType.Text);
+                ScintillaLexers.ScintillaLexers.CreateLexer(document.Scintilla, LexerType.Text);
 
                 Documents.Add(document);
 
@@ -1633,7 +1639,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <summary>
         /// Gets or sets the type of the lexer.
         /// </summary>
-        public ScintillaLexers.LexerType LexerType { get; set; } = ScintillaLexers.LexerType.Unknown;
+        public LexerType LexerType { get; set; } = LexerType.Unknown;
 
         /// <summary>
         /// Gets or sets the object that contains data about the class.
