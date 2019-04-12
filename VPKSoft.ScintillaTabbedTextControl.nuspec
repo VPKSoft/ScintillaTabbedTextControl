@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added possibility to set the lexer style from the famous Notepad++ XML lexer definition file. Added 12 overloads for the SetLexer method.</releaseNotes>
+    <releaseNotes>Updated NuGet dependencies.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>
