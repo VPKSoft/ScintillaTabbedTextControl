@@ -61,6 +61,12 @@
     <Compile Include="FileTabButton.Designer.cs">
       <DependentUpon>FileTabButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="NoFocusButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NoFocusButton.Designer.cs">
+      <DependentUpon>NoFocusButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -32,8 +32,8 @@
             this.pnScrollingTabContainer = new System.Windows.Forms.Panel();
             this.tlpTopContainer = new System.Windows.Forms.TableLayoutPanel();
             this.tlpNavigationButtons = new System.Windows.Forms.TableLayoutPanel();
-            this.btPrevious = new System.Windows.Forms.Button();
-            this.btNext = new System.Windows.Forms.Button();
+            this.btPrevious = new NoFocusButton();
+            this.btNext = new NoFocusButton();
             this.pnTabContainer = new System.Windows.Forms.Panel();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.scintillaAutoComplete = new AutocompleteMenuNS.AutocompleteMenu();
@@ -160,9 +160,9 @@
 
         private System.Windows.Forms.Panel pnScrollingTabContainer;
         private System.Windows.Forms.TableLayoutPanel tlpTopContainer;
-        private System.Windows.Forms.Button btPrevious;
+        private NoFocusButton btPrevious;
         private System.Windows.Forms.TableLayoutPanel tlpNavigationButtons;
-        private System.Windows.Forms.Button btNext;
+        private NoFocusButton btNext;
         private System.Windows.Forms.Panel pnTabContainer;
         private System.Windows.Forms.TableLayoutPanel tlpMain;
         private AutocompleteMenuNS.AutocompleteMenu scintillaAutoComplete;
