@@ -93,6 +93,56 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public object Tag { get; set; } = null;
 
         /// <summary>
+        /// Gets or sets the object 0 that contains data about the class.
+        /// </summary>
+        public object Tag0 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 1 that contains data about the class.
+        /// </summary>
+        public object Tag1 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 2 that contains data about the class.
+        /// </summary>
+        public object Tag2 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 3 that contains data about the class.
+        /// </summary>
+        public object Tag3 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 4 that contains data about the class.
+        /// </summary>
+        public object Tag4 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 5 that contains data about the class.
+        /// </summary>
+        public object Tag5 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 6 that contains data about the class.
+        /// </summary>
+        public object Tag6 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 7 that contains data about the class.
+        /// </summary>
+        public object Tag7 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 8 that contains data about the class.
+        /// </summary>
+        public object Tag8 { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the object 9 that contains data about the class.
+        /// </summary>
+        public object Tag9 { get; set; } = null;
+
+        /// <summary>
         /// Gets or sets the list of objects that contains data about the class.
         /// </summary>
         /// <value>

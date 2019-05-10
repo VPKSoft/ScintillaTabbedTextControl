@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Made the back and forward buttons non-focusable.</releaseNotes>
+    <releaseNotes>Updated NuGet dependencies. Added 10 named Tag[n] properties for the ScintillaTabbedDocument class.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>

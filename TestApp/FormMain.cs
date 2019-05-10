@@ -27,6 +27,7 @@ SOFTWARE.
 using System.Windows.Forms;
 using static VPKSoft.ScintillaLexers.LexerEnumerations;
 
+
 namespace TestApp
 {
     public partial class FormMain : Form
