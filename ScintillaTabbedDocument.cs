@@ -79,10 +79,22 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         public Scintilla Scintilla { get; set; } = new Scintilla();
 
+        // a field for the LexerType property..
+        private LexerType lexerType = LexerType.Unknown;
+
         /// <summary>
         /// Gets or sets the type of the lexer.
         /// </summary>
-        public LexerType LexerType { get; set; } = LexerType.Unknown;
+        public LexerType LexerType
+        {
+            get => lexerType;
+
+            set
+            {
+                ScintillaLexers.ScintillaLexers.CreateLexer(Scintilla, value);
+                lexerType = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the object that contains data about the class.
