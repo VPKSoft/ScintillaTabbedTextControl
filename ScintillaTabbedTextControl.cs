@@ -79,8 +79,24 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("Gets or sets a value indicating whether the right mouse button is also used to drag the tabs in the control.")]
         public bool RightButtonTabDragging { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use code indenting in the <see cref="Scintilla"/> control.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets a value indicating whether to use code indenting in the Scintilla control.")]
+        public bool UseCodeIndenting { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the tab width in space characters>.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets the tab width in space characters>.")]
+        public int TabWidth { get; set; } = 4;
+
         // a list of reject files by the AcceptNewFileName event..
-        private readonly List<string> _rejectedFileNames = new List<string>();
+        private readonly List<string> rejectedFileNames = new List<string>();
 
         /// <summary>
         /// Gets a value indicating what is the next number appended to a new file name.
@@ -102,7 +118,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                         Select(f => f.FileName).ToList(); // select the full file name..
 
                 // add the rejected file names rejected externally by the AcceptNewFileName event..
-                fileNames.AddRange(_rejectedFileNames);
+                fileNames.AddRange(rejectedFileNames);
 
                 // start the counter from the default value of one..
                 int counter = 1;
@@ -170,7 +186,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public string NewFilenameStart { get; set; } = "new ";
 
         // the left-most tab index in the container..
-        private int _LeftFileIndex = 0;
+        private int leftFileIndex;
 
         /// <summary>
         /// Gets or sets the  left-most tab index in the tab container.
@@ -181,7 +197,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             get
             {
-                return _LeftFileIndex;
+                return leftFileIndex;
             }
 
             set
@@ -189,7 +205,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 // no reason to throw exceptions if nothing can be set...
                 if (value == 0 && DocumentsCount == 0) 
                 {
-                    _LeftFileIndex = value;
+                    leftFileIndex = value;
                 }
                 // an invalid index was given so do raise an exception..
                 else if (value < 0 || value >= DocumentsCount)
@@ -201,7 +217,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         // an indicator image of whether the document hasn't been changed after initial loading..
-        private Image _SavedImage = Properties.Resources.Save;
+        private Image savedImage = Properties.Resources.Save;
 
         /// <summary>
         /// Gets or sets the indicator image of whether the document hasn't been changed after initial loading.
@@ -213,23 +229,23 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             get
             {
-                return _SavedImage;
+                return savedImage;
             }
 
             set
             {
-                _SavedImage = value;
+                savedImage = value;
 
                 // delegate the new value to the tab controls..
                 foreach (ScintillaTabbedDocument document in Documents)
                 {
-                    document.FileTabButton.SavedImage = _SavedImage;
+                    document.FileTabButton.SavedImage = savedImage;
                 }
             }
         }
 
         // an indicator image of whether the document has been changed after initial loading..
-        private Image _ChangedImage = Properties.Resources.Save_Red;
+        private Image changedImage = Properties.Resources.Save_Red;
 
         /// <summary>
         /// Gets or sets the indicator image of whether the document has been changed after initial loading.
@@ -241,23 +257,23 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             get
             {
-                return _ChangedImage;
+                return changedImage;
             }
 
             set
             {
-                _ChangedImage = value;
+                changedImage = value;
 
                 // delegate the new value to the tab controls..
                 foreach (ScintillaTabbedDocument document in Documents)
                 {
-                    document.FileTabButton.SavedImage = _ChangedImage;
+                    document.FileTabButton.SavedImage = changedImage;
                 }
             }
         }
 
         // an image used on tab's close button..
-        private Image _CloseButtonImage = Properties.Resources.Cancel;
+        private Image closeButtonImage = Properties.Resources.Cancel;
 
         /// <summary>
         /// Gets or sets the close button image.
@@ -267,16 +283,16 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("Gets or sets the close button image.")]
         public Image CloseButtonImage
         {
-            get => _CloseButtonImage;
+            get => closeButtonImage;
 
             set
             {
-                _CloseButtonImage = value;
+                closeButtonImage = value;
 
                 // delegate the new value to the tab controls..
                 foreach (ScintillaTabbedDocument document in Documents)
                 {
-                    document.FileTabButton.CloseButtonImage = _CloseButtonImage;
+                    document.FileTabButton.CloseButtonImage = closeButtonImage;
                 }
             }
         }
@@ -379,7 +395,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 if (LeftFileIndex >= (int)(document.FileTabButton).Tag)
                 {
-                    _LeftFileIndex--;
+                    leftFileIndex--;
                 }
 
                 // do some cleanup (unsubscribe the events)..
@@ -391,7 +407,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.MouseWheel -= Scintilla_MouseWheel;
                 document.Scintilla.MouseClick -= Scintilla_MouseClick;
                 document.Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
-
+                document.Scintilla.InsertCheck -= Scintilla_InsertCheck;
+                document.Scintilla.CharAdded -= Scintilla_CharAdded;
 
                 document.FileTabButton.Click -= FileTabButton_Click;
                 document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
@@ -401,9 +418,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 // in case there are documents still open and the left index has been set to a negative value
                 // set the left index to zero.
-                if (_LeftFileIndex == -1 && DocumentsCount > 0)
+                if (leftFileIndex == -1 && DocumentsCount > 0)
                 {
-                    _LeftFileIndex = 0;
+                    leftFileIndex = 0;
                 }
 
                 LayoutTabs(); // perform the layout..
@@ -412,7 +429,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
 
         // a counter for naming new tabs, hopefully ulong.MaxValue will be enough (18446744073709551615)..
-        private ulong docNameCounter = 0;
+        private ulong docNameCounter;
 
 
         /// <summary>
@@ -797,7 +814,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Gets the latest added document to the control.
         /// </summary>
         [Browsable(false)]
-        public ScintillaTabbedDocument LastAddedDocument { get; private set; } = null;
+        public ScintillaTabbedDocument LastAddedDocument { get; private set; }
 
         /// <summary>
         /// Add a document to the control.
@@ -806,6 +823,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="ID">An unique identifier for the document. A value of -1 indicates that the document has no ID.</param>
         /// <param name="stream">An optional stream to load the contents for the document.</param>
         /// <returns>True if the document was successfully added; otherwise false.</returns>
+        // ReSharper disable once InconsistentNaming
         public bool AddDocument(string fileName, int ID, Stream stream = null)
         {
             return AddDocument(fileName, ID, Encoding.UTF8, stream);
@@ -819,6 +837,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="encoding">An encoding to be used to load the document.</param>
         /// <param name="stream">An optional stream to load the contents for the document.</param>
         /// <returns>True if the document was successfully added; otherwise false.</returns>
+        // ReSharper disable once InconsistentNaming
         public bool AddDocument(string fileName, int ID, Encoding encoding, Stream stream = null)
         {
             // if the document already exists with a given file name, just activate it and
@@ -834,7 +853,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             {
                 try
                 {
-                    string docText = string.Empty;
+                    string docText;
                     // if a stream was gotten as a parameter..
                     if (stream != null)
                     {
@@ -902,6 +921,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.Scintilla.MouseWheel += Scintilla_MouseWheel;
                     document.Scintilla.MouseClick += Scintilla_MouseClick;
                     document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
+                    document.Scintilla.InsertCheck += Scintilla_InsertCheck;
+                    document.Scintilla.CharAdded += Scintilla_CharAdded;
 
                     document.FileTabButton.Click += FileTabButton_Click;
                     document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -938,7 +959,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 fileName = NewFilenameStart + NewFileCounter;
 
                 // clear the list of new file names rejected by the AcceptNewFileName event..
-                _rejectedFileNames.Clear();
+                rejectedFileNames.Clear();
 
                 // create a new instance of AcceptNewFileNameEventArgs class with Accept property assumed to true..
                 AcceptNewFileNameEventArgs acceptNewFileNameEventArgs = new AcceptNewFileNameEventArgs { Accept = true, FileName = fileName };
@@ -952,7 +973,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     // the external validation didn't accept the suggested file name, so create a new file name..
                     if (!acceptNewFileNameEventArgs.Accept)
                     {
-                        _rejectedFileNames.Add(acceptNewFileNameEventArgs.FileName);
+                        rejectedFileNames.Add(acceptNewFileNameEventArgs.FileName);
                         fileName = NewFilenameStart + NewFileCounter;
 
                         // re-set the values for the AcceptNewFileNameEventArgs class instance..
@@ -967,7 +988,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
 
                 // clear the list of new file names rejected by the AcceptNewFileName event..
-                _rejectedFileNames.Clear();
+                rejectedFileNames.Clear();
 
                 // create a new ScintillaTabbedDocument class instance..
                 ScintillaTabbedDocument document =
@@ -993,6 +1014,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.MouseWheel += Scintilla_MouseWheel;
                 document.Scintilla.MouseClick += Scintilla_MouseClick;
                 document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
+                document.Scintilla.InsertCheck += Scintilla_InsertCheck;
+                document.Scintilla.CharAdded += Scintilla_CharAdded;
 
                 document.FileTabButton.Click += FileTabButton_Click;
                 document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -1037,13 +1060,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Occurs when a tab gets activated via user or other interaction with the control.
         /// </summary>
         [Browsable(true)]
-        public event OnTabActivated TabActivated = null;
+        public event OnTabActivated TabActivated;
 
         /// <summary>
         /// Occurs when close button of the "tab" has been clicked.
         /// </summary>
         [Browsable(true)]
-        public event OnTabClosing TabClosing = null;
+        public event OnTabClosing TabClosing;
 
         /// <summary>
         /// A delegate for the DocumentTextChanged event.
@@ -1071,13 +1094,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         [Browsable(true)]
         [Category("Behavior")]
-        public event OnAcceptNewFileName AcceptNewFileName = null;
+        public event OnAcceptNewFileName AcceptNewFileName;
 
         /// <summary>
         /// Occurs when the caret position has been changed on the <see cref="ScintillaTabbedDocument"/>.
         /// </summary>
         [Browsable(true)]
-        public event OnCaretPositionChanged CaretPositionChanged = null;
+        public event OnCaretPositionChanged CaretPositionChanged;
 
         /// <summary>
         /// A delegate for the SelectionChanged event.
@@ -1092,7 +1115,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Mouse")]
         [Description("Occurs when the mouse pointer is over the control (Scintilla) and a mouse button is pressed.")]
-        public event MouseEventHandler DocumentMouseDown = null;
+        public event MouseEventHandler DocumentMouseDown;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control <see cref="Scintilla"/> and a mouse button is released.
@@ -1100,7 +1123,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Mouse")]
         [Description("Occurs when the mouse pointer is over the control (Scintilla) and a mouse button is released.")]
-        public event MouseEventHandler DocumentMouseUp = null;
+        public event MouseEventHandler DocumentMouseUp;
 
         /// <summary>
         /// Occurs when the mouse pointer is moved over the control <see cref="Scintilla"/>).
@@ -1108,7 +1131,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Mouse")]
         [Description("Occurs when the mouse pointer is moved over the control (Scintilla).")]
-        public event MouseEventHandler DocumentMouseMove = null;
+        public event MouseEventHandler DocumentMouseMove;
 
         /// <summary>
         /// Occurs when the mouse wheel moves while the control <see cref="Scintilla"/> has focus.
@@ -1116,7 +1139,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Mouse")]
         [Description("Occurs when the mouse wheel moves while the control (Scintilla) has focus.")]
-        public event MouseEventHandler DocumentMouseWheel = null;
+        public event MouseEventHandler DocumentMouseWheel;
 
         /// <summary>
         /// Occurs when the control <see cref="Scintilla"/> is clicked by the mouse.
@@ -1124,7 +1147,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Action")]
         [Description("Occurs when the control (Scintilla) is clicked by the mouse.")]
-        public event MouseEventHandler DocumentMouseClick = null;
+        public event MouseEventHandler DocumentMouseClick;
 
         /// <summary>
         /// Occurs when the control <see cref="Scintilla"/> is double clicked by the mouse.
@@ -1138,21 +1161,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Occurs when the selection has been changed on the <see cref="ScintillaTabbedDocument"/>.
         /// </summary>
         [Browsable(true)]
-        public event OnSelectionChanged SelectionChanged = null;
+        public event OnSelectionChanged SelectionChanged;
 
         /// <summary>
         /// Occurs when the contents of a tabbed document has been changed.
         /// </summary>
         [Browsable(true)]
-        public event OnDocumentTextChanged DocumentTextChanged = null;
+        public event OnDocumentTextChanged DocumentTextChanged;
         #endregion
 
         #region FileTabButtonEvents
         // a flag indicating if a tab is being dragger..
-        bool tabDragging = false;
+        bool tabDragging;
 
         // an indicator if the user has allowed a tab to close..
-        private bool tabClosing = false;
+        private bool tabClosing;
 
         // the tab dragging has been "started"..
         private void FileTabButton_MouseDown(object sender, MouseEventArgs e)
@@ -1244,7 +1267,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 if (LeftFileIndex >= (int)((Control)sender).Tag)
                 {
-                    _LeftFileIndex--;
+                    leftFileIndex--;
                 }
 
                 // do some cleanup (unsubscribe the events)..
@@ -1256,6 +1279,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[docIndex].Scintilla.MouseWheel -= Scintilla_MouseWheel;
                 Documents[docIndex].Scintilla.MouseClick -= Scintilla_MouseClick;
                 Documents[docIndex].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
+                Documents[docIndex].Scintilla.InsertCheck -= Scintilla_InsertCheck;
+                Documents[docIndex].Scintilla.CharAdded -= Scintilla_CharAdded;
 
 
                 Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
@@ -1266,9 +1291,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 // in case there are documents still open and the left index has been set to a negative value
                 // set the left index to zero.
-                if (_LeftFileIndex == -1 && DocumentsCount > 0)
+                if (leftFileIndex == -1 && DocumentsCount > 0)
                 {
-                    _LeftFileIndex = 0;
+                    leftFileIndex = 0;
                 }
 
                 LayoutTabs(); // perform the layout..
@@ -1281,7 +1306,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Gets or set the value if text changed events should be raised by the control or not.
         /// </summary>
         [Browsable(false)]
-        public bool SuspendTextChangedEvents { get; set; } = false;
+        public bool SuspendTextChangedEvents { get; set; }
 
         private void Scintilla_TextChanged(object sender, EventArgs e)
         {
@@ -1361,12 +1386,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         // to clear the Scintilla control from the control the previously active Scintilla class instance must be saved..
-        private Scintilla previousDocument = null;
+        private Scintilla previousDocument;
 
         /// <summary>
         /// A flag indicating whether the <see cref="TabActivated"/> event should be suspended.
         /// </summary>
-        private bool preventTabActivatedEvent = false;
+        private bool preventTabActivatedEvent;
 
         /// <summary>
         /// Perform layout for the tabbed documents on the control.
@@ -1375,7 +1400,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         private void LayoutTabs(int index = -1)
         {
             // don't accept a -1 index for nothing..
-            _LeftFileIndex = index == -1 ? _LeftFileIndex : index;
+            leftFileIndex = index == -1 ? leftFileIndex : index;
 
             // a value which indicates of how much the next tab should be laid out after
             // the previous tab to the right..
@@ -1419,7 +1444,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 // this condition would indicate that the active tab matches then 
                 // index within the container control's layout..
-                if (i == _LeftFileIndex)
+                if (i == leftFileIndex)
                 {
                     // ..so do add matching Scintilla to it's container..
                     tlpMain.Controls.Add(Documents[i].Scintilla, 0, 1);
@@ -1442,13 +1467,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
 
                 // do the math for a tab which is active..
-                (pnScrollingTabContainer.Controls[i] as FileTabButton).IsActive = i == _LeftFileIndex;
+                ((FileTabButton) pnScrollingTabContainer.Controls[i]).IsActive = i == leftFileIndex;
                 // ..and also set the tag to indicate it's order in the parent container..
                 (pnScrollingTabContainer.Controls[i] as FileTabButton).Tag = // save the index to the Tag..
                     pnScrollingTabContainer.Controls.GetChildIndex(pnScrollingTabContainer.Controls[i]);
 
                 // if the index matches the active tab..
-                if (i == _LeftFileIndex)
+                if (i == leftFileIndex)
                 {
                     // ..save it's left position to another variable..
                     leftAtIndex = leftAt;
@@ -1482,7 +1507,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
             // get the right coordinate of the "tab"..
             int controlRight = pnScrollingTabContainer.Left + leftAtIndex +
-                (_LeftFileIndex == -1 ? 0 : pnScrollingTabContainer.Controls[_LeftFileIndex].Width);
+                (leftFileIndex == -1 ? 0 : pnScrollingTabContainer.Controls[leftFileIndex].Width);
             
             // check if the "tab" is visible..
             bool isVisible = clientRect.Contains(controlLeft, 0) && clientRect.Contains(controlRight, 0);
@@ -1497,7 +1522,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
                 else
                 {
-                    int newLeft = clientRect.Width - leftAtIndex - pnScrollingTabContainer.Controls[_LeftFileIndex].Width;
+                    int newLeft = clientRect.Width - leftAtIndex - pnScrollingTabContainer.Controls[leftFileIndex].Width;
                     pnScrollingTabContainer.Left = newLeft;
                 }
             }
@@ -1577,13 +1602,76 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         /// <param name="scintilla">A Scintilla which index to find.</param>
         /// <returns>A non-negative index for the document if successful; otherwise -1.</returns>
+        // ReSharper disable once UnusedMember.Local
         private int GetDocumentIndex(Scintilla scintilla)
         {
             return scintilla == null ? -1 : Documents.FindIndex(f => f.Scintilla.Equals(scintilla));
         }
         #endregion
 
+        #region "CodeIndent Handlers"
+        // This (C): https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
+        // ReSharper disable once InconsistentNaming
+        private const int SCI_SETLINEINDENTATION = 2126;
+        // ReSharper disable once InconsistentNaming
+        private const int SCI_GETLINEINDENTATION = 2127;
+        void SetIndent(Scintilla scintilla, int line, int indent)
+        {
+            scintilla.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
+        }
+        int GetIndent(Scintilla scintilla, int line)
+        {
+            return (scintilla.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), IntPtr.Zero).ToInt32());
+        }
+        #endregion
+
         #region InternalEvents
+        private void Scintilla_CharAdded(object sender, CharAddedEventArgs e)
+        {
+            // This (C): https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
+            //Codes for the handling the Indention of the lines.
+            //They are manually added here until they get officially added to the Scintilla control.
+
+            if (!UseCodeIndenting)
+            {
+                return;
+            }
+
+            var scintilla = (Scintilla) sender;
+
+            //The '}' char.
+            if (e.Char == '}') {
+                int curLine = scintilla.LineFromPosition(scintilla.CurrentPosition);
+		
+                if (scintilla.Lines[curLine].Text.Trim() == "}") { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
+                    SetIndent(scintilla, curLine, GetIndent(scintilla, curLine) - TabWidth);
+                }
+            }
+        }
+
+        private void Scintilla_InsertCheck(object sender, InsertCheckEventArgs e)
+        {
+            // This (C): https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
+            if (!UseCodeIndenting)
+            {
+                return;
+            }
+
+            var scintilla = (Scintilla) sender;
+
+            if ((e.Text.EndsWith("\r") || e.Text.EndsWith("\n"))) {
+                int startPos = scintilla.Lines[scintilla.LineFromPosition(scintilla.CurrentPosition)].Position;
+                int endPos = e.Position;
+                string curLineText = scintilla.GetTextRange(startPos, (endPos - startPos)); //Text until the caret so that the whitespace is always equal in every line.
+		
+                Match indent = Regex.Match(curLineText, "^[ \\t]*");
+                e.Text = (e.Text + indent.Value);
+                if (Regex.IsMatch(curLineText, "{\\s*$")) {
+                    e.Text = (e.Text + "\t");
+                }
+            }
+        }
+
         private void Scintilla_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             DocumentMouseDoubleClick?.Invoke(sender, e);
@@ -1648,6 +1736,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[i].Scintilla.MouseWheel -= Scintilla_MouseWheel;
                 Documents[i].Scintilla.MouseClick -= Scintilla_MouseClick;
                 Documents[i].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
+                Documents[i].Scintilla.InsertCheck -= Scintilla_InsertCheck;
+                Documents[i].Scintilla.CharAdded -= Scintilla_CharAdded;
 
                 Documents[i].FileTabButton.Click -= FileTabButton_Click;
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
@@ -1713,5 +1803,4 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
     }
     #endregion
-
 }
