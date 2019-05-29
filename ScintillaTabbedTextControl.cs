@@ -166,6 +166,65 @@ namespace VPKSoft.ScintillaTabbedTextControl
         }
 
         /// <summary>
+        /// Gets or set the current document's zoom percentage.
+        /// </summary>
+        [Browsable(false)]
+        public int CurrentZoomPercentage
+        {
+            get => CurrentDocument != null
+                ? ScintillaZoomPercentage.ZoomPercentageFromPoints(CurrentDocument.Scintilla)
+                : 100;
+
+            set
+            {
+                if (value < 0)
+                {
+                    // ReSharper disable once LocalizableElement
+                    throw new ArgumentOutOfRangeException(nameof(value), "The zoom percentage must be a positive value.");
+                }
+
+                if (CurrentDocument != null)
+                {
+                    CurrentDocument.Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep all open documents zoomed in the same value.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Behavior")]
+        [Description("Gets or sets a value indicating whether to keep all open documents zoomed in to the same value.")]
+        public bool ZoomSynchronization { get; set; } = false;
+
+
+        private int zoomPercentageAll = 100;
+
+        /// <summary>
+        /// Gets or sets the zoom percentage for all documents.
+        /// </summary>
+        [Browsable(false)]
+        public int ZoomPercentageAll
+        {
+            get => zoomPercentageAll;
+            set
+            {
+                if (value < 0)
+                {
+                    // ReSharper disable once LocalizableElement
+                    throw new ArgumentOutOfRangeException(nameof(value), "The zoom percentage must be a positive value.");
+                }
+
+                zoomPercentageAll = value;
+                for (int i = 0; i < DocumentsCount; i++)
+                {
+                    Documents[i].Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(zoomPercentageAll);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the index of the current document.
         /// </summary>
         [Browsable(false)] // not in designer time..
@@ -227,10 +286,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("An indicator image of whether the document hasn't been changed after initial loading.")]
         public Image SavedImage
         {
-            get
-            {
-                return savedImage;
-            }
+            get => savedImage;
 
             set
             {
@@ -409,6 +465,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
                 document.Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 document.Scintilla.CharAdded -= Scintilla_CharAdded;
+                document.Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
 
                 document.FileTabButton.Click -= FileTabButton_Click;
                 document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
@@ -923,6 +980,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
                     document.Scintilla.InsertCheck += Scintilla_InsertCheck;
                     document.Scintilla.CharAdded += Scintilla_CharAdded;
+                    document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
 
                     document.FileTabButton.Click += FileTabButton_Click;
                     document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -941,6 +999,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     Documents.Add(document);
 
                     LayoutTabs(DocumentsCount - 1); // perform the layout..
+
+                    // if the zoom is set to synchronize mode..
+                    if (ZoomSynchronization)
+                    {
+                        // ..set the new Scintilla's zoom..
+                        document.Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(ZoomPercentageAll);
+                    }
 
                     // TODO::More Lexers..
 
@@ -1016,6 +1081,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
                 document.Scintilla.InsertCheck += Scintilla_InsertCheck;
                 document.Scintilla.CharAdded += Scintilla_CharAdded;
+                document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
 
                 document.FileTabButton.Click += FileTabButton_Click;
                 document.FileTabButton.MouseMove += FileTabButton_MouseMove;
@@ -1030,6 +1096,14 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents.Add(document);
 
                 LayoutTabs(DocumentsCount - 1); // perform the layout..
+
+                // if the zoom is set to synchronize mode..
+                if (ZoomSynchronization)
+                {
+                    // ..set the new Scintilla's zoom..
+                    document.Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(ZoomPercentageAll);
+                }
+
                 LastAddedDocument = document;
                 return true;
             }
@@ -1061,6 +1135,19 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         [Browsable(true)]
         public event OnTabActivated TabActivated;
+
+        /// <summary>
+        /// Delegate OnDocumentZoomChanged
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="T:VPKSoft.ScintillaTabbedTextControl.ScintillaZoomChangedEventArgs"/> instance containing the event data.</param>
+        public delegate void OnDocumentZoomChanged(object sender, ScintillaZoomChangedEventArgs e);
+
+        /// <summary>
+        /// Occurs when a zoom value of <see cref="Scintilla"/> has changed.
+        /// </summary>
+        [Browsable(true)]
+        public event OnDocumentZoomChanged DocumentZoomChanged;
 
         /// <summary>
         /// Occurs when close button of the "tab" has been clicked.
@@ -1281,6 +1368,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[docIndex].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
                 Documents[docIndex].Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 Documents[docIndex].Scintilla.CharAdded -= Scintilla_CharAdded;
+                Documents[docIndex].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
 
 
                 Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
@@ -1314,8 +1402,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
             DateTime timeStamp = DateTime.Now;
             Scintilla scintilla = (Scintilla)sender;
 
-            int maxLineNumberCharLengthFromTag = (int)scintilla.Tag;
-
             if (!SuspendTextChangedEvents)
             {
                 foreach (ScintillaTabbedDocument document in Documents)
@@ -1331,10 +1417,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
 
+            ReCalculateScintillaMargin(scintilla, false);
+        }
+
+        /// <summary>
+        /// Recalculates the margin of a given <see cref="Scintilla"/>.
+        /// </summary>
+        /// <param name="scintilla">The scintilla.</param>
+        /// <param name="force">A value indicating whether to force the margin recalculation. I.e. don't compare to previous value.</param>
+        public static void ReCalculateScintillaMargin(Scintilla scintilla, bool force)
+        {
+            int maxLineNumberCharLengthFromTag = (int)scintilla.Tag;
             // Did the number of characters in the line number display change?
             // i.e. nnn VS nn, or nnnn VS nn, etc...
             var maxLineNumberCharLength = scintilla.Lines.Count.ToString().Length;
-            if (maxLineNumberCharLength == maxLineNumberCharLengthFromTag)
+            if (maxLineNumberCharLength == maxLineNumberCharLengthFromTag && !force)
                 return;
 
             // Calculate the width required to display the last line number
@@ -1649,6 +1746,47 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
         }
 
+        // flag indicating whether the zoom synchronization is taking place
+        // so a stack overflow won't happen..
+        private bool suspendZoomEventRecall;
+
+        // the Scintilla zoom has changed so raise the DocumentZoomChanged event..
+        private void Scintilla_ZoomChanged(object sender, EventArgs e)
+        {
+            var scintilla = (Scintilla) sender;
+            ScintillaTabbedDocument document = GetDocument(sender);
+            if (document != null)
+            {
+                int zoomValue = ScintillaZoomPercentage.ZoomPercentageFromPoints(scintilla);
+
+                DocumentZoomChanged?.Invoke(sender,
+                    new ScintillaZoomChangedEventArgs
+                    {
+                        ScintillaTabbedDocument = document,
+                        ZoomPercentage = zoomValue,
+                    });
+
+                ReCalculateScintillaMargin(document.Scintilla, true);
+
+                if (ZoomSynchronization && !suspendZoomEventRecall)
+                {
+                    suspendZoomEventRecall = true;
+                    zoomPercentageAll = zoomValue;
+                    for (int i = 0; i < DocumentsCount; i++)
+                    {
+                        if (Documents[i].Equals(document))
+                        {
+                            continue;
+                        }
+
+                        Documents[i].Scintilla.Zoom = document.Scintilla.Zoom;
+                        ReCalculateScintillaMargin(document.Scintilla, true);
+                    }
+                    suspendZoomEventRecall = false;
+                }
+            }
+        }
+
         private void Scintilla_InsertCheck(object sender, InsertCheckEventArgs e)
         {
             // This (C): https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
@@ -1738,6 +1876,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[i].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
                 Documents[i].Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 Documents[i].Scintilla.CharAdded -= Scintilla_CharAdded;
+                Documents[i].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
 
                 Documents[i].FileTabButton.Click -= FileTabButton_Click;
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;

@@ -97,4 +97,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         public DateTime TimeStamp { get; set; }
     }
+
+    /// <summary>
+    /// A class which instance is passed via a parameter to the DocumentZoomChanged event.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class ScintillaZoomChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Gets or sets an instance to a ScintillaTabbedDocument which zoom was changed.
+        /// </summary>
+        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
+
+        /// <summary>
+        /// Gets the zoom percentage to witch to zoom percentage did change into.
+        /// </summary>
+        public int ZoomPercentage { get; internal set; }
+    }
 }

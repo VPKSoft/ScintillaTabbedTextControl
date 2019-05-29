@@ -161,6 +161,15 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// A list of System.Object's that contains data about the class. The default is an empty list.
         /// </value>
         public List<object> Tags { get; set; } = new List<object>();
-    }
 
+        /// <summary>
+        /// Gets the zoom percentage of the <see cref="Scintilla"/> document.
+        /// </summary>
+        public int ZoomPercentage
+        {
+            get => ScintillaZoomPercentage.ZoomPercentageFromPoints(Scintilla);
+
+            set => Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(value);
+        } 
+    }
 }

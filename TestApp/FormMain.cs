@@ -89,5 +89,15 @@ namespace TestApp
                 }
             }
         }
+
+        private void MnuZoom_Click(object sender, System.EventArgs e)
+        {
+            var item = (ToolStripMenuItem) sender;
+            var zoom = int.Parse((string) item.Tag);
+            //sttcMain.CurrentDocument.ZoomPercentage = zoom;
+            //sttcMain.CurrentZoomPercentage = zoom;
+
+            sttcMain.ZoomPercentageAll = zoom;
+        }
     }
 }

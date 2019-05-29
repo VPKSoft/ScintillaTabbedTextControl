@@ -34,12 +34,19 @@
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNew = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuOpenWithDef = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCloseActiveTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom50 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom70 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom100 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom150 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom200 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoom400 = new System.Windows.Forms.ToolStripMenuItem();
             this.odAnyFile = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
-            this.mnuOpenWithDef = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +54,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFile});
+            this.mnuFile,
+            this.mnuZoom});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -79,12 +87,80 @@
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
+            // mnuOpenWithDef
+            // 
+            this.mnuOpenWithDef.Name = "mnuOpenWithDef";
+            this.mnuOpenWithDef.Size = new System.Drawing.Size(275, 22);
+            this.mnuOpenWithDef.Text = "Open with Notepad++ lexer definition";
+            this.mnuOpenWithDef.Click += new System.EventHandler(this.MnuOpenWithDef_Click);
+            // 
             // mnuCloseActiveTab
             // 
             this.mnuCloseActiveTab.Name = "mnuCloseActiveTab";
             this.mnuCloseActiveTab.Size = new System.Drawing.Size(275, 22);
             this.mnuCloseActiveTab.Text = "Close active tab";
             this.mnuCloseActiveTab.Click += new System.EventHandler(this.mnuCloseActiveTab_Click);
+            // 
+            // mnuZoom
+            // 
+            this.mnuZoom.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuZoom50,
+            this.mnuZoom70,
+            this.mnuZoom100,
+            this.mnuZoom150,
+            this.mnuZoom200,
+            this.mnuZoom400});
+            this.mnuZoom.Name = "mnuZoom";
+            this.mnuZoom.Size = new System.Drawing.Size(51, 20);
+            this.mnuZoom.Text = "Zoom";
+            // 
+            // mnuZoom50
+            // 
+            this.mnuZoom50.Name = "mnuZoom50";
+            this.mnuZoom50.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom50.Tag = "50";
+            this.mnuZoom50.Text = "50%";
+            this.mnuZoom50.Click += new System.EventHandler(this.MnuZoom_Click);
+            // 
+            // mnuZoom70
+            // 
+            this.mnuZoom70.Name = "mnuZoom70";
+            this.mnuZoom70.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom70.Tag = "70";
+            this.mnuZoom70.Text = "70%";
+            this.mnuZoom70.Click += new System.EventHandler(this.MnuZoom_Click);
+            // 
+            // mnuZoom100
+            // 
+            this.mnuZoom100.Name = "mnuZoom100";
+            this.mnuZoom100.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom100.Tag = "100";
+            this.mnuZoom100.Text = "100%";
+            this.mnuZoom100.Click += new System.EventHandler(this.MnuZoom_Click);
+            // 
+            // mnuZoom150
+            // 
+            this.mnuZoom150.Name = "mnuZoom150";
+            this.mnuZoom150.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom150.Tag = "150";
+            this.mnuZoom150.Text = "150%";
+            this.mnuZoom150.Click += new System.EventHandler(this.MnuZoom_Click);
+            // 
+            // mnuZoom200
+            // 
+            this.mnuZoom200.Name = "mnuZoom200";
+            this.mnuZoom200.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom200.Tag = "200";
+            this.mnuZoom200.Text = "200%";
+            this.mnuZoom200.Click += new System.EventHandler(this.MnuZoom_Click);
+            // 
+            // mnuZoom400
+            // 
+            this.mnuZoom400.Name = "mnuZoom400";
+            this.mnuZoom400.Size = new System.Drawing.Size(102, 22);
+            this.mnuZoom400.Tag = "400";
+            this.mnuZoom400.Text = "400%";
+            this.mnuZoom400.Click += new System.EventHandler(this.MnuZoom_Click);
             // 
             // odAnyFile
             // 
@@ -108,6 +184,7 @@
             // 
             this.sttcMain.ChangedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.ChangedImage")));
             this.sttcMain.CloseButtonImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.CloseButtonImage")));
+            this.sttcMain.CurrentZoomPercentage = 100;
             this.sttcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sttcMain.LeftFileIndex = 0;
             this.sttcMain.Location = new System.Drawing.Point(0, 24);
@@ -119,14 +196,11 @@
             this.sttcMain.Size = new System.Drawing.Size(800, 426);
             this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
+            this.sttcMain.TabWidth = 4;
+            this.sttcMain.UseCodeIndenting = false;
+            this.sttcMain.ZoomPercentageAll = 100;
+            this.sttcMain.ZoomSynchronization = false;
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
-            // 
-            // mnuOpenWithDef
-            // 
-            this.mnuOpenWithDef.Name = "mnuOpenWithDef";
-            this.mnuOpenWithDef.Size = new System.Drawing.Size(275, 22);
-            this.mnuOpenWithDef.Text = "Open with Notepad++ lexer definition";
-            this.mnuOpenWithDef.Click += new System.EventHandler(this.MnuOpenWithDef_Click);
             // 
             // FormMain
             // 
@@ -158,6 +232,13 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCloseActiveTab;
         private System.Windows.Forms.ToolStripMenuItem mnuNew;
         private System.Windows.Forms.ToolStripMenuItem mnuOpenWithDef;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom50;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom70;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom100;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom150;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom200;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoom400;
     }
 }
 

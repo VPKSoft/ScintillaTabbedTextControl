@@ -80,6 +80,7 @@
       <DependentUpon>ScintillaTabbedTextControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScintillaZoomPercentage.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\Playback.png" />
+    <None Include="ScintillaTabbedTextControl.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Play.png" />
