@@ -99,5 +99,10 @@ namespace TestApp
 
             sttcMain.ZoomPercentageAll = zoom;
         }
+
+        private void MnuZoomTest_Click(object sender, System.EventArgs e)
+        {
+            new FormZoomConvertTest().Show();
+        }
     }
 }

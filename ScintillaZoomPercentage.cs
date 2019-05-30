@@ -109,7 +109,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
             // a percentage larger than 100 means point value above 0 points..
             if (percentage > 100)
             {
-                double zoom = (double)percentage / 20;
+                double zoom = (double)percentage / 10;
+                zoom = zoom - 10;
+                zoom *= 2;
                 return (int) zoom;
             }
 

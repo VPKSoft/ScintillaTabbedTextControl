@@ -47,6 +47,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
+            this.mnuZoomTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +69,8 @@
             this.mnuNew,
             this.mnuOpen,
             this.mnuOpenWithDef,
-            this.mnuCloseActiveTab});
+            this.mnuCloseActiveTab,
+            this.mnuZoomTest});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "File";
@@ -202,6 +204,13 @@
             this.sttcMain.ZoomSynchronization = false;
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
             // 
+            // mnuZoomTest
+            // 
+            this.mnuZoomTest.Name = "mnuZoomTest";
+            this.mnuZoomTest.Size = new System.Drawing.Size(275, 22);
+            this.mnuZoomTest.Text = "Zoom Test";
+            this.mnuZoomTest.Click += new System.EventHandler(this.MnuZoomTest_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +248,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuZoom150;
         private System.Windows.Forms.ToolStripMenuItem mnuZoom200;
         private System.Windows.Forms.ToolStripMenuItem mnuZoom400;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoomTest;
     }
 }
 

@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added properties: ZoomSynchronization, ZoomPercentageAll, CurrentZoomPercentage and ScintillaTabbedDocument.ZoomPercentage. Added event: DocumentZoomChanged.</releaseNotes>
+    <releaseNotes>Fixed zoom percentage calculation.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>
