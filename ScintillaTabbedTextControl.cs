@@ -466,19 +466,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 document.Scintilla.CharAdded -= Scintilla_CharAdded;
                 document.Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-                document.Scintilla.DragDrop -= PnScrollingTabContainer_DragDrop;
-                document.Scintilla.DragEnter -= PnScrollingTabContainer_DragEnter;
-                document.Scintilla.DragLeave -= PnScrollingTabContainer_DragLeave;
-                document.Scintilla.DragOver -= PnScrollingTabContainer_DragOver;
 
                 document.FileTabButton.Click -= FileTabButton_Click;
                 document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 document.FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 document.FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                document.FileTabButton.DragDrop -= PnScrollingTabContainer_DragDrop;
-                document.FileTabButton.DragEnter -= PnScrollingTabContainer_DragEnter;
-                document.FileTabButton.DragLeave -= PnScrollingTabContainer_DragLeave;
-                document.FileTabButton.DragOver -= PnScrollingTabContainer_DragOver;
 
                 Documents.RemoveAt(index);
 
@@ -990,22 +982,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.Scintilla.InsertCheck += Scintilla_InsertCheck;
                     document.Scintilla.CharAdded += Scintilla_CharAdded;
                     document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
-                    document.Scintilla.DragDrop += PnScrollingTabContainer_DragDrop;
-                    document.Scintilla.DragEnter += PnScrollingTabContainer_DragEnter;
-                    document.Scintilla.DragLeave += PnScrollingTabContainer_DragLeave;
-                    document.Scintilla.DragOver += PnScrollingTabContainer_DragOver;
 
                     document.FileTabButton.Click += FileTabButton_Click;
                     document.FileTabButton.MouseMove += FileTabButton_MouseMove;
                     document.FileTabButton.MouseUp += FileTabButton_MouseUp;
                     document.FileTabButton.MouseDown += FileTabButton_MouseDown;
                     document.FileTabButton.TabClosing += FileTabButton_TabClosing;
-                    document.FileTabButton.DragDrop += PnScrollingTabContainer_DragDrop;
-                    document.FileTabButton.DragEnter += PnScrollingTabContainer_DragEnter;
-                    document.FileTabButton.DragLeave += PnScrollingTabContainer_DragLeave;
-                    document.FileTabButton.DragOver += PnScrollingTabContainer_DragOver;
-
-
 
                     document.Scintilla.Tag = -1;
                     SuspendTextChangedEvents = true;
@@ -1101,20 +1083,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.InsertCheck += Scintilla_InsertCheck;
                 document.Scintilla.CharAdded += Scintilla_CharAdded;
                 document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
-                document.Scintilla.DragDrop += PnScrollingTabContainer_DragDrop;
-                document.Scintilla.DragEnter += PnScrollingTabContainer_DragEnter;
-                document.Scintilla.DragLeave += PnScrollingTabContainer_DragLeave;
-                document.Scintilla.DragOver += PnScrollingTabContainer_DragOver;
 
                 document.FileTabButton.Click += FileTabButton_Click;
                 document.FileTabButton.MouseMove += FileTabButton_MouseMove;
                 document.FileTabButton.MouseUp += FileTabButton_MouseUp;
                 document.FileTabButton.MouseDown += FileTabButton_MouseDown;
                 document.FileTabButton.TabClosing += FileTabButton_TabClosing;
-                document.FileTabButton.DragDrop += PnScrollingTabContainer_DragDrop;
-                document.FileTabButton.DragEnter += PnScrollingTabContainer_DragEnter;
-                document.FileTabButton.DragLeave += PnScrollingTabContainer_DragLeave;
-                document.FileTabButton.DragOver += PnScrollingTabContainer_DragOver;
 
                 document.Scintilla.Tag = -1;
 
@@ -1396,19 +1370,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[docIndex].Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 Documents[docIndex].Scintilla.CharAdded -= Scintilla_CharAdded;
                 Documents[docIndex].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-                Documents[docIndex].Scintilla.DragDrop -= PnScrollingTabContainer_DragDrop;
-                Documents[docIndex].Scintilla.DragEnter -= PnScrollingTabContainer_DragEnter;
-                Documents[docIndex].Scintilla.DragLeave -= PnScrollingTabContainer_DragLeave;
-                Documents[docIndex].Scintilla.DragOver -= PnScrollingTabContainer_DragOver;
 
                 Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
                 Documents[docIndex].FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 Documents[docIndex].FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 Documents[docIndex].FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                Documents[docIndex].FileTabButton.DragDrop -= PnScrollingTabContainer_DragDrop;
-                Documents[docIndex].FileTabButton.DragEnter -= PnScrollingTabContainer_DragEnter;
-                Documents[docIndex].FileTabButton.DragLeave -= PnScrollingTabContainer_DragLeave;
-                Documents[docIndex].FileTabButton.DragOver -= PnScrollingTabContainer_DragOver;
                 Documents.RemoveAt(docIndex);
 
                 // in case there are documents still open and the left index has been set to a negative value
@@ -1911,19 +1877,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[i].Scintilla.InsertCheck -= Scintilla_InsertCheck;
                 Documents[i].Scintilla.CharAdded -= Scintilla_CharAdded;
                 Documents[i].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-                Documents[i].Scintilla.DragDrop -= PnScrollingTabContainer_DragDrop;
-                Documents[i].Scintilla.DragEnter -= PnScrollingTabContainer_DragEnter;
-                Documents[i].Scintilla.DragLeave -= PnScrollingTabContainer_DragLeave;
-                Documents[i].Scintilla.DragOver -= PnScrollingTabContainer_DragOver;
 
                 Documents[i].FileTabButton.Click -= FileTabButton_Click;
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 Documents[i].FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 Documents[i].FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                Documents[i].FileTabButton.DragDrop -= PnScrollingTabContainer_DragDrop;
-                Documents[i].FileTabButton.DragEnter -= PnScrollingTabContainer_DragEnter;
-                Documents[i].FileTabButton.DragLeave -= PnScrollingTabContainer_DragLeave;
-                Documents[i].FileTabButton.DragOver -= PnScrollingTabContainer_DragOver;
             }
             // ..and clean up the cleanup event subscription..
             Disposed -= ScintillaTabbedTextControl_Disposed;
@@ -1982,28 +1940,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
         }
-
-        #region DragDrop
-        private void PnScrollingTabContainer_DragDrop(object sender, DragEventArgs e)
-        {
-            OnDragDrop(e);
-        }
-
-        private void PnScrollingTabContainer_DragEnter(object sender, DragEventArgs e)
-        {
-            OnDragEnter(e);
-        }
-
-        private void PnScrollingTabContainer_DragLeave(object sender, EventArgs e)
-        {
-            OnDragLeave(e);
-        }
-
-        private void PnScrollingTabContainer_DragOver(object sender, DragEventArgs e)
-        {
-            OnDragOver(e);
-        }
-        #endregion
     }
     #endregion
 }

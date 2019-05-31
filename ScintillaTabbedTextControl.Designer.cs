@@ -50,10 +50,6 @@
             this.pnScrollingTabContainer.Name = "pnScrollingTabContainer";
             this.pnScrollingTabContainer.Size = new System.Drawing.Size(732, 37);
             this.pnScrollingTabContainer.TabIndex = 0;
-            this.pnScrollingTabContainer.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
-            this.pnScrollingTabContainer.DragEnter += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragEnter);
-            this.pnScrollingTabContainer.DragOver += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragOver);
-            this.pnScrollingTabContainer.DragLeave += new System.EventHandler(this.PnScrollingTabContainer_DragLeave);
             // 
             // tlpTopContainer
             // 
@@ -71,7 +67,6 @@
             this.tlpTopContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTopContainer.Size = new System.Drawing.Size(794, 37);
             this.tlpTopContainer.TabIndex = 1;
-            this.tlpTopContainer.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // tlpNavigationButtons
             // 
@@ -89,7 +84,6 @@
             this.tlpNavigationButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpNavigationButtons.Size = new System.Drawing.Size(62, 31);
             this.tlpNavigationButtons.TabIndex = 2;
-            this.tlpNavigationButtons.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // btPrevious
             // 
@@ -100,7 +94,6 @@
             this.btPrevious.TabIndex = 0;
             this.btPrevious.UseVisualStyleBackColor = true;
             this.btPrevious.Click += new System.EventHandler(this.btPrevious_Click);
-            this.btPrevious.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // btNext
             // 
@@ -111,7 +104,6 @@
             this.btNext.TabIndex = 1;
             this.btNext.UseVisualStyleBackColor = true;
             this.btNext.Click += new System.EventHandler(this.btnNext_Click);
-            this.btNext.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // pnTabContainer
             // 
@@ -122,7 +114,6 @@
             this.pnTabContainer.Name = "pnTabContainer";
             this.pnTabContainer.Size = new System.Drawing.Size(726, 37);
             this.pnTabContainer.TabIndex = 3;
-            this.pnTabContainer.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // tlpMain
             // 
@@ -137,7 +128,6 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.Size = new System.Drawing.Size(800, 450);
             this.tlpMain.TabIndex = 2;
-            this.tlpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PnScrollingTabContainer_DragDrop);
             // 
             // scintillaAutoComplete
             // 
