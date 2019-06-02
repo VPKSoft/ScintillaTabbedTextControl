@@ -76,7 +76,19 @@ namespace VPKSoft.ScintillaTabbedTextControl
     public class TabActivatedEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets or sets an instance to a ScintillaTabbedDocument class which is to be closed.
+        /// Gets or sets an instance to a ScintillaTabbedDocument class which was activated.
+        /// </summary>
+        public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
+    }
+
+    /// <summary>
+    /// A class which instance is passed via a parameter to the TabClosed event.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class TabClosedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Gets or sets an instance to a ScintillaTabbedDocument class which was closed.
         /// </summary>
         public ScintillaTabbedDocument ScintillaTabbedDocument { get; set; } = null;
     }

@@ -104,5 +104,10 @@ namespace TestApp
         {
             new FormZoomConvertTest().Show();
         }
+
+        private void SttcMain_TabClosed(object sender, VPKSoft.ScintillaTabbedTextControl.TabClosedEventArgs e)
+        {
+            //MessageBox.Show(e.ScintillaTabbedDocument.FileName);
+        }
     }
 }

@@ -36,6 +36,7 @@
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenWithDef = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCloseActiveTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuZoomTest = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom50 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom70 = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +48,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
-            this.mnuZoomTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +102,13 @@
             this.mnuCloseActiveTab.Size = new System.Drawing.Size(275, 22);
             this.mnuCloseActiveTab.Text = "Close active tab";
             this.mnuCloseActiveTab.Click += new System.EventHandler(this.mnuCloseActiveTab_Click);
+            // 
+            // mnuZoomTest
+            // 
+            this.mnuZoomTest.Name = "mnuZoomTest";
+            this.mnuZoomTest.Size = new System.Drawing.Size(275, 22);
+            this.mnuZoomTest.Text = "Zoom Test";
+            this.mnuZoomTest.Click += new System.EventHandler(this.MnuZoomTest_Click);
             // 
             // mnuZoom
             // 
@@ -202,14 +209,8 @@
             this.sttcMain.UseCodeIndenting = false;
             this.sttcMain.ZoomPercentageAll = 100;
             this.sttcMain.ZoomSynchronization = false;
+            this.sttcMain.TabClosed += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnTabClosed(this.SttcMain_TabClosed);
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
-            // 
-            // mnuZoomTest
-            // 
-            this.mnuZoomTest.Name = "mnuZoomTest";
-            this.mnuZoomTest.Size = new System.Drawing.Size(275, 22);
-            this.mnuZoomTest.Text = "Zoom Test";
-            this.mnuZoomTest.Click += new System.EventHandler(this.MnuZoomTest_Click);
             // 
             // FormMain
             // 

@@ -482,6 +482,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
 
                 LayoutTabs(); // perform the layout..
+
+                // tab closed will be raised non-dependent of the raiseEvent flag..
+                TabClosed?.Invoke(this, new TabClosedEventArgs {ScintillaTabbedDocument = document});
             }
         }
 
@@ -1132,6 +1135,13 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public delegate void OnTabActivated(object sender, TabActivatedEventArgs e);
 
         /// <summary>
+        /// A delegate for the TabClosed event.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="TabClosedEventArgs"/> instance containing the event data.</param>
+        public delegate void OnTabClosed(object sender, TabClosedEventArgs e);
+
+        /// <summary>
         /// Occurs when a tab gets activated via user or other interaction with the control.
         /// </summary>
         [Browsable(true)]
@@ -1155,6 +1165,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         [Browsable(true)]
         public event OnTabClosing TabClosing;
+
+        /// <summary>
+        /// Occurs when the tab has been closed.
+        /// </summary>
+        [Browsable(true)]
+        public event OnTabClosed TabClosed;
 
         /// <summary>
         /// A delegate for the DocumentTextChanged event.
@@ -1358,6 +1374,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     leftFileIndex--;
                 }
 
+                // save the closed document instance..
+                var closedDocument = Documents[docIndex];
+
                 // do some cleanup (unsubscribe the events)..
                 Documents[docIndex].Scintilla.TextChanged -= Scintilla_TextChanged;
                 Documents[docIndex].Scintilla.UpdateUI -= Scintilla_UpdateUI;
@@ -1376,7 +1395,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[docIndex].FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 Documents[docIndex].FileTabButton.MouseDown -= FileTabButton_MouseDown;
                 Documents.RemoveAt(docIndex);
-
+                
                 // in case there are documents still open and the left index has been set to a negative value
                 // set the left index to zero.
                 if (leftFileIndex == -1 && DocumentsCount > 0)
@@ -1385,6 +1404,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
 
                 LayoutTabs(); // perform the layout..
+
+                // raise the tab closed event..
+                TabClosed?.Invoke(this, new TabClosedEventArgs {ScintillaTabbedDocument = closedDocument});
             }
         }
         #endregion        
