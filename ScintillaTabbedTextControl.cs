@@ -71,6 +71,40 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("Gets or sets a value indicating whether the right mouse button also activates a tab on to control.")]
         public bool RightButtonTabActivation { get; set; } = false;
 
+        private RightToLeft rightToLeft = RightToLeft.No;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether control's elements are aligned to support locales using right-to-left fonts.
+        /// </summary>
+        ///<returns>
+        /// One of the <see cref="T:System.Windows.Forms.RightToLeft" /> values. The default is <see cref="F:System.Windows.Forms.RightToLeft.Inherit" />.
+        /// </returns>
+        /// <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The assigned value is not one of the <see cref="T:System.Windows.Forms.RightToLeft" /> values.</exception>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [AmbientValue(RightToLeft.Inherit)]
+        [Description("Indicates whether the component should draw right-to-left for RTL languages.")]
+        public override RightToLeft RightToLeft
+        {
+            get => rightToLeft;
+
+            set
+            {
+                if (rightToLeft == value)
+                {
+                    return;
+                }
+
+                base.RightToLeft = value;
+
+                rightToLeft = value;
+                for (int i = 0; i < DocumentsCount; i++)
+                {
+                    Documents[i].Scintilla.RightToLeft = value;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the right mouse button is also used to drag the tabs in the control.
         /// </summary>
@@ -962,7 +996,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                             FileName = fileName, // and initialize it's members..
                             FileNameNotPath = Path.GetFileName(fileName),
                             FileTabButton = new FileTabButton() { Top = 0, Name = "doc_tab" + docNameCounter++, IsSaved = true },
-                            Scintilla = new Scintilla() { Dock = DockStyle.Fill },
+                            Scintilla = new Scintilla() { Dock = DockStyle.Fill, RightToLeft = RightToLeft },
                             LexerType = lexerType,
                             ID = ID
                         };
@@ -1066,7 +1100,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                         FileName = fileName, // and initialize it's members..
                         FileNameNotPath = fileName,
                         FileTabButton = new FileTabButton() { Top = 0, Name = "doc_tab" + docNameCounter++, IsSaved = false },
-                        Scintilla = new Scintilla() { Dock = DockStyle.Fill },
+                        Scintilla = new Scintilla() { Dock = DockStyle.Fill, RightToLeft = RightToLeft, },
                         LexerType = LexerType.Unknown
                     };
 
