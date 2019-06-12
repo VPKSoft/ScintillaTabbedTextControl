@@ -288,10 +288,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(false)] // not in designer time..
         public int LeftFileIndex
         {
-            get
-            {
-                return leftFileIndex;
-            }
+            get => leftFileIndex;
 
             set
             {
@@ -383,6 +380,122 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 foreach (ScintillaTabbedDocument document in Documents)
                 {
                     document.FileTabButton.CloseButtonImage = closeButtonImage;
+                }
+            }
+        }
+
+
+        private Color colorBraceHighlightForeground = Color.BlueViolet;
+        private Color colorBraceHighlightBackground = Color.LightGray;
+        private Color colorBraceHighlightBad = Color.Red;
+
+        /// <summary>
+        /// Sets the brace highlight colors for all opened tabs.
+        /// </summary>
+        private void SetBraceHighlights()
+        {
+            foreach (ScintillaTabbedDocument document in Documents)
+            {
+                SetBraceHighlights(document.Scintilla);
+            }
+        }
+
+        /// <summary>
+        /// Sets the brace highlight colors for a given <see cref="Scintilla"/>.
+        /// <param name="scintilla">The <see cref="Scintilla"/> control to instance to set the brace highlights for.</param>
+        /// </summary>
+        private void SetBraceHighlights(Scintilla scintilla)
+        {
+            // only if the highlighting is in use..
+            if (!UseBraceHighlight)
+            {
+                return;
+            }            
+            scintilla.Styles[Style.BraceLight].ForeColor = colorBraceHighlightForeground;
+            scintilla.Styles[Style.BraceLight].BackColor = colorBraceHighlightBackground;
+            scintilla.Styles[Style.BraceBad].BackColor = colorBraceHighlightBad;
+        }
+
+        private bool useBraceHighlight;
+
+        /// <summary>
+        /// Gets or sets a value whether to use brace matching and highlighting with the <see cref="Scintilla"/> controls.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Gets or sets a value whether to use brace matching and highlighting with the Scintilla controls.")]
+        public bool UseBraceHighlight
+        {
+            get => useBraceHighlight;
+            set
+            {
+                if (value != useBraceHighlight)
+                {
+                    useBraceHighlight = value;
+                    SetBraceHighlights();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or set a color for a brace highlight foreground.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Gets or set a color for a brace highlight foreground.")]
+        public Color ColorBraceHighlightForeground
+        {
+            get => colorBraceHighlightForeground;
+
+            set
+            {
+                // delegate the new value to the Scintilla controls..
+                if (colorBraceHighlightForeground != value)
+                {
+                    colorBraceHighlightForeground = value;
+                    SetBraceHighlights();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or set a color for a brace highlight background.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Gets or set a color for a brace highlight background.")]
+        public Color ColorBraceHighlightBackground
+        {
+            get => colorBraceHighlightBackground;
+
+            set
+            {
+                // delegate the new value to the Scintilla controls..
+                if (colorBraceHighlightBackground != value)
+                {
+                    colorBraceHighlightBackground = value;
+                    SetBraceHighlights();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or set a color for a bad brace highlight.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Gets or set a color for a bad brace highlight.")]
+        public Color ColorBraceHighlightBad
+        {
+            get => colorBraceHighlightBad;
+
+            set
+            {
+                // delegate the new value to the Scintilla controls..
+                if (colorBraceHighlightBad != value)
+                {
+                    colorBraceHighlightBad = value;
+                    SetBraceHighlights();
                 }
             }
         }
@@ -1006,7 +1119,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.FileTabButton.Location = new Point(0, 0);
                     document.FileTabButton.Text = Path.GetFileName(fileName);
 
-
                     // scintilla events..
                     document.Scintilla.TextChanged += Scintilla_TextChanged;
                     document.Scintilla.UpdateUI += Scintilla_UpdateUI;
@@ -1033,6 +1145,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                     // set the lexer for the Scintilla..
                     ScintillaLexers.ScintillaLexers.CreateLexer(document.Scintilla, lexerType);
+
+                    // set the brace highlights if enabled..
+                    SetBraceHighlights(document.Scintilla);
 
                     Documents.Add(document);
 
@@ -1130,6 +1245,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.Scintilla.Tag = -1;
 
                 ScintillaLexers.ScintillaLexers.CreateLexer(document.Scintilla, LexerType.Text);
+
+                // set the brace highlights if enabled..
+                SetBraceHighlights(document.Scintilla);
 
                 Documents.Add(document);
 
@@ -1943,6 +2061,25 @@ namespace VPKSoft.ScintillaTabbedTextControl
             Disposed -= ScintillaTabbedTextControl_Disposed;
         }
 
+        // (C): https://github.com/jacobslusser/ScintillaNET/wiki/Brace-Matching
+        private static bool IsBrace(int c)
+        {
+            switch (c)
+            {
+                case '(':
+                case ')':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                case '<':
+                case '>':
+                    return true;
+            }
+
+            return false;
+        }
+
         private void Scintilla_UpdateUI(object sender, UpdateUIEventArgs e)
         {
             ScintillaTabbedDocument document = GetDocument(sender);
@@ -1993,6 +2130,47 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (selectionChanged && document.FileTabButton.IsActive)
                 {
                     SelectionChanged?.Invoke(this, new ScintillaTabbedDocumentEventArgsExt() { ScintillaTabbedDocument = document });
+                }
+
+                // (C): https://github.com/jacobslusser/ScintillaNET/wiki/Brace-Matching
+                if (UseBraceHighlight)
+                {
+                    // Has the caret changed position?
+                    var caretPos = document.Scintilla.CurrentPosition;
+                    if (document.LastCaretPos != caretPos)
+                    {
+                        document.LastCaretPos = caretPos;
+                        var bracePos1 = -1;
+
+                        // Is there a brace to the left or right?
+                        if (caretPos > 0 && IsBrace(document.Scintilla.GetCharAt(caretPos - 1)))
+                        {
+                            bracePos1 = (caretPos - 1);
+                        }
+                        else if (IsBrace(document.Scintilla.GetCharAt(caretPos)))
+                        {
+                            bracePos1 = caretPos;
+                        }
+
+                        if (bracePos1 >= 0)
+                        {
+                            // Find the matching brace
+                            var bracePos2 = document.Scintilla.BraceMatch(bracePos1);
+                            if (bracePos2 == Scintilla.InvalidPosition)
+                            {
+                                document.Scintilla.BraceBadLight(bracePos1);
+                            }
+                            else
+                            {
+                                document.Scintilla.BraceHighlight(bracePos1, bracePos2);
+                            }
+                        }
+                        else
+                        {
+                            // Turn off brace matching
+                            document.Scintilla.BraceHighlight(Scintilla.InvalidPosition, Scintilla.InvalidPosition);
+                        }
+                    }
                 }
             }
         }

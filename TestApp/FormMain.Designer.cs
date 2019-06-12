@@ -193,6 +193,9 @@
             // 
             this.sttcMain.ChangedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.ChangedImage")));
             this.sttcMain.CloseButtonImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.CloseButtonImage")));
+            this.sttcMain.ColorBraceHighlightBackground = System.Drawing.Color.LightGray;
+            this.sttcMain.ColorBraceHighlightBad = System.Drawing.Color.Red;
+            this.sttcMain.ColorBraceHighlightForeground = System.Drawing.Color.BlueViolet;
             this.sttcMain.CurrentZoomPercentage = 100;
             this.sttcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sttcMain.LeftFileIndex = 0;
@@ -207,6 +210,7 @@
             this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
             this.sttcMain.TabWidth = 4;
+            this.sttcMain.UseBraceHighlight = false;
             this.sttcMain.UseCodeIndenting = false;
             this.sttcMain.ZoomPercentageAll = 100;
             this.sttcMain.ZoomSynchronization = false;

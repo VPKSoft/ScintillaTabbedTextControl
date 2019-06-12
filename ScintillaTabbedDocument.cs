@@ -57,6 +57,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <summary>
         /// Gets or sets the identifier (database) for the document.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public int ID { get; set; } = -1;
 
         /// <summary>
@@ -170,6 +171,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
             get => ScintillaZoomPercentage.ZoomPercentageFromPoints(Scintilla);
 
             set => Scintilla.Zoom = ScintillaZoomPercentage.PointsFromZoomPercentage(value);
-        } 
+        }
+
+        /// <summary>
+        /// Gets or sets the last caret position of the <see cref="Scintilla"/> document instance within this class.
+        /// </summary>
+        internal int LastCaretPos { get; set; } = 0;
     }
 }
