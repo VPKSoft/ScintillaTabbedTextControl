@@ -342,10 +342,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("An indicator image of whether the document has been changed after initial loading.")]
         public Image ChangedImage
         {
-            get
-            {
-                return changedImage;
-            }
+            get => changedImage;
 
             set
             {
@@ -2016,17 +2013,44 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
         private void btPrevious_Click(object sender, EventArgs e)
         {
-            if (LeftFileIndex > 0)
-            {
-                LeftFileIndex--;
-            }
+            PreviousTab(false);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            NextTab(false);
+        }
+
+        /// <summary>
+        /// Moves to the previous tab from the currently active tab.
+        /// </summary>
+        /// <param name="roll">A value indicating whether to start from the last tab if there is no previous tab left.</param>
+        public void PreviousTab(bool roll)
+        {
+            if (LeftFileIndex > 0)
+            {
+                LeftFileIndex--;
+            }
+            else if (roll)
+            {
+                LeftFileIndex = DocumentsCount - 1;
+            }
+        }
+
+
+        /// <summary>
+        /// Moves to the next tab from the currently active tab.
+        /// </summary>
+        /// <param name="roll">A value indicating whether to start from the first tab if there is no next one left.</param>
+        public void NextTab(bool roll)
+        {
             if (LeftFileIndex < DocumentsCount - 1)
             {
                 LeftFileIndex++;
+            }
+            else if (roll)
+            {
+                LeftFileIndex = 0;
             }
         }
 

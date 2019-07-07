@@ -204,13 +204,13 @@
             this.sttcMain.NewFilenameStart = "new ";
             this.sttcMain.RightButtonTabActivation = true;
             this.sttcMain.RightButtonTabDragging = false;
-            this.sttcMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.sttcMain.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sttcMain.SavedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.SavedImage")));
             this.sttcMain.Size = new System.Drawing.Size(800, 426);
             this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
             this.sttcMain.TabWidth = 4;
-            this.sttcMain.UseBraceHighlight = false;
+            this.sttcMain.UseBraceHighlight = true;
             this.sttcMain.UseCodeIndenting = false;
             this.sttcMain.ZoomPercentageAll = 100;
             this.sttcMain.ZoomSynchronization = false;
