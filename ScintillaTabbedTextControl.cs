@@ -1799,6 +1799,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
             pnScrollingTabContainer.ResumeLayout(); // END: to avoid flickering while layout in progress..
 
             SetPreviousNextButtonStates(); // enable / disable the previous / next buttons..
+
+            // fix the invalid layout with this.. paradoxal, but with WinForms hopefully works..
+            pnScrollingTabContainer.PerformLayout();
         }
 
         /// <summary>
