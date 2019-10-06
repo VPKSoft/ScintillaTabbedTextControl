@@ -109,5 +109,10 @@ namespace TestApp
         {
             //MessageBox.Show(e.ScintillaTabbedDocument.FileName);
         }
+
+        private void MnuSetFileNameLongString_Click(object sender, System.EventArgs e)
+        {
+            sttcMain.CurrentDocument.FileTabButton.Text = "a very long useless file name";
+        }
     }
 }

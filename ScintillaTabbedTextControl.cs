@@ -615,6 +615,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 document.FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 document.FileTabButton.MouseDown -= FileTabButton_MouseDown;
+                // ReSharper disable once DelegateSubtraction
+                document.FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
 
                 Documents.RemoveAt(index);
 
@@ -630,6 +632,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 // tab closed will be raised non-dependent of the raiseEvent flag..
                 TabClosed?.Invoke(this, new TabClosedEventArgs {ScintillaTabbedDocument = document});
             }
+        }
+
+        // the file tab button is requesting re-layout of the control..
+        private void FileTabButton_RequestLayout(object sender, EventArgs e)
+        {
+            LayoutTabs();
         }
 
 
@@ -1134,6 +1142,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.FileTabButton.MouseUp += FileTabButton_MouseUp;
                     document.FileTabButton.MouseDown += FileTabButton_MouseDown;
                     document.FileTabButton.TabClosing += FileTabButton_TabClosing;
+                    document.FileTabButton.RequestLayout += FileTabButton_RequestLayout;
 
                     document.Scintilla.Tag = -1;
                     SuspendTextChangedEvents = true;
@@ -1238,6 +1247,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.FileTabButton.MouseUp += FileTabButton_MouseUp;
                 document.FileTabButton.MouseDown += FileTabButton_MouseDown;
                 document.FileTabButton.TabClosing += FileTabButton_TabClosing;
+                document.FileTabButton.RequestLayout += FileTabButton_RequestLayout;
 
                 document.Scintilla.Tag = -1;
 
@@ -1543,6 +1553,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[docIndex].FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 Documents[docIndex].FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 Documents[docIndex].FileTabButton.MouseDown -= FileTabButton_MouseDown;
+                // ReSharper disable once DelegateSubtraction
+                Documents[docIndex].FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
                 Documents.RemoveAt(docIndex);
                 
                 // in case there are documents still open and the left index has been set to a negative value
@@ -1737,7 +1749,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 // do the math for a tab which is active..
                 ((FileTabButton) pnScrollingTabContainer.Controls[i]).IsActive = i == leftFileIndex;
                 // ..and also set the tag to indicate it's order in the parent container..
-                (pnScrollingTabContainer.Controls[i] as FileTabButton).Tag = // save the index to the Tag..
+                ((FileTabButton) pnScrollingTabContainer.Controls[i]).Tag = // save the index to the Tag..
                     pnScrollingTabContainer.Controls.GetChildIndex(pnScrollingTabContainer.Controls[i]);
 
                 // if the index matches the active tab..
@@ -1819,14 +1831,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
 
             // determine if going forward is possible..
-            if (LeftFileIndex < DocumentsCount - 1)
-            {
-                btNext.Enabled = true;
-            }
-            else
-            {
-                btNext.Enabled = false;
-            }
+            btNext.Enabled = LeftFileIndex < DocumentsCount - 1;
 
             // determine if going backward is possible..
             if (LeftFileIndex > 0 && DocumentsCount > 0)
@@ -2083,6 +2088,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
                 Documents[i].FileTabButton.MouseUp -= FileTabButton_MouseUp;
                 Documents[i].FileTabButton.MouseDown -= FileTabButton_MouseDown;
+                // ReSharper disable once DelegateSubtraction
+                Documents[i].FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
             }
             // ..and clean up the cleanup event subscription..
             Disposed -= ScintillaTabbedTextControl_Disposed;

@@ -48,6 +48,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
+            this.mnuSetFileNameLongString = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +71,8 @@
             this.mnuOpen,
             this.mnuOpenWithDef,
             this.mnuCloseActiveTab,
-            this.mnuZoomTest});
+            this.mnuZoomTest,
+            this.mnuSetFileNameLongString});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "File";
@@ -78,35 +80,35 @@
             // mnuNew
             // 
             this.mnuNew.Name = "mnuNew";
-            this.mnuNew.Size = new System.Drawing.Size(275, 22);
+            this.mnuNew.Size = new System.Drawing.Size(276, 22);
             this.mnuNew.Text = "New";
             this.mnuNew.Click += new System.EventHandler(this.mnuNew_Click);
             // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(275, 22);
+            this.mnuOpen.Size = new System.Drawing.Size(276, 22);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
             // mnuOpenWithDef
             // 
             this.mnuOpenWithDef.Name = "mnuOpenWithDef";
-            this.mnuOpenWithDef.Size = new System.Drawing.Size(275, 22);
+            this.mnuOpenWithDef.Size = new System.Drawing.Size(276, 22);
             this.mnuOpenWithDef.Text = "Open with Notepad++ lexer definition";
             this.mnuOpenWithDef.Click += new System.EventHandler(this.MnuOpenWithDef_Click);
             // 
             // mnuCloseActiveTab
             // 
             this.mnuCloseActiveTab.Name = "mnuCloseActiveTab";
-            this.mnuCloseActiveTab.Size = new System.Drawing.Size(275, 22);
+            this.mnuCloseActiveTab.Size = new System.Drawing.Size(276, 22);
             this.mnuCloseActiveTab.Text = "Close active tab";
             this.mnuCloseActiveTab.Click += new System.EventHandler(this.mnuCloseActiveTab_Click);
             // 
             // mnuZoomTest
             // 
             this.mnuZoomTest.Name = "mnuZoomTest";
-            this.mnuZoomTest.Size = new System.Drawing.Size(275, 22);
+            this.mnuZoomTest.Size = new System.Drawing.Size(276, 22);
             this.mnuZoomTest.Text = "Zoom Test";
             this.mnuZoomTest.Click += new System.EventHandler(this.MnuZoomTest_Click);
             // 
@@ -180,12 +182,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(96, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(95, 26);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.testToolStripMenuItem.Text = "Test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -204,7 +206,6 @@
             this.sttcMain.NewFilenameStart = "new ";
             this.sttcMain.RightButtonTabActivation = true;
             this.sttcMain.RightButtonTabDragging = false;
-            this.sttcMain.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sttcMain.SavedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.SavedImage")));
             this.sttcMain.Size = new System.Drawing.Size(800, 426);
             this.sttcMain.SuspendTextChangedEvents = false;
@@ -216,6 +217,13 @@
             this.sttcMain.ZoomSynchronization = false;
             this.sttcMain.TabClosed += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnTabClosed(this.SttcMain_TabClosed);
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
+            // 
+            // mnuSetFileNameLongString
+            // 
+            this.mnuSetFileNameLongString.Name = "mnuSetFileNameLongString";
+            this.mnuSetFileNameLongString.Size = new System.Drawing.Size(276, 22);
+            this.mnuSetFileNameLongString.Text = "Set file name to a very long string";
+            this.mnuSetFileNameLongString.Click += new System.EventHandler(this.MnuSetFileNameLongString_Click);
             // 
             // FormMain
             // 
@@ -255,6 +263,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuZoom200;
         private System.Windows.Forms.ToolStripMenuItem mnuZoom400;
         private System.Windows.Forms.ToolStripMenuItem mnuZoomTest;
+        private System.Windows.Forms.ToolStripMenuItem mnuSetFileNameLongString;
     }
 }
 

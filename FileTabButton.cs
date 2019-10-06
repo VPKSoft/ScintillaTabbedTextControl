@@ -46,6 +46,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
             IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
         }
 
+        /// <summary>
+        /// The file tab button is requesting a re-layout of for the main control.
+        /// </summary>
+        public EventHandler<EventArgs> RequestLayout;
+
         #region PublicProperties
         /// <summary>
         /// Gets or sets the text associated with this control. 
@@ -54,14 +59,15 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("Gets or sets the text associated with this control.")]
         public new string Text
         {
-            get
-            {
-                return lbCaption.Text;
-            }
+            get => lbCaption.Text;
 
             set
             {
-                lbCaption.Text = value;
+                if (lbCaption.Text != value)
+                {
+                    lbCaption.Text = value;
+                    RequestLayout?.Invoke(this, new EventArgs());
+                }
             }
         }
 
@@ -71,26 +77,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(false)]
         public bool IsActive
         {
-            get
-            {
-                return BorderStyle == BorderStyle.None;
-            }
+            get => BorderStyle == BorderStyle.None;
 
             set
             {
-                if (value)
+                if (value && BorderStyle != BorderStyle.None ||
+                    !value && BorderStyle != BorderStyle.Fixed3D)
                 {
-                    BorderStyle = BorderStyle.None;
-                }
-                else
-                {
-                    BorderStyle = BorderStyle.Fixed3D;
+                    BorderStyle = value ? BorderStyle.None : BorderStyle.Fixed3D;
+                    RequestLayout?.Invoke(this, new EventArgs());
                 }
             }
         }
 
         // an indicator whether the document has been changed after it's initial loading..
-        private bool _IsSaved = false;
+        private bool isSaved;
 
         /// <summary>
         /// Gets or sets a value indicating whether the document has been changed after it's initial loading. An image is also set to indicate the state.
@@ -98,20 +99,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(false)]
         public bool IsSaved
         {
-            get
-            {
-                return _IsSaved;
-            }
+            get => isSaved;
 
             set
             {
-                _IsSaved = value;
-                pnSaveIndicator.BackgroundImage = value ? SavedImage : ChangedImage;
+                if (value != isSaved)
+                {
+                    isSaved = value;
+                    pnSaveIndicator.BackgroundImage = value ? SavedImage : ChangedImage;
+                    RequestLayout?.Invoke(this, new EventArgs());
+                }
             }
         }
 
         // an indicator image of whether the document hasn't been changed after initial loading..
-        private Image _SavedImage = Properties.Resources.Save;
+        private Image savedImage = Properties.Resources.Save;
 
         /// <summary>
         /// Gets or sets the indicator image of whether the document hasn't been changed after initial loading.
@@ -121,20 +123,21 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("An indicator image of whether the document hasn't been changed after initial loading.")]
         public Image SavedImage
         {
-            get
-            {
-                return _SavedImage;
-            }
+            get => savedImage;
 
             set
             {
-                _SavedImage = value;
-                IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
+                if (savedImage != value)
+                {
+                    savedImage = value;
+                    IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
+                    RequestLayout?.Invoke(this, new EventArgs());
+                }
             }
         }
 
         // an indicator image of whether the document has been changed after initial loading..
-        private Image _ChangedImage = Properties.Resources.Save_Red;
+        private Image changedImage = Properties.Resources.Save_Red;
 
         /// <summary>
         /// Gets or sets the indicator image of whether the document has been changed after initial loading.
@@ -144,15 +147,16 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Description("An indicator image of whether the document has been changed after initial loading.")]
         public Image ChangedImage
         {
-            get
-            {
-                return _ChangedImage;
-            }
+            get => changedImage;
 
             set
             {
-                _ChangedImage = value;
-                IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
+                if (changedImage != value)
+                {
+                    changedImage = value;
+                    IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
+                    RequestLayout?.Invoke(this, new EventArgs());
+                }
             }
         }
 
@@ -162,7 +166,19 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Appearance")]
         [Description("Gets or sets the close button image.")]
-        public Image CloseButtonImage { get => btClose.Image; set => btClose.Image = value; }
+        public Image CloseButtonImage 
+        { 
+            get => btClose.Image;
+
+            set
+            {
+                if (btClose.Image != value)
+                {
+                    btClose.Image = value;
+                    RequestLayout?.Invoke(this, new EventArgs());
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the shortcut menu associated with the control.
@@ -248,7 +264,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Behavior")]
         [Description("An event that occurs when close button of the tab was clicked.")]
-        public event OnTabClosing TabClosing = null;
+        public event OnTabClosing TabClosing;
         #endregion
 
         #region DelegatedEvents
@@ -278,7 +294,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             if (!sender.Equals(this))
             {
                 // recalculate the point to match the control..
-                Point delegatePoint = PointToClient(((sender as Control).PointToScreen(e.Location)));
+                Point delegatePoint = PointToClient((((Control) sender).PointToScreen(e.Location)));
 
                 // raise the "delegated" event..
                 OnMouseDown(new MouseEventArgs(e.Button, e.Clicks, delegatePoint.X, delegatePoint.Y, e.Delta));
@@ -295,7 +311,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             if (!sender.Equals(this))
             {
                 // recalculate the point to match the control..
-                Point delegatePoint = PointToClient(((sender as Control).PointToScreen(e.Location)));
+                Point delegatePoint = PointToClient((((Control) sender).PointToScreen(e.Location)));
 
                 // raise the "delegated" event..
                 OnMouseMove(new MouseEventArgs(e.Button, e.Clicks, delegatePoint.X, delegatePoint.Y, e.Delta));
@@ -312,7 +328,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             if (!sender.Equals(this))
             {
                 // recalculate the point to match the control..
-                Point delegatePoint = PointToClient(((sender as Control).PointToScreen(e.Location)));
+                Point delegatePoint = PointToClient((((Control) sender).PointToScreen(e.Location)));
 
                 // raise the "delegated" event..
                 OnMouseUp(new MouseEventArgs(e.Button, e.Clicks, delegatePoint.X, delegatePoint.Y, e.Delta));
