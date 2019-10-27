@@ -10,7 +10,7 @@
     <iconUrl>https://www.vpksoft.net/site/VPKSoft.ico</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Updated NuGet package dependencies to add InnoSetup script language for the control, Fixed the layout problem for the package.</releaseNotes>
+    <releaseNotes>Added possibility to detect whether a file is a XML file by it's contents via NuGet dependency update.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>
