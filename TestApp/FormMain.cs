@@ -111,12 +111,17 @@ namespace TestApp
 
         private void SttcMain_TabClosed(object sender, VPKSoft.ScintillaTabbedTextControl.TabClosedEventArgs e)
         {
-            //MessageBox.Show(e.ScintillaTabbedDocument.FileName);
+            sttcMain.ResumeLayout();
         }
 
         private void MnuSetFileNameLongString_Click(object sender, System.EventArgs e)
         {
             sttcMain.CurrentDocument.FileTabButton.Text = "a very long useless file name";
+        }
+
+        private void sttcMain_TabClosing(object sender, VPKSoft.ScintillaTabbedTextControl.TabClosingEventArgsExt e)
+        {
+            sttcMain.SuspendLayout();
         }
     }
 }

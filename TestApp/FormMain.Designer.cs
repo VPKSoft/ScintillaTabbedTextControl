@@ -37,6 +37,7 @@
             this.mnuOpenWithDef = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCloseActiveTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoomTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSetFileNameLongString = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom50 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoom70 = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +49,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sttcMain = new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl();
-            this.mnuSetFileNameLongString = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -111,6 +111,13 @@
             this.mnuZoomTest.Size = new System.Drawing.Size(276, 22);
             this.mnuZoomTest.Text = "Zoom Test";
             this.mnuZoomTest.Click += new System.EventHandler(this.MnuZoomTest_Click);
+            // 
+            // mnuSetFileNameLongString
+            // 
+            this.mnuSetFileNameLongString.Name = "mnuSetFileNameLongString";
+            this.mnuSetFileNameLongString.Size = new System.Drawing.Size(276, 22);
+            this.mnuSetFileNameLongString.Text = "Set file name to a very long string";
+            this.mnuSetFileNameLongString.Click += new System.EventHandler(this.MnuSetFileNameLongString_Click);
             // 
             // mnuZoom
             // 
@@ -215,15 +222,9 @@
             this.sttcMain.UseCodeIndenting = false;
             this.sttcMain.ZoomPercentageAll = 100;
             this.sttcMain.ZoomSynchronization = false;
+            this.sttcMain.TabClosing += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnTabClosing(this.sttcMain_TabClosing);
             this.sttcMain.TabClosed += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnTabClosed(this.SttcMain_TabClosed);
             this.sttcMain.AcceptNewFileName += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnAcceptNewFileName(this.sttcMain_AcceptNewFileName);
-            // 
-            // mnuSetFileNameLongString
-            // 
-            this.mnuSetFileNameLongString.Name = "mnuSetFileNameLongString";
-            this.mnuSetFileNameLongString.Size = new System.Drawing.Size(276, 22);
-            this.mnuSetFileNameLongString.Text = "Set file name to a very long string";
-            this.mnuSetFileNameLongString.Click += new System.EventHandler(this.MnuSetFileNameLongString_Click);
             // 
             // FormMain
             // 

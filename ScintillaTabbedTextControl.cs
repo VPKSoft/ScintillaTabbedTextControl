@@ -1771,7 +1771,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
 
             // only try to raise the TabActivated event if it's not suspended via the preventTabActivatedEvent flag..
-            if (!preventTabActivatedEvent)
+            if (!preventTabActivatedEvent && activeTabIndex >= 0 && activeTabIndex < DocumentsCount)
             {
                 // if subscribed, raise the TabActivated event and give it the active ScintillaTabbedDocument class instance
                 // as a parameter..
