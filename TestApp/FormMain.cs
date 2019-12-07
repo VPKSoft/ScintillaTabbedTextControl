@@ -41,10 +41,12 @@ namespace TestApp
         {
             if (odAnyFile.ShowDialog() == DialogResult.OK)
             {
+                sttcMain.SuspendLayout();
                 if (sttcMain.AddDocument(odAnyFile.FileName, -1))
                 {
                     sttcMain.LastAddedDocument.FileTabButton.ContextMenuStrip = contextMenuStrip1;
                 }                
+                sttcMain.ResumeLayout();
             }
         }
 
@@ -68,13 +70,15 @@ namespace TestApp
         {
             if (e.FileName == "new 2")
             {
-                e.Accept = false;
+                //e.Accept = false;
             }
         }
 
         private void mnuNew_Click(object sender, System.EventArgs e)
         {
+            sttcMain.SuspendLayout();
             sttcMain.AddNewDocument();
+            sttcMain.ResumeLayout();
         }
 
         private void MnuOpenWithDef_Click(object sender, System.EventArgs e)

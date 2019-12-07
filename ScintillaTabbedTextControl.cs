@@ -1156,7 +1156,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     SetBraceHighlights(document.Scintilla);
 
                     Documents.Add(document);
-
                     LayoutTabs(DocumentsCount - 1); // perform the layout..
 
                     // if the zoom is set to synchronize mode..
@@ -1509,8 +1508,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// Handles the TabClosing event of the FileTabButton control.
         /// </summary>
         /// <param name="sender">The sender of the event.</param>
-        /// <param name="e">The <see cref="TabClosingEventArgs"/> instance containing the event data.</param>
-        private void FileTabButton_TabClosing(object sender, TabClosingEventArgs e)
+        /// <param name="e">The <see cref="FileTabButton.TabClosingEventArgs"/> instance containing the event data.</param>
+        private void FileTabButton_TabClosing(object sender, FileTabButton.TabClosingEventArgs e)
         {
             int docIndex = 0;
             for (int i = 0; i < DocumentsCount; i++)
@@ -1679,6 +1678,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="index">An index for the first document to be shown on the tab panel.</param>
         private void LayoutTabs(int index = -1)
         {
+            if (layoutSuspended)
+            {
+                return;
+            }
+
             // don't accept a -1 index for nothing..
             leftFileIndex = index == -1 ? leftFileIndex : index;
 
@@ -2158,12 +2162,14 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                 if (changed && document.FileTabButton.IsActive)
                 {
-                    CaretPositionChanged?.Invoke(this, new ScintillaTabbedDocumentEventArgsExt() { ScintillaTabbedDocument = document });
+                    CaretPositionChanged?.Invoke(this,
+                        new ScintillaTabbedDocumentEventArgsExt() {ScintillaTabbedDocument = document});
                 }
 
                 if (selectionChanged && document.FileTabButton.IsActive)
                 {
-                    SelectionChanged?.Invoke(this, new ScintillaTabbedDocumentEventArgsExt() { ScintillaTabbedDocument = document });
+                    SelectionChanged?.Invoke(this,
+                        new ScintillaTabbedDocumentEventArgsExt() {ScintillaTabbedDocument = document});
                 }
 
                 // (C): https://github.com/jacobslusser/ScintillaNET/wiki/Brace-Matching
@@ -2208,6 +2214,42 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
         }
+
+        #endregion
+
+        #region Layout
+        // a flag indicating whether to perform layout on the tabs..
+        private bool layoutSuspended;
+
+        /// <summary>
+        /// Temporarily suspends the layout logic for the control.
+        /// </summary>
+        public new void SuspendLayout()
+        {
+            foreach (var document in Documents)
+            {
+                document.FileTabButton.SuspendLayout();
+            }
+
+            base.SuspendLayout();
+            layoutSuspended = true;
+        }
+
+        /// <summary>
+        /// Resumes usual layout logic.
+        /// </summary>
+        public new void ResumeLayout()
+        {
+            base.ResumeLayout();
+
+            foreach (var document in Documents)
+            {
+                document.FileTabButton.ResumeLayout();
+            }
+
+            layoutSuspended = false;
+            LayoutTabs();
+        }
+        #endregion
     }
-    #endregion
 }

@@ -52,6 +52,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public EventHandler<EventArgs> RequestLayout;
 
         #region PublicProperties
+
         /// <summary>
         /// Gets or sets the text associated with this control. 
         /// </summary>
@@ -66,7 +67,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (lbCaption.Text != value)
                 {
                     lbCaption.Text = value;
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -85,7 +86,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     !value && BorderStyle != BorderStyle.Fixed3D)
                 {
                     BorderStyle = value ? BorderStyle.None : BorderStyle.Fixed3D;
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -106,8 +107,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (value != isSaved)
                 {
                     isSaved = value;
-                    pnSaveIndicator.BackgroundImage = value ? SavedImage : ChangedImage;
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -130,8 +130,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (savedImage != value)
                 {
                     savedImage = value;
-                    IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -154,8 +153,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (changedImage != value)
                 {
                     changedImage = value;
-                    IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -166,8 +164,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Appearance")]
         [Description("Gets or sets the close button image.")]
-        public Image CloseButtonImage 
-        { 
+        public Image CloseButtonImage
+        {
             get => btClose.Image;
 
             set
@@ -175,7 +173,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 if (btClose.Image != value)
                 {
                     btClose.Image = value;
-                    RequestLayout?.Invoke(this, new EventArgs());
+                    InternalLayout();
                 }
             }
         }
@@ -248,9 +246,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 base.Cursor = value;
             }
         }
+
         #endregion
 
         #region PublicEvents
+
         /// <summary>
         /// A delegate for the TabClosing event.
         /// </summary>
@@ -265,9 +265,11 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Category("Behavior")]
         [Description("An event that occurs when close button of the tab was clicked.")]
         public event OnTabClosing TabClosing;
+
         #endregion
 
         #region DelegatedEvents
+
         /// <summary>
         /// Raises the Click event if any of the controls on this control is clicked.
         /// </summary>
@@ -335,19 +337,55 @@ namespace VPKSoft.ScintillaTabbedTextControl
             }
         }
         #endregion
-    }
 
-    #region TabClosingEventArgs
-    /// <summary>
-    /// A class which is passed to the TabClosing event as an argument.
-    /// </summary>
-    /// <seealso cref="System.EventArgs" />
-    public class TabClosingEventArgs : EventArgs
-    {
+        #region TabClosingEventArgs
+
         /// <summary>
-        /// Gets or sets a value indicating whether tab should be allowed to close.
+        /// A class which is passed to the TabClosing event as an argument.
         /// </summary>
-        public bool Cancel { get; set; } = false;
+        /// <seealso cref="System.EventArgs" />
+        public class TabClosingEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Gets or sets a value indicating whether tab should be allowed to close.
+            /// </summary>
+            public bool Cancel { get; set; } = false;
+        }
+        #endregion
+
+        #region Layout
+        // a flag indicating whether to perform layout on the tab..
+        private bool layoutSuspended;
+
+        /// <summary>
+        /// Temporarily suspends the layout logic for the control.
+        /// </summary>
+        public new void SuspendLayout()
+        {
+            base.SuspendLayout();
+            layoutSuspended = true;
+        }
+
+        /// <summary>
+        /// Resumes usual layout logic.
+        /// </summary>
+        public new void ResumeLayout()
+        {
+            base.ResumeLayout();
+            layoutSuspended = false;
+            RequestLayout?.Invoke(this, new EventArgs());
+        }
+
+        private void InternalLayout()
+        {
+            if (layoutSuspended)
+            {
+                return;
+            }
+
+            RequestLayout?.Invoke(this, new EventArgs());
+            pnSaveIndicator.BackgroundImage = isSaved ? SavedImage : ChangedImage;
+        }
+        #endregion
     }
-    #endregion
 }

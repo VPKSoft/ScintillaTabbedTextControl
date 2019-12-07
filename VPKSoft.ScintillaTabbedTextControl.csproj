@@ -99,6 +99,7 @@
     <None Include="packages.config" />
     <None Include="Resources\Playback.png" />
     <None Include="ScintillaTabbedTextControl.licenseheader" />
+    <None Include="VPKSoft.ScintillaTabbedTextControl.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Play.png" />
