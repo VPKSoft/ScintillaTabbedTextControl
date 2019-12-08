@@ -2226,13 +2226,40 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         public new void SuspendLayout()
         {
-            foreach (var document in Documents)
+            layoutSuspended = true;
+
+            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
             {
-                document.FileTabButton.SuspendLayout();
+                pnScrollingTabContainer.Controls[i].SuspendLayout();
+            }
+
+            for (int i = 0; i < tlpMain.Controls.Count; i++)
+            {
+                tlpMain.Controls[i].SuspendLayout();
             }
 
             base.SuspendLayout();
-            layoutSuspended = true;
+        }
+
+        /// <summary>
+        /// Resumes usual layout logic, optionally forcing an immediate layout of pending layout requests.
+        /// </summary>
+        /// <param name="performLayout"><see langword="true" /> to execute pending layout requests; otherwise, <see langword="false" />.</param>
+        public new void ResumeLayout(bool performLayout)
+        {
+            base.ResumeLayout(performLayout);
+            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
+            {
+                pnScrollingTabContainer.Controls[i].ResumeLayout(performLayout);
+            }
+
+            for (int i = 0; i < tlpMain.Controls.Count; i++)
+            {
+                tlpMain.Controls[i].ResumeLayout(performLayout);
+            }
+
+            layoutSuspended = false;
+            LayoutTabs();
         }
 
         /// <summary>
@@ -2242,14 +2269,20 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             base.ResumeLayout();
 
-            foreach (var document in Documents)
+            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
             {
-                document.FileTabButton.ResumeLayout();
+                pnScrollingTabContainer.Controls[i].ResumeLayout();
+            }
+
+            for (int i = 0; i < tlpMain.Controls.Count; i++)
+            {
+                tlpMain.Controls[i].ResumeLayout();
             }
 
             layoutSuspended = false;
             LayoutTabs();
         }
+
         #endregion
     }
 }

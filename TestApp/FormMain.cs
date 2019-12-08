@@ -111,7 +111,6 @@ namespace TestApp
 
         private void SttcMain_TabClosed(object sender, VPKSoft.ScintillaTabbedTextControl.TabClosedEventArgs e)
         {
-            sttcMain.ResumeLayout();
         }
 
         private void MnuSetFileNameLongString_Click(object sender, System.EventArgs e)
@@ -121,7 +120,6 @@ namespace TestApp
 
         private void sttcMain_TabClosing(object sender, VPKSoft.ScintillaTabbedTextControl.TabClosingEventArgsExt e)
         {
-            sttcMain.SuspendLayout();
         }
     }
 }
