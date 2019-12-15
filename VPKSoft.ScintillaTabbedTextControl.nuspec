@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added suspend/resume layout methods. Fixed index out of boundaries exception. Fixed the suspend layout addition.</releaseNotes>
+    <releaseNotes>Removed the useless layout logic.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>

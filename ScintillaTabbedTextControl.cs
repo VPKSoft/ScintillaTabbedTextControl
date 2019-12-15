@@ -1678,11 +1678,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// <param name="index">An index for the first document to be shown on the tab panel.</param>
         private void LayoutTabs(int index = -1)
         {
-            if (layoutSuspended)
-            {
-                return;
-            }
-
             // don't accept a -1 index for nothing..
             leftFileIndex = index == -1 ? leftFileIndex : index;
 
@@ -2214,75 +2209,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
         }
-
-        #endregion
-
-        #region Layout
-        // a flag indicating whether to perform layout on the tabs..
-        private bool layoutSuspended;
-
-        /// <summary>
-        /// Temporarily suspends the layout logic for the control.
-        /// </summary>
-        public new void SuspendLayout()
-        {
-            layoutSuspended = true;
-
-            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
-            {
-                pnScrollingTabContainer.Controls[i].SuspendLayout();
-            }
-
-            for (int i = 0; i < tlpMain.Controls.Count; i++)
-            {
-                tlpMain.Controls[i].SuspendLayout();
-            }
-
-            base.SuspendLayout();
-        }
-
-        /// <summary>
-        /// Resumes usual layout logic, optionally forcing an immediate layout of pending layout requests.
-        /// </summary>
-        /// <param name="performLayout"><see langword="true" /> to execute pending layout requests; otherwise, <see langword="false" />.</param>
-        public new void ResumeLayout(bool performLayout)
-        {
-            base.ResumeLayout(performLayout);
-            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
-            {
-                pnScrollingTabContainer.Controls[i].ResumeLayout(performLayout);
-            }
-
-            for (int i = 0; i < tlpMain.Controls.Count; i++)
-            {
-                tlpMain.Controls[i].ResumeLayout(performLayout);
-            }
-
-            layoutSuspended = false;
-            LayoutTabs();
-        }
-
-        /// <summary>
-        /// Resumes usual layout logic.
-        /// </summary>
-        public new void ResumeLayout()
-        {
-            base.ResumeLayout();
-
-            for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
-            {
-                pnScrollingTabContainer.Controls[i].ResumeLayout();
-            }
-
-            for (int i = 0; i < tlpMain.Controls.Count; i++)
-            {
-                tlpMain.Controls[i].ResumeLayout();
-            }
-
-            layoutSuspended = false;
-            LayoutTabs();
-        }
-
         #endregion
     }
 }
