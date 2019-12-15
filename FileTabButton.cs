@@ -354,35 +354,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
         #endregion
 
         #region Layout
-        // a flag indicating whether to perform layout on the tab..
-        private bool layoutSuspended;
-
-        /// <summary>
-        /// Temporarily suspends the layout logic for the control.
-        /// </summary>
-        public new void SuspendLayout()
-        {
-            base.SuspendLayout();
-            layoutSuspended = true;
-        }
-
-        /// <summary>
-        /// Resumes usual layout logic.
-        /// </summary>
-        public new void ResumeLayout()
-        {
-            base.ResumeLayout();
-            layoutSuspended = false;
-            RequestLayout?.Invoke(this, new EventArgs());
-        }
-
         private void InternalLayout()
         {
-            if (layoutSuspended)
-            {
-                return;
-            }
-
             RequestLayout?.Invoke(this, new EventArgs());
             pnSaveIndicator.BackgroundImage = isSaved ? SavedImage : ChangedImage;
         }
