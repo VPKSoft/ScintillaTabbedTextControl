@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Removed the useless layout logic r2.</releaseNotes>
+    <releaseNotes>NuGet dependency update.</releaseNotes>
     <copyright>Copyright © 2019 VPKSoft</copyright>
     <tags>wrapper scintilla ScintillaNET winforms control</tags>
     <license type="expression">MIT</license>
