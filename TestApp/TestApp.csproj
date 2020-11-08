@@ -18,7 +18,13 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="unofficial.ScintillaNET" Version="3.6.5" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.dll" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.exp" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.lib" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="unofficial.ScintillaNET" Version="3.6.51" />
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +67,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <ProjectReference Include="..\ScintillaTabbedTextControl\VPKSoft.ScintillaTabbedTextControl.csproj" />
+    <ProjectReference Include="..\ScintillaTabbedTextControl.SUO\VPKSoft.ScintillaTabbedTextControl.SUO.csproj" />
     <Compile Update="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

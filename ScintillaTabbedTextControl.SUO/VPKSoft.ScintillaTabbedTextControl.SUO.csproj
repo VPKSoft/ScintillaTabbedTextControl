@@ -11,13 +11,15 @@
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <AssemblyName>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyName>
-    <RootNamespace>VPKSoft.ScintillaTabbedTextControl.SUO</RootNamespace>
+    <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab unofficial</PackageTags>
     <PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -26,40 +28,41 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\ScintillaTabbedTextControl\EventArgClasses.cs" Link="EventArgClasses.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\NoFocusButton.cs" Link="NoFocusButton.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\NoFocusButton.Designer.cs" Link="NoFocusButton.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\Properties\Resources.Designer.cs" Link="Properties\Resources.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.cs" Link="ScintillaTabbedTextControl.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.Designer.cs" Link="ScintillaTabbedTextControl.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\ScintillaTabbedTextControl\Resources\Cancel.png" Link="Resources\Cancel.png" />
-    <Content Include="..\ScintillaTabbedTextControl\Resources\New document.png" Link="Resources\New document.png" />
-    <Content Include="..\ScintillaTabbedTextControl\Resources\Play.png" Link="Resources\Play.png" />
-    <Content Include="..\ScintillaTabbedTextControl\Resources\Playback.png" Link="Resources\Playback.png" />
-    <Content Include="..\ScintillaTabbedTextControl\Resources\Save.png" Link="Resources\Save.png" />
-    <Content Include="..\ScintillaTabbedTextControl\Resources\Save_Red.png" Link="Resources\Save_Red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
-    <EmbeddedResource Include="..\ScintillaTabbedTextControl\Properties\Resources.resx" Link="Properties\Resources.resx" />
-    <EmbeddedResource Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.resx" Link="ScintillaTabbedTextControl.resx" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\License.txt" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.dll" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.exp" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.lib" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.pdb" />
+    <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\version.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="unofficial.ScintillaNET" Version="3.6.51" />
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="FileTabButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="FileTabButton.Designer.cs">
+      <DependentUpon>FileTabButton.cs</DependentUpon>
+    </Compile>
+    <Compile Update="NoFocusButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="NoFocusButton.Designer.cs">
+      <DependentUpon>NoFocusButton.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="FileTabButton.resx">
+      <DependentUpon>FileTabButton.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileTabButton.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\vpksoft_logo.png">

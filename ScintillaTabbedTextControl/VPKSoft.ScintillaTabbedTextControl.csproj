@@ -6,12 +6,12 @@
     <Product>VPKSoft.ScintillaTabbedTextControl</Product>
     <Description>A tabbed control for ScintillaNET to display multiple documents.</Description>
     <Copyright>Copyright © VPKSoft 2020</Copyright>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
     <DocumentationFile>bin\$(Configuration)\VPKSoft.ScintillaTabbedTextControl.xml</DocumentationFile>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>VPKSoft</Authors>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
