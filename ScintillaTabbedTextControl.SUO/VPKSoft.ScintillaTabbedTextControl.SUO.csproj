@@ -36,6 +36,13 @@
     <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\version.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -44,12 +51,6 @@
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="FileTabButton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="FileTabButton.Designer.cs">
-      <DependentUpon>FileTabButton.cs</DependentUpon>
-    </Compile>
     <Compile Update="NoFocusButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -63,11 +64,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="FileTabButton.resx">
-      <DependentUpon>FileTabButton.cs</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>FileTabButton.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
