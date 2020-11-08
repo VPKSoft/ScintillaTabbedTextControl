@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net47</TargetFramework>
+    <AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyTitle>
+    <Product>VPKSoft.ScintillaTabbedTextControl.SUO</Product>
+    <Copyright>Copyright © VPKSoft 2020</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Authors>VPKSoft</Authors>
+    <Description>A tabbed control for ScintillaNET to display multiple documents.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
+    <PackageIcon>vpksoft_logo.png</PackageIcon>
+    <Version>1.0.6</Version>
+    <AssemblyName>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyName>
+    <RootNamespace>VPKSoft.ScintillaTabbedTextControl.SUO</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab unofficial</PackageTags>
+    <PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\ScintillaTabbedTextControl\EventArgClasses.cs" Link="EventArgClasses.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\NoFocusButton.cs" Link="NoFocusButton.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\NoFocusButton.Designer.cs" Link="NoFocusButton.Designer.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\Properties\Resources.Designer.cs" Link="Properties\Resources.Designer.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.cs" Link="ScintillaTabbedTextControl.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.Designer.cs" Link="ScintillaTabbedTextControl.Designer.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\ScintillaTabbedTextControl\Resources\Cancel.png" Link="Resources\Cancel.png" />
+    <Content Include="..\ScintillaTabbedTextControl\Resources\New document.png" Link="Resources\New document.png" />
+    <Content Include="..\ScintillaTabbedTextControl\Resources\Play.png" Link="Resources\Play.png" />
+    <Content Include="..\ScintillaTabbedTextControl\Resources\Playback.png" Link="Resources\Playback.png" />
+    <Content Include="..\ScintillaTabbedTextControl\Resources\Save.png" Link="Resources\Save.png" />
+    <Content Include="..\ScintillaTabbedTextControl\Resources\Save_Red.png" Link="Resources\Save_Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
+    <EmbeddedResource Include="..\ScintillaTabbedTextControl\Properties\Resources.resx" Link="Properties\Resources.resx" />
+    <EmbeddedResource Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.resx" Link="ScintillaTabbedTextControl.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="unofficial.ScintillaNET" Version="3.6.51" />
+    <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\vpksoft_logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
