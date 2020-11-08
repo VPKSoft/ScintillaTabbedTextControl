@@ -36,7 +36,6 @@
             this.btNext = new VPKSoft.ScintillaTabbedTextControl.NoFocusButton();
             this.pnTabContainer = new System.Windows.Forms.Panel();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.scintillaAutoComplete = new AutocompleteMenuNS.AutocompleteMenu();
             this.tlpTopContainer.SuspendLayout();
             this.tlpNavigationButtons.SuspendLayout();
             this.pnTabContainer.SuspendLayout();
@@ -129,14 +128,6 @@
             this.tlpMain.Size = new System.Drawing.Size(800, 450);
             this.tlpMain.TabIndex = 2;
             // 
-            // scintillaAutoComplete
-            // 
-            this.scintillaAutoComplete.Colors = ((AutocompleteMenuNS.Colors)(resources.GetObject("scintillaAutoComplete.Colors")));
-            this.scintillaAutoComplete.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scintillaAutoComplete.ImageList = null;
-            this.scintillaAutoComplete.Items = new string[0];
-            this.scintillaAutoComplete.TargetControlWrapper = null;
-            // 
             // ScintillaTabbedTextControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,6 +156,5 @@
         private NoFocusButton btNext;
         private System.Windows.Forms.Panel pnTabContainer;
         private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private AutocompleteMenuNS.AutocompleteMenu scintillaAutoComplete;
     }
 }

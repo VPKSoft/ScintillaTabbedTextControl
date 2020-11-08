@@ -55,15 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgClasses.cs" />
-    <Compile Include="FileTabButton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="FileTabButton.cs" />
     <Compile Include="FileTabButton.Designer.cs">
       <DependentUpon>FileTabButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="NoFocusButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="NoFocusButton.cs" />
     <Compile Include="NoFocusButton.Designer.cs">
       <DependentUpon>NoFocusButton.cs</DependentUpon>
     </Compile>
@@ -73,9 +69,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ScintillaTabbedDocument.cs" />
-    <Compile Include="ScintillaTabbedTextControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="ScintillaTabbedTextControl.cs" />
     <Compile Include="ScintillaTabbedTextControl.Designer.cs">
       <DependentUpon>ScintillaTabbedTextControl.cs</DependentUpon>
     </Compile>

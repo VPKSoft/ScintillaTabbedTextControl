@@ -1730,8 +1730,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     previousDocument = Documents[i].Scintilla;
                     previousDocument.Focus();
 
-                    // TODO::Make the auto-complete to work..
-                    scintillaAutoComplete.TargetControlWrapper = new ScintillaWrapper(Documents[i].Scintilla);
                     /* Make this work via a XML definition file
                     string[] snippets = { "Whatever", "Bla", "Another_bla", "HEY" };
 
