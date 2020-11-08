@@ -15,8 +15,8 @@
     
      steps:
        - checkout
-       - run: msbuild ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj.csproj /t:restore
-       - run: msbuild ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj.csproj /p:Configuration=Release
+       - run: msbuild ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj /t:restore
+       - run: msbuild ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj /p:Configuration=Release
        - run: msbuild ScintillaTabbedTextControl.SUO/VPKSoft.ScintillaTabbedTextControl.SUO.csproj /t:restore
        - run: msbuild ScintillaTabbedTextControl.SUO/VPKSoft.ScintillaTabbedTextControl.SUO.csproj /p:Configuration=Release
 # No need for bleeding edge       - run: dotnet tool install --global PowerShell
