@@ -39,10 +39,13 @@
     <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
     <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
     <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.cs" Link="ScintillaTabbedTextControl.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.Designer.cs" Link="ScintillaTabbedTextControl.Designer.cs" />
     <Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
+    <EmbeddedResource Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.resx" Link="ScintillaTabbedTextControl.resx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
