@@ -39,6 +39,7 @@
     <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
     <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
     <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
+    <Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
