@@ -93,6 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jacobslusser.ScintillaNET" Version="3.6.3" />
-    <PackageReference Include="VPKSoft.ScintillaLexers" Version="1.1.1" />
+    <PackageReference Include="VPKSoft.ScintillaLexers" Version="1.1.2" />
   </ItemGroup>
 </Project>
