@@ -184,18 +184,18 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Behavior")]
         [Description("Gets or sets the shortcut menu associated with the control.")]
-        public override ContextMenu ContextMenu
+        public ContextMenuStrip ContextMenu
         {
-            get => base.ContextMenu;
+            get => base.ContextMenuStrip;
 
             set
             {
                 // set the context menu to all child controls and for the base control..
-                btClose.ContextMenu = value;
-                pnSaveIndicator.ContextMenu = value;
-                tlpMain.ContextMenu = value;
-                lbCaption.ContextMenu = value;
-                base.ContextMenu = value;
+                btClose.ContextMenuStrip = value;
+                pnSaveIndicator.ContextMenuStrip = value;
+                tlpMain.ContextMenuStrip = value;
+                lbCaption.ContextMenuStrip = value;
+                base.ContextMenuStrip = value;
             }
         }
 
