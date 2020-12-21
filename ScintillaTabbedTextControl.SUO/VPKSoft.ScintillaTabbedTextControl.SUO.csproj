@@ -11,15 +11,15 @@
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
     <AssemblyName>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyName>
     <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab unofficial</PackageTags>
     <PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
-    <AssemblyVersion>1.0.10.0</AssemblyVersion>
-    <FileVersion>1.0.10.0</FileVersion>
+    <AssemblyVersion>1.0.11.0</AssemblyVersion>
+    <FileVersion>1.0.11.0</FileVersion>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
