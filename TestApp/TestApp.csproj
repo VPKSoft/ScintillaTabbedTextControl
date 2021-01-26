@@ -24,7 +24,7 @@
     <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.pdb" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.0" />
+    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.1" />
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.4" />
   </ItemGroup>
   <ItemGroup>
