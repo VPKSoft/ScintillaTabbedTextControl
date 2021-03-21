@@ -6,12 +6,12 @@
     <Product>VPKSoft.ScintillaTabbedTextControl</Product>
     <Description>A tabbed control for ScintillaNET to display multiple documents.</Description>
     <Copyright>Copyright © VPKSoft 2021</Copyright>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.1.3.0</AssemblyVersion>
+    <FileVersion>1.1.3.0</FileVersion>
     <DocumentationFile>bin\$(Configuration)\VPKSoft.ScintillaTabbedTextControl.xml</DocumentationFile>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>VPKSoft</Authors>
-    <Version>1.1.1</Version>
+    <Version>1.1.3</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
@@ -21,6 +21,7 @@
     <PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <UserSecretsId>eb070337-a19d-407a-87cb-90420745c88e</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,6 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jacobslusser.ScintillaNET" Version="3.6.3" />
-    <PackageReference Include="VPKSoft.ScintillaLexers" Version="1.1.6" />
+    <PackageReference Include="VPKSoft.ScintillaLexers" Version="1.1.7" />
   </ItemGroup>
 </Project>
