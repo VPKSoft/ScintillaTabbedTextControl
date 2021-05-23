@@ -25,31 +25,38 @@ SOFTWARE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace VPKSoft.ScintillaTabbedTextControl
 {
     /// <summary>
-    /// A user control for a non-focusable button.
-    /// Implements the <see cref="System.Windows.Forms.Button" />
+    /// An enumeration for the 
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.Button" />
-    public partial class NoFocusButton : Button
+    [Flags]
+    public enum WheelScrollButtons
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NoFocusButton"/> class.
+        /// The wheel scrolling is disabled.
         /// </summary>
-        public NoFocusButton()
-        {
-            InitializeComponent();
-            SetStyle(ControlStyles.Selectable, false);
-        }
+        None = 0,
+
+        /// <summary>
+        /// The control button is disabled.
+        /// </summary>
+        Control = 1,
+
+        /// <summary>
+        /// The shift button is disabled.
+        /// </summary>
+        Shift = 2,
+
+        /// <summary>
+        /// The alt button is disabled.
+        /// </summary>
+        Alt = 4,
+
+        /// <summary>
+        /// No checking for the modifier keys is done. The wheel scrolling is enough.
+        /// </summary>
+        Any = Control | Alt | Shift,
     }
 }

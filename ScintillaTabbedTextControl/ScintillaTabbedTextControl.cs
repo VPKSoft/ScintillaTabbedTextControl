@@ -2,7 +2,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Petteri Kautonen
+Copyright(c) 2019 Petteri Kautonen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
             tlpTopContainer.BorderStyle = BorderStyle.Fixed3D; // this is the not "active" state..
 
             // subscribe an event to unsubscribe all the other event subscriptions on dispose..
-            Disposed += ScintillaTabbedTextControl_Disposed; 
+            Disposed += ScintillaTabbedTextControl_Disposed;
+            MouseWheel += FileTabButton_MouseWheel;
+            Leave += ScintillaTabbedTextControl_Leave;
         }
 
         #region PublicProperties
@@ -72,6 +74,22 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public bool RightButtonTabActivation { get; set; } = false;
 
         private RightToLeft rightToLeft = RightToLeft.No;
+
+        /// <summary>
+        /// Gets or sets a value of which modifier key or keys allow mouse wheel scrolling of the active tab.
+        /// </summary>
+        [Browsable(true)]
+        [Description("A value of which modifier key or keys allow mouse wheel scrolling of the active tab.")]
+        [Category("Behaviour")]
+        public WheelScrollButtons WheelScroll { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep as many tabs as possible visible without stepping. 
+        /// </summary>
+        [Browsable(true)]
+        [Description("A value indicating whether to keep as many tabs as possible visible without stepping.")]
+        [Category("Behaviour")]
+        public bool SeamlessScroll { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether control's elements are aligned to support locales using right-to-left fonts.
@@ -598,25 +616,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     leftFileIndex--;
                 }
 
-                // do some cleanup (unsubscribe the events)..
-                document.Scintilla.TextChanged -= Scintilla_TextChanged;
-                document.Scintilla.UpdateUI -= Scintilla_UpdateUI;
-                document.Scintilla.MouseDown -= Scintilla_MouseDown;
-                document.Scintilla.MouseUp -= Scintilla_MouseUp;
-                document.Scintilla.MouseMove -= Scintilla_MouseMove;
-                document.Scintilla.MouseWheel -= Scintilla_MouseWheel;
-                document.Scintilla.MouseClick -= Scintilla_MouseClick;
-                document.Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
-                document.Scintilla.InsertCheck -= Scintilla_InsertCheck;
-                document.Scintilla.CharAdded -= Scintilla_CharAdded;
-                document.Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-
-                document.FileTabButton.Click -= FileTabButton_Click;
-                document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
-                document.FileTabButton.MouseUp -= FileTabButton_MouseUp;
-                document.FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                // ReSharper disable once DelegateSubtraction
-                document.FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
+                DetachDocumentEventHandlers(document);
 
                 Documents.RemoveAt(index);
 
@@ -640,6 +640,31 @@ namespace VPKSoft.ScintillaTabbedTextControl
             LayoutTabs();
         }
 
+        private void FileTabButton_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (WheelScroll == WheelScrollButtons.None)
+            {
+                return;
+            }
+
+            if (WheelScroll == WheelScrollButtons.Any ||
+                WheelScroll.HasFlag(WheelScrollButtons.Control) ? ControlButtonDown :
+                !ControlButtonDown &&
+                WheelScroll.HasFlag(WheelScrollButtons.Shift) ? ShiftButtonDown :
+                !ShiftButtonDown &&
+                WheelScroll.HasFlag(WheelScrollButtons.Alt) ? AltButtonDown : !AltButtonDown)
+            {
+
+                if (e.Delta >= 0 && LeftFileIndex < DocumentsCount - 1)
+                {
+                    LeftFileIndex++;
+                }
+                else if (e.Delta < 0 && LeftFileIndex > 0)
+                {
+                    LeftFileIndex--;
+                }
+            }
+        }
 
         // a counter for naming new tabs, hopefully ulong.MaxValue will be enough (18446744073709551615)..
         private ulong docNameCounter;
@@ -1125,24 +1150,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     document.FileTabButton.Text = Path.GetFileName(fileName);
 
                     // scintilla events..
-                    document.Scintilla.TextChanged += Scintilla_TextChanged;
-                    document.Scintilla.UpdateUI += Scintilla_UpdateUI;
-                    document.Scintilla.MouseDown += Scintilla_MouseDown;
-                    document.Scintilla.MouseUp += Scintilla_MouseUp;
-                    document.Scintilla.MouseMove += Scintilla_MouseMove;
-                    document.Scintilla.MouseWheel += Scintilla_MouseWheel;
-                    document.Scintilla.MouseClick += Scintilla_MouseClick;
-                    document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
-                    document.Scintilla.InsertCheck += Scintilla_InsertCheck;
-                    document.Scintilla.CharAdded += Scintilla_CharAdded;
-                    document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
-
-                    document.FileTabButton.Click += FileTabButton_Click;
-                    document.FileTabButton.MouseMove += FileTabButton_MouseMove;
-                    document.FileTabButton.MouseUp += FileTabButton_MouseUp;
-                    document.FileTabButton.MouseDown += FileTabButton_MouseDown;
-                    document.FileTabButton.TabClosing += FileTabButton_TabClosing;
-                    document.FileTabButton.RequestLayout += FileTabButton_RequestLayout;
+                    AttachDocumentEventHandlers(document);
 
                     document.Scintilla.Tag = -1;
                     SuspendTextChangedEvents = true;
@@ -1229,24 +1237,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 document.FileTabButton.Text = fileName;
 
                 // scintilla events..
-                document.Scintilla.TextChanged += Scintilla_TextChanged;
-                document.Scintilla.UpdateUI += Scintilla_UpdateUI;
-                document.Scintilla.MouseDown += Scintilla_MouseDown;
-                document.Scintilla.MouseUp += Scintilla_MouseUp;
-                document.Scintilla.MouseMove += Scintilla_MouseMove;
-                document.Scintilla.MouseWheel += Scintilla_MouseWheel;
-                document.Scintilla.MouseClick += Scintilla_MouseClick;
-                document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
-                document.Scintilla.InsertCheck += Scintilla_InsertCheck;
-                document.Scintilla.CharAdded += Scintilla_CharAdded;
-                document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
-
-                document.FileTabButton.Click += FileTabButton_Click;
-                document.FileTabButton.MouseMove += FileTabButton_MouseMove;
-                document.FileTabButton.MouseUp += FileTabButton_MouseUp;
-                document.FileTabButton.MouseDown += FileTabButton_MouseDown;
-                document.FileTabButton.TabClosing += FileTabButton_TabClosing;
-                document.FileTabButton.RequestLayout += FileTabButton_RequestLayout;
+                AttachDocumentEventHandlers(document);
 
                 document.Scintilla.Tag = -1;
 
@@ -1536,24 +1527,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 var closedDocument = Documents[docIndex];
 
                 // do some cleanup (unsubscribe the events)..
-                Documents[docIndex].Scintilla.TextChanged -= Scintilla_TextChanged;
-                Documents[docIndex].Scintilla.UpdateUI -= Scintilla_UpdateUI;
-                Documents[docIndex].Scintilla.MouseDown -= Scintilla_MouseDown;
-                Documents[docIndex].Scintilla.MouseUp -= Scintilla_MouseUp;
-                Documents[docIndex].Scintilla.MouseMove -= Scintilla_MouseMove;
-                Documents[docIndex].Scintilla.MouseWheel -= Scintilla_MouseWheel;
-                Documents[docIndex].Scintilla.MouseClick -= Scintilla_MouseClick;
-                Documents[docIndex].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
-                Documents[docIndex].Scintilla.InsertCheck -= Scintilla_InsertCheck;
-                Documents[docIndex].Scintilla.CharAdded -= Scintilla_CharAdded;
-                Documents[docIndex].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-
-                Documents[docIndex].FileTabButton.Click -= FileTabButton_Click;
-                Documents[docIndex].FileTabButton.MouseMove -= FileTabButton_MouseMove;
-                Documents[docIndex].FileTabButton.MouseUp -= FileTabButton_MouseUp;
-                Documents[docIndex].FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                // ReSharper disable once DelegateSubtraction
-                Documents[docIndex].FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
+                DetachDocumentEventHandlers(Documents[docIndex]);
                 Documents.RemoveAt(docIndex);
                 
                 // in case there are documents still open and the left index has been set to a negative value
@@ -1625,6 +1599,77 @@ namespace VPKSoft.ScintillaTabbedTextControl
         #endregion
 
         #region InternalHelpers
+
+        internal void AttachDocumentEventHandlers(ScintillaTabbedDocument document)
+        {
+            // do some cleanup (unsubscribe the events)..
+            document.Scintilla.TextChanged += Scintilla_TextChanged;
+            document.Scintilla.UpdateUI += Scintilla_UpdateUI;
+            document.Scintilla.MouseDown += Scintilla_MouseDown;
+            document.Scintilla.MouseUp += Scintilla_MouseUp;
+            document.Scintilla.MouseMove += Scintilla_MouseMove;
+            document.Scintilla.MouseWheel += Scintilla_MouseWheel;
+            document.Scintilla.MouseClick += Scintilla_MouseClick;
+            document.Scintilla.MouseDoubleClick += Scintilla_MouseDoubleClick;
+            document.Scintilla.InsertCheck += Scintilla_InsertCheck;
+            document.Scintilla.CharAdded += Scintilla_CharAdded;
+            document.Scintilla.ZoomChanged += Scintilla_ZoomChanged;
+            document.Scintilla.KeyDown += Scintilla_KeyUpDown;
+            document.Scintilla.KeyUp += Scintilla_KeyUpDown;
+
+            document.FileTabButton.Click += FileTabButton_Click;
+            document.FileTabButton.MouseMove += FileTabButton_MouseMove;
+            document.FileTabButton.MouseUp += FileTabButton_MouseUp;
+            document.FileTabButton.MouseDown += FileTabButton_MouseDown;
+            // ReSharper disable once DelegateSubtraction
+            document.FileTabButton.RequestLayout += FileTabButton_RequestLayout;
+            document.FileTabButton.TabClosing += FileTabButton_TabClosing;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Control modifier key is down.
+        /// </summary>
+        /// <value><c>true</c> if the Control modifier key is down; otherwise, <c>false</c>.</value>
+        private bool ControlButtonDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the ALT modifier key is down.
+        /// </summary>
+        /// <value><c>true</c> if the ALT modifier key is down; otherwise, <c>false</c>.</value>
+        private bool AltButtonDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Shift modifier key is down.
+        /// </summary>
+        /// <value><c>true</c> if the Shift modifier key is down; otherwise, <c>false</c>.</value>
+        private bool ShiftButtonDown { get; set; }
+
+        internal void DetachDocumentEventHandlers(ScintillaTabbedDocument document)
+        {
+            // do some cleanup (unsubscribe the events)..
+            document.Scintilla.TextChanged -= Scintilla_TextChanged;
+            document.Scintilla.UpdateUI -= Scintilla_UpdateUI;
+            document.Scintilla.MouseDown -= Scintilla_MouseDown;
+            document.Scintilla.MouseUp -= Scintilla_MouseUp;
+            document.Scintilla.MouseMove -= Scintilla_MouseMove;
+            document.Scintilla.MouseWheel -= Scintilla_MouseWheel;
+            document.Scintilla.MouseClick -= Scintilla_MouseClick;
+            document.Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
+            document.Scintilla.InsertCheck -= Scintilla_InsertCheck;
+            document.Scintilla.CharAdded -= Scintilla_CharAdded;
+            document.Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
+            document.Scintilla.KeyDown -= Scintilla_KeyUpDown;
+            document.Scintilla.KeyUp -= Scintilla_KeyUpDown;
+
+            document.FileTabButton.Click -= FileTabButton_Click;
+            document.FileTabButton.MouseMove -= FileTabButton_MouseMove;
+            document.FileTabButton.MouseUp -= FileTabButton_MouseUp;
+            document.FileTabButton.MouseDown -= FileTabButton_MouseDown;
+            // ReSharper disable once DelegateSubtraction
+            document.FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
+            document.FileTabButton.TabClosing -= FileTabButton_TabClosing;
+        }
+
         /// <summary>
         /// Switches two tabs with each other.
         /// </summary>
@@ -1672,6 +1717,24 @@ namespace VPKSoft.ScintillaTabbedTextControl
         /// </summary>
         private bool preventTabActivatedEvent;
 
+        private bool TabVisible(int leftAtIndex, out int controlLeft, out Rectangle clientRect)
+        {
+            leftAtIndex = leftAtIndex < 0 ? 0 : leftAtIndex;
+
+            // no margin so no need for ClientSize..
+            clientRect = new Rectangle(0, 0, pnTabContainer.Size.Width, pnTabContainer.Size.Height);
+
+            // get the left coordinate of the "tab"..
+            controlLeft = pnScrollingTabContainer.Left + leftAtIndex;
+
+            // get the right coordinate of the "tab"..
+            int controlRight = pnScrollingTabContainer.Left + leftAtIndex +
+                               (leftFileIndex == -1 ? 0 : pnScrollingTabContainer.Controls[leftFileIndex].Width);
+            
+            // check if the "tab" is visible..
+            return clientRect.Contains(controlLeft, 0) && clientRect.Contains(controlRight, 0);
+        }
+
         /// <summary>
         /// Perform layout for the tabbed documents on the control.
         /// </summary>
@@ -1712,6 +1775,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
             pnScrollingTabContainer.SuspendLayout(); // to avoid flickering while layout in progress..
 
+            var activeTabWidth = 0;
+
             // loop through the controls in the collection..
             for (int i = 0; i < pnScrollingTabContainer.Controls.Count; i++)
             {
@@ -1729,18 +1794,6 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     tlpMain.Controls.Add(Documents[i].Scintilla, 0, 1);
                     previousDocument = Documents[i].Scintilla;
                     previousDocument.Focus();
-
-                    /* Make this work via a XML definition file
-                    string[] snippets = { "Whatever", "Bla", "Another_bla", "HEY" };
-
-                        var items = new List<AutocompleteItem>();
-
-                        foreach (var item in snippets)
-                            items.Add(new SnippetAutocompleteItem(item) { ImageIndex = 1 });
-
-                    //set as autocomplete source
-                    scintillaAutoComplete.SetAutocompleteItems(items);
-                    */
                 }
 
                 // do the math for a tab which is active..
@@ -1757,6 +1810,9 @@ namespace VPKSoft.ScintillaTabbedTextControl
 
                     // ..also save the index of the active tab..
                     activeTabIndex = i;
+
+                    // ..save the active tab width..
+                    activeTabWidth = pnScrollingTabContainer.Controls[i].Width;
                 }
 
                 // increase the left counter..
@@ -1776,18 +1832,8 @@ namespace VPKSoft.ScintillaTabbedTextControl
             pnScrollingTabContainer.Width = leftAt;
 
             #region some calculation if the active tab is totally visible..
-            // no margin so no need for ClientSize..
-            Rectangle clientRect = new Rectangle(0, 0, pnTabContainer.Size.Width, pnTabContainer.Size.Height);
 
-            // get the left coordinate of the "tab"..
-            int controlLeft = pnScrollingTabContainer.Left + leftAtIndex;
-
-            // get the right coordinate of the "tab"..
-            int controlRight = pnScrollingTabContainer.Left + leftAtIndex +
-                (leftFileIndex == -1 ? 0 : pnScrollingTabContainer.Controls[leftFileIndex].Width);
-            
-            // check if the "tab" is visible..
-            bool isVisible = clientRect.Contains(controlLeft, 0) && clientRect.Contains(controlRight, 0);
+            var isVisible = TabVisible(leftAtIndex, out var controlLeft, out var clientRect);
 
             // .. if not visible then some more calculation..
             if (!isVisible)
@@ -1802,6 +1848,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
                     int newLeft = clientRect.Width - leftAtIndex - pnScrollingTabContainer.Controls[leftFileIndex].Width;
                     pnScrollingTabContainer.Left = newLeft;
                 }
+            }
+
+            
+            if (SeamlessScroll && leftAtIndex + activeTabWidth > clientRect.Width)
+            {
+                pnScrollingTabContainer.Left = -leftAtIndex + clientRect.Width - activeTabWidth;
             }
             #endregion
 
@@ -1899,6 +1951,22 @@ namespace VPKSoft.ScintillaTabbedTextControl
         #endregion
 
         #region InternalEvents
+        // handle the modifier key UP/DOWN event for the control..
+        private void Scintilla_KeyUpDown(object sender, KeyEventArgs e)
+        {
+            ControlButtonDown = e.Control;
+            AltButtonDown = e.Alt;
+            ShiftButtonDown = e.Shift;
+        }
+
+        // No key is down if the control is not active..
+        private void ScintillaTabbedTextControl_Leave(object sender, EventArgs e)
+        {
+            ControlButtonDown = false;
+            AltButtonDown = false;
+            ShiftButtonDown = false;
+        }
+
         private void Scintilla_CharAdded(object sender, CharAddedEventArgs e)
         {
             // This (C): https://gist.github.com/Ahmad45123/f2910192987a73a52ab4
@@ -2069,27 +2137,12 @@ namespace VPKSoft.ScintillaTabbedTextControl
             // clean up the event subscriptions..
             for (int i = 0; i < DocumentsCount; i++)
             {
-                Documents[i].Scintilla.TextChanged -= Scintilla_TextChanged;
-                Documents[i].Scintilla.UpdateUI -= Scintilla_UpdateUI;
-                Documents[i].Scintilla.MouseDown -= Scintilla_MouseDown;
-                Documents[i].Scintilla.MouseUp -= Scintilla_MouseUp;
-                Documents[i].Scintilla.MouseMove -= Scintilla_MouseMove;
-                Documents[i].Scintilla.MouseWheel -= Scintilla_MouseWheel;
-                Documents[i].Scintilla.MouseClick -= Scintilla_MouseClick;
-                Documents[i].Scintilla.MouseDoubleClick -= Scintilla_MouseDoubleClick;
-                Documents[i].Scintilla.InsertCheck -= Scintilla_InsertCheck;
-                Documents[i].Scintilla.CharAdded -= Scintilla_CharAdded;
-                Documents[i].Scintilla.ZoomChanged -= Scintilla_ZoomChanged;
-
-                Documents[i].FileTabButton.Click -= FileTabButton_Click;
-                Documents[i].FileTabButton.MouseMove -= FileTabButton_MouseMove;
-                Documents[i].FileTabButton.MouseUp -= FileTabButton_MouseUp;
-                Documents[i].FileTabButton.MouseDown -= FileTabButton_MouseDown;
-                // ReSharper disable once DelegateSubtraction
-                Documents[i].FileTabButton.RequestLayout -= FileTabButton_RequestLayout;
+                DetachDocumentEventHandlers(Documents[i]);
             }
             // ..and clean up the cleanup event subscription..
             Disposed -= ScintillaTabbedTextControl_Disposed;
+            MouseWheel -= FileTabButton_MouseWheel;
+            Leave -= ScintillaTabbedTextControl_Leave;
         }
 
         // (C): https://github.com/jacobslusser/ScintillaNET/wiki/Brace-Matching

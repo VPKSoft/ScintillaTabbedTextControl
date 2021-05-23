@@ -52,7 +52,7 @@
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpMain.Size = new System.Drawing.Size(91, 31);
+            this.tlpMain.Size = new System.Drawing.Size(106, 35);
             this.tlpMain.TabIndex = 0;
             this.tlpMain.Click += new System.EventHandler(this.ControlClickDelegation);
             this.tlpMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ControlMouseDownDelegation);
@@ -62,9 +62,10 @@
             // btClose
             // 
             this.btClose.Image = global::VPKSoft.ScintillaTabbedTextControl.Properties.Resources.Cancel;
-            this.btClose.Location = new System.Drawing.Point(63, 3);
+            this.btClose.Location = new System.Drawing.Point(73, 3);
+            this.btClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(25, 25);
+            this.btClose.Size = new System.Drawing.Size(29, 29);
             this.btClose.TabIndex = 3;
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.ControlClickDelegation);
@@ -75,10 +76,10 @@
             // lbCaption
             // 
             this.lbCaption.AutoSize = true;
-            this.lbCaption.Location = new System.Drawing.Point(31, 8);
-            this.lbCaption.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.lbCaption.Location = new System.Drawing.Point(37, 9);
+            this.lbCaption.Margin = new System.Windows.Forms.Padding(0, 9, 0, 0);
             this.lbCaption.Name = "lbCaption";
-            this.lbCaption.Size = new System.Drawing.Size(29, 13);
+            this.lbCaption.Size = new System.Drawing.Size(32, 15);
             this.lbCaption.TabIndex = 2;
             this.lbCaption.Text = "file 1";
             this.lbCaption.Click += new System.EventHandler(this.ControlClickDelegation);
@@ -90,9 +91,10 @@
             // 
             this.pnSaveIndicator.BackgroundImage = global::VPKSoft.ScintillaTabbedTextControl.Properties.Resources.Save;
             this.pnSaveIndicator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnSaveIndicator.Location = new System.Drawing.Point(3, 3);
+            this.pnSaveIndicator.Location = new System.Drawing.Point(4, 3);
+            this.pnSaveIndicator.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pnSaveIndicator.Name = "pnSaveIndicator";
-            this.pnSaveIndicator.Size = new System.Drawing.Size(25, 25);
+            this.pnSaveIndicator.Size = new System.Drawing.Size(29, 29);
             this.pnSaveIndicator.TabIndex = 4;
             this.pnSaveIndicator.Click += new System.EventHandler(this.ControlClickDelegation);
             this.pnSaveIndicator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ControlMouseDownDelegation);
@@ -101,7 +103,7 @@
             // 
             // FileTabButton
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -109,7 +111,7 @@
             this.Controls.Add(this.tlpMain);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "FileTabButton";
-            this.Size = new System.Drawing.Size(91, 31);
+            this.Size = new System.Drawing.Size(106, 35);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
             this.ResumeLayout(false);

@@ -60,7 +60,8 @@
             this.mnuZoom});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(933, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -200,8 +201,8 @@
             // 
             // sttcMain
             // 
-            this.sttcMain.ChangedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.ChangedImage")));
-            this.sttcMain.CloseButtonImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.CloseButtonImage")));
+            this.sttcMain.ChangedImage = null;
+            this.sttcMain.CloseButtonImage = null;
             this.sttcMain.ColorBraceHighlightBackground = System.Drawing.Color.LightGray;
             this.sttcMain.ColorBraceHighlightBad = System.Drawing.Color.Red;
             this.sttcMain.ColorBraceHighlightForeground = System.Drawing.Color.BlueViolet;
@@ -209,17 +210,19 @@
             this.sttcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sttcMain.LeftFileIndex = 0;
             this.sttcMain.Location = new System.Drawing.Point(0, 24);
+            this.sttcMain.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.sttcMain.Name = "sttcMain";
             this.sttcMain.NewFilenameStart = "new ";
             this.sttcMain.RightButtonTabActivation = true;
             this.sttcMain.RightButtonTabDragging = false;
-            this.sttcMain.SavedImage = ((System.Drawing.Image)(resources.GetObject("sttcMain.SavedImage")));
-            this.sttcMain.Size = new System.Drawing.Size(800, 426);
+            this.sttcMain.SavedImage = null;
+            this.sttcMain.Size = new System.Drawing.Size(933, 495);
             this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
             this.sttcMain.TabWidth = 4;
             this.sttcMain.UseBraceHighlight = true;
             this.sttcMain.UseCodeIndenting = false;
+            this.sttcMain.WheelScroll = VPKSoft.ScintillaTabbedTextControl.WheelScrollButtons.Control;
             this.sttcMain.ZoomPercentageAll = 100;
             this.sttcMain.ZoomSynchronization = false;
             this.sttcMain.TabClosing += new VPKSoft.ScintillaTabbedTextControl.ScintillaTabbedTextControl.OnTabClosing(this.sttcMain_TabClosing);
@@ -228,13 +231,14 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(933, 519);
             this.Controls.Add(this.sttcMain);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormMain";
             this.Text = "VPKSoft.ScintillaTabbedTextControl test application";
             this.menuStrip1.ResumeLayout(false);

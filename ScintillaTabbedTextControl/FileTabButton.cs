@@ -2,7 +2,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Petteri Kautonen
+Copyright(c) 2019 Petteri Kautonen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,14 +43,16 @@ namespace VPKSoft.ScintillaTabbedTextControl
         public FileTabButton()
         {
             InitializeComponent();
+
             IsSaved = IsSaved; // set the file modified indicator by this dummy logic..
+
+            Disposed += DnDisposed;
         }
 
         /// <summary>
         /// The file tab button is requesting a re-layout of for the main control.
         /// </summary>
         public EventHandler<EventArgs> RequestLayout;
-
         #region PublicProperties
 
         /// <summary>
@@ -184,7 +186,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
         [Browsable(true)]
         [Category("Behavior")]
         [Description("Gets or sets the shortcut menu associated with the control.")]
-        public ContextMenuStrip ContextMenu
+        public new ContextMenuStrip ContextMenu
         {
             get => base.ContextMenuStrip;
 
@@ -358,6 +360,14 @@ namespace VPKSoft.ScintillaTabbedTextControl
         {
             RequestLayout?.Invoke(this, new EventArgs());
             pnSaveIndicator.BackgroundImage = isSaved ? SavedImage : ChangedImage;
+        }
+        #endregion
+
+        #region InternalEvents
+        // if there is something to dispose..
+        private void DnDisposed(object sender, EventArgs e)
+        {
+            Disposed -= DnDisposed;
         }
         #endregion
     }
