@@ -50,7 +50,7 @@
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.5" />
+    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.7" />
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.7" />
   </ItemGroup>
   <ItemGroup>
