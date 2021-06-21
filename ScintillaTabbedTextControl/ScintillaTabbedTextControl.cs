@@ -1836,7 +1836,7 @@ namespace VPKSoft.ScintillaTabbedTextControl
             var isVisible = TabVisible(leftAtIndex, out var controlLeft, out var clientRect);
 
             // .. if not visible then some more calculation..
-            if (!isVisible)
+            if (!isVisible && !SeamlessScroll)
             {
                 bool leftSide = controlLeft < clientRect.Width;
                 if (leftSide)
@@ -1850,10 +1850,15 @@ namespace VPKSoft.ScintillaTabbedTextControl
                 }
             }
 
-            
-            if (SeamlessScroll && leftAtIndex + activeTabWidth > clientRect.Width)
+            if (SeamlessScroll && pnScrollingTabContainer.Left + leftAtIndex + activeTabWidth > clientRect.Width)
+
             {
                 pnScrollingTabContainer.Left = -leftAtIndex + clientRect.Width - activeTabWidth;
+            }
+
+            if (SeamlessScroll && pnScrollingTabContainer.Left + leftAtIndex < 0)
+            {
+                pnScrollingTabContainer.Left = -leftAtIndex;
             }
             #endregion
 

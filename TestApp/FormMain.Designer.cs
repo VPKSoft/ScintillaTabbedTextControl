@@ -216,6 +216,7 @@
             this.sttcMain.RightButtonTabActivation = true;
             this.sttcMain.RightButtonTabDragging = false;
             this.sttcMain.SavedImage = null;
+            this.sttcMain.SeamlessScroll = true;
             this.sttcMain.Size = new System.Drawing.Size(933, 495);
             this.sttcMain.SuspendTextChangedEvents = false;
             this.sttcMain.TabIndex = 2;
