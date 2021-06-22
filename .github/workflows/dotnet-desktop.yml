@@ -101,7 +101,7 @@ jobs:
             $file = $files[$i].FullName
             
             # sign the NuGet packages.
-	          Write-Output (-join("Signing package: ", $file, " ..."))
+	    Write-Output (-join("Signing package: ", $file, " ..."))
 
             $arguments = @("sign", $file, "-CertificatePath", "$certificatePath", "-Timestamper", "http://timestamp.comodoca.com", "-CertificatePassword", $Env:PFXPASS)        
             nuget.exe $arguments
