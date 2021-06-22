@@ -104,6 +104,6 @@ jobs:
             # sign the NuGet packages.
             Write-Output (-join("Signing package: ", $file, " ..."))
 
-            $arguments = @("sign", $file, "-CertificatePath", "$certificatePath", "-Timestamper", "http://timestamp.comodoca.com", "-CertificatePassword", $Env:PFXPASS)        
+            $arguments = @("sign", $file, "-CertificatePath", "$certificatePath", "-Timestamper", "http://timestamp.comodoca.com", "-CertificatePassword", ${{ secrets.PFXPASS }})        
             nuget.exe $arguments
         }
