@@ -83,3 +83,10 @@ jobs:
 
     - name: Build the project 
       run: msbuild $env:Project_1 /p:Configuration=$env:Configuration
+
+    - name: Decode the Pfx
+      run: |
+        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.PFXFILE }}")
+        $currentDirectory = Get-Location
+        $certificatePath = Join-Path -Path $currentDirectory -ChildPath "VPKSoft.pfx"
+        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
