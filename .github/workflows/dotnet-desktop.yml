@@ -45,8 +45,8 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
+    environment: Code signing
 
     strategy:
       matrix:
@@ -58,6 +58,7 @@ jobs:
     env:
       Solution_Name: VPKSoft.ScintillaTabbedTextControl.sln     # Replace with your solution name, i.e. MyWpfApp.sln.
       Project_1: ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj
+
 
     steps:
     - name: Checkout
