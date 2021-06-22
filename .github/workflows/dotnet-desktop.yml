@@ -90,3 +90,19 @@ jobs:
         $currentDirectory = Get-Location
         $certificatePath = Join-Path -Path $currentDirectory -ChildPath "VPKSoft.pfx"
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+
+    - name: NuGet sign
+      run: |
+        $currentDirectory = Get-Location
+        $certificatePath = Join-Path -Path $currentDirectory -ChildPath "VPKSoft.pfx"
+        $files = Get-ChildItem $currentDirectory -r -Filter *ScintillaTabbedTextControl*.nupkg # use the mask to discard possible third party packages..
+        for ($i = 0; $i -lt $files.Count; $i++) 
+        { 
+            $file = $files[$i].FullName
+            
+            # sign the NuGet packages.
+	          Write-Output (-join("Signing package: ", $file, " ..."))
+
+            $arguments = @("sign", $file, "-CertificatePath", "$certificatePath", "-Timestamper", "http://timestamp.comodoca.com", "-CertificatePassword", $Env:PFXPASS)        
+            nuget.exe $arguments
+        }
