@@ -2,6 +2,7 @@
 A tabbed control for ScintillaNET to display multiple documents.
 
 [![Nuget](https://img.shields.io/nuget/v/VPKSoft.ScintillaTabbedTextControl)](https://www.nuget.org/packages/VPKSoft.ScintillaTabbedTextControl/)
+[![GithubAction](https://img.shields.io/github/workflow/status/VPKSoft/ScintillaTabbedTextControl/.NET%20Core%20Desktop)]
 
 ## The SUO package
 The SUO stands for [unofficial.ScintillaNET](https://www.nuget.org/packages/unofficial.ScintillaNET/) dependency which is updated with the recent pull requests build from this [ScintillaNET fork](https://github.com/VPKSoft/ScintillaNET) from the original [ScintillaNET](https://github.com/jacobslusser/ScintillaNET). The fork was made to try to keep up with the changes to the code base suggested by users as the official version is getting outdated for unknown reason(s) 🙄.
@@ -14,7 +15,5 @@ The SUO stands for [unofficial.ScintillaNET](https://www.nuget.org/packages/unof
 
 ### Thanks to
 * [JetBrains](https://www.jetbrains.com/?from=ScintillaTabbedTextControl) for their open source license(s).
-* [![VPKSoft](https://circleci.com/gh/VPKSoft/ScintillaTabbedTextControl.svg?style=shield)](https://app.circleci.com/pipelines/github/VPKSoft/ScintillaTabbedTextControl) 
-
 
 [![JetBrains](http://www.vpksoft.net/site/External/JetBrains/jetbrains.svg)](https://www.jetbrains.com/?from=ScintillaTabbedTextControl)
