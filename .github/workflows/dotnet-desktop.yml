@@ -60,7 +60,6 @@ jobs:
       Project_1: ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj
       Project_2: ScintillaTabbedTextControl.SUO/VPKSoft.VPKSoft.ScintillaTabbedTextControl.SUO.csproj
 
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
