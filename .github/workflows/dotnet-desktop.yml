@@ -46,7 +46,7 @@ on:
 
 jobs:
   build:
-    environment: Code signing
+    environment: NuGet
 
     strategy:
       matrix:
@@ -85,25 +85,27 @@ jobs:
     - name: Build the project 
       run: msbuild $env:Project_1 /p:Configuration=$env:Configuration
 
-    - name: Decode the Pfx
+    - name: Decode nuget.config
       run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.PFXFILE }}")
+        $nuget_config_bytes = [System.Convert]::FromBase64String("${{ secrets.NUGETCONFIG }}")
         $currentDirectory = Get-Location
-        $certificatePath = Join-Path -Path $currentDirectory -ChildPath "VPKSoft.pfx"
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+        $nugetConfigFile = Join-Path -Path $currentDirectory -ChildPath "nuget.config"
+        [IO.File]::WriteAllBytes("$nugetConfigFile", $nuget_config_bytes)
 
-    - name: NuGet sign
+    - name: NuGet push
       run: |
         $currentDirectory = Get-Location
-        $certificatePath = Join-Path -Path $currentDirectory -ChildPath "VPKSoft.pfx"
         $files = Get-ChildItem $currentDirectory -r -Filter *ScintillaTabbedTextControl*.nupkg # use the mask to discard possible third party packages..
         for ($i = 0; $i -lt $files.Count; $i++) 
         { 
             $file = $files[$i].FullName
             
+            $arguments = @("push", $file, "${{ secrets.NUGET_APIKEY }}", "-Source", "${{ secret.NUGETAPI }}", "-SkipDuplicate")
+            
             # sign the NuGet packages.
-            Write-Output (-join("Signing package: ", $file, " ..."))
-
-            $arguments = @("sign", $file, "-CertificatePath", "$certificatePath", "-Timestamper", "http://timestamp.comodoca.com", "-CertificatePassword", "${{ secrets.PFXPASS }}")        
+            Write-Output (-join("Pushing NuGet:", $file, " ..."))
+            nuget.exe $arguments
+            
+            $arguments = @("push", $file, "${{ secrets.GH_PACKAGES_APIKEY }}", "-Source", "${{ secret.PACKAGESAPI }}", "-SkipDuplicate")
             nuget.exe $arguments
         }
