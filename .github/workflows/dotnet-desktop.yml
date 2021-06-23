@@ -100,12 +100,12 @@ jobs:
         { 
             $file = $files[$i].FullName
             
-            $arguments = @("push", $file, "${{ secrets.NUGET_APIKEY }}", "-Source", "${{ secret.NUGETAPI }}", "-SkipDuplicate")
+            $arguments = @("push", $file, "${{ secrets.NUGET_APIKEY }}", "-Source", "${{ secrets.NUGETAPI }}", "-SkipDuplicate")
             
             # sign the NuGet packages.
             Write-Output (-join("Pushing NuGet:", $file, " ..."))
             nuget.exe $arguments
             
-            $arguments = @("push", $file, "${{ secrets.GH_PACKAGES_APIKEY }}", "-Source", "${{ secret.PACKAGESAPI }}", "-SkipDuplicate")
+            $arguments = @("push", $file, "${{ secrets.GH_PACKAGES_APIKEY }}", "-Source", "${{ secrets.PACKAGESAPI }}", "-SkipDuplicate")
             nuget.exe $arguments
         }
