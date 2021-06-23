@@ -58,6 +58,7 @@ jobs:
     env:
       Solution_Name: VPKSoft.ScintillaTabbedTextControl.sln     # Replace with your solution name, i.e. MyWpfApp.sln.
       Project_1: ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj
+      Project_2: ScintillaTabbedTextControl.SUO/VPKSoft.VPKSoft.ScintillaTabbedTextControl.SUO.csproj
 
 
     steps:
@@ -85,7 +86,11 @@ jobs:
     - name: Build the project 
       run: msbuild $env:Project_1 /p:Configuration=$env:Configuration
 
+    - name: Build the project 
+      run: msbuild $env:Project_2 /p:Configuration=$env:Configuration
+
     - name: Decode nuget.config
+      if: ${{ github.event_name != 'pull_request' }}
       run: |
         $nuget_config_bytes = [System.Convert]::FromBase64String("${{ secrets.NUGETCONFIG }}")
         $currentDirectory = Get-Location
@@ -93,6 +98,7 @@ jobs:
         [IO.File]::WriteAllBytes("$nugetConfigFile", $nuget_config_bytes)
 
     - name: NuGet push
+      if: ${{ github.event_name != 'pull_request' }}
       run: |
         $currentDirectory = Get-Location
         $files = Get-ChildItem $currentDirectory -r -Filter *ScintillaTabbedTextControl*.nupkg # use the mask to discard possible third party packages..

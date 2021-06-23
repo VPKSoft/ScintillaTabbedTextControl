@@ -44,9 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="unofficial.ScintillaNET" Version="3.8.7" />
     <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.7" />
