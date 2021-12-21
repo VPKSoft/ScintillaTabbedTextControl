@@ -24,10 +24,6 @@
     <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.lib" />
     <Content Remove="C:\Users\Petteri Kautonen\.nuget\packages\unofficial.scintillanet\3.6.51\contentFiles\any\net40\SciLexer.pdb" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.7" />
-    <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.7" />
-  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,7 +64,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <ProjectReference Include="..\ScintillaTabbedTextControl.SUO\VPKSoft.ScintillaTabbedTextControl.SUO.csproj" />
+    <ProjectReference Include="..\ScintillaTabbedTextControl.NET\VPKSoft.ScintillaTabbedTextControl.NET.csproj" />
     <Compile Update="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

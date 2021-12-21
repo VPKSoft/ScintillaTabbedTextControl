@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net47;net5.0-windows</TargetFrameworks>
-    <AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyTitle>
-    <Product>VPKSoft.ScintillaTabbedTextControl.SUO</Product>
+    <TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows</TargetFrameworks>
+    <AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyTitle>
+    <Product>VPKSoft.ScintillaTabbedTextControl.NET</Product>
     <Copyright>Copyright © VPKSoft 2021</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>VPKSoft</Authors>
@@ -11,8 +11,8 @@
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.1.5</Version>
-    <AssemblyName>VPKSoft.ScintillaTabbedTextControl.SUO</AssemblyName>
+    <Version>1.1.6</Version>
+    <AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
     <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -45,8 +45,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="unofficial.ScintillaNET" Version="3.8.7" />
-    <PackageReference Include="VPKSoft.ScintillaLexers.SUO" Version="1.1.7" />
+    <PackageReference Include="Scintilla.NET" Version="5.1.5" />
+    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.8" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="NoFocusButton.cs">
