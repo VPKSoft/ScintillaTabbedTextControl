@@ -1,7 +1,7 @@
 # ScintillaTabbedTextControl
 A tabbed control for ScintillaNET to display multiple documents.
 
-[![Nuget](https://img.shields.io/nuget/v/VPKSoft.ScintillaTabbedTextControl)](https://www.nuget.org/packages/VPKSoft.ScintillaTabbedTextControl/)
+[![Nuget](https://img.shields.io/nuget/v/VPKSoft.ScintillaTabbedTextControl.NET)](https://www.nuget.org/packages/VPKSoft.ScintillaTabbedTextControl.NET/)
 [![.NET Core Desktop](https://github.com/VPKSoft/ScintillaTabbedTextControl/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/VPKSoft/ScintillaTabbedTextControl/actions/workflows/dotnet-desktop.yml)
 
 ## The .NET package
