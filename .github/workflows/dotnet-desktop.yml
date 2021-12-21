@@ -58,7 +58,7 @@ jobs:
     env:
       Solution_Name: VPKSoft.ScintillaTabbedTextControl.sln     # Replace with your solution name, i.e. MyWpfApp.sln.
       Project_1: ScintillaTabbedTextControl/VPKSoft.ScintillaTabbedTextControl.csproj
-      Project_2: ScintillaTabbedTextControl.SUO/VPKSoft.VPKSoft.ScintillaTabbedTextControl.SUO.csproj
+      Project_2: ScintillaTabbedTextControl.SUO/VPKSoft.ScintillaTabbedTextControl.SUO.csproj
 
     steps:
     - name: Checkout
