@@ -1,11 +1,11 @@
 # ScintillaTabbedTextControl
 A tabbed control for ScintillaNET to display multiple documents.
 
-[![Nuget](https://img.shields.io/nuget/v/VPKSoft.ScintillaTabbedTextControl)](https://www.nuget.org/packages/VPKSoft.ScintillaTabbedTextControl/)
+[![Nuget](https://img.shields.io/nuget/v/VPKSoft.ScintillaTabbedTextControl.NET)](https://www.nuget.org/packages/VPKSoft.ScintillaTabbedTextControl.NET/)
 [![.NET Core Desktop](https://github.com/VPKSoft/ScintillaTabbedTextControl/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/VPKSoft/ScintillaTabbedTextControl/actions/workflows/dotnet-desktop.yml)
 
-## The SUO package
-The SUO stands for [unofficial.ScintillaNET](https://www.nuget.org/packages/unofficial.ScintillaNET/) dependency which is updated with the recent pull requests build from this [ScintillaNET fork](https://github.com/VPKSoft/ScintillaNET) from the original [ScintillaNET](https://github.com/jacobslusser/ScintillaNET). The fork was made to try to keep up with the changes to the code base suggested by users as the official version is getting outdated for unknown reason(s) 🙄.
+## The .NET package
+The package ending with .NET is depended upon the new Scintilla 5 series [Scintilla.NET](https://www.nuget.org/packages/Scintilla.NET/) and is in active development. The other package's Scintilla dependency is no longer being maintained even though the codebase of the dependent software may be maintained.
 
 ## Screenshot with default lexer
 ![ScreenShot](http://www.vpksoft.net/images/screenshots/misclib/ScintillaTabbedTextControl/ScintillaTabbedTextControl_1.png)
