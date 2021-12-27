@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.1.8</Version>
+    <Version>1.1.9</Version>
     <AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
     <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Scintilla.NET" Version="5.1.5.3" />
-    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.9" />
+    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.10" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="NoFocusButton.cs">
