@@ -45,7 +45,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Scintilla.NET" Version="5.1.5.1" />
+    <PackageReference Include="Scintilla.NET" Version="5.1.5.3" />
     <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.9" />
   </ItemGroup>
   <ItemGroup>
