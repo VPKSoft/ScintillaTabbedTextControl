@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
     <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.1.7</Version>
+    <Version>1.1.8</Version>
     <AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
     <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
