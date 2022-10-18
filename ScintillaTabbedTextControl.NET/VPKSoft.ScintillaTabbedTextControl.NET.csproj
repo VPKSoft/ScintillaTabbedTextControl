@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Scintilla.NET" Version="5.1.5.4" />
-    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.11" />
+    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.12" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="NoFocusButton.cs">
