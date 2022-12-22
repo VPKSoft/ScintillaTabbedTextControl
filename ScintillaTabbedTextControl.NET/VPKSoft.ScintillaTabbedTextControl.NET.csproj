@@ -1,76 +1,76 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows</TargetFrameworks>
-    <AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyTitle>
-    <Product>VPKSoft.ScintillaTabbedTextControl.NET</Product>
-    <Copyright>Copyright © VPKSoft 2021</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <Authors>VPKSoft</Authors>
-    <Description>A tabbed control for ScintillaNET to display multiple documents.</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
-    <PackageIcon>vpksoft_logo.png</PackageIcon>
-    <Version>1.1.10</Version>
-    <AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
-    <RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab unofficial</PackageTags>
-    <PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
-    <UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.cs" Link="ScintillaTabbedTextControl.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.Designer.cs" Link="ScintillaTabbedTextControl.Designer.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
-    <Compile Include="..\ScintillaTabbedTextControl\WheelScrollButtons.cs" Link="WheelScrollButtons.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
-    <EmbeddedResource Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.resx" Link="ScintillaTabbedTextControl.resx" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Scintilla.NET" Version="5.1.5.4" />
-    <PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.11" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="NoFocusButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="NoFocusButton.Designer.cs">
-      <DependentUpon>NoFocusButton.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\vpksoft_logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows;net7-windows</TargetFrameworks>
+		<AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyTitle>
+		<Product>VPKSoft.ScintillaTabbedTextControl.NET</Product>
+		<Copyright>Copyright © VPKSoft 2022</Copyright>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<Authors>VPKSoft</Authors>
+		<Description>A tabbed control for ScintillaNET to display multiple documents.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
+		<PackageIcon>vpksoft_logo.png</PackageIcon>
+		<Version>1.1.14</Version>
+		<AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
+		<RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab</PackageTags>
+		<PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugType>full</DebugType>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedDocument.cs" Link="ScintillaTabbedDocument.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.cs" Link="ScintillaTabbedTextControl.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.Designer.cs" Link="ScintillaTabbedTextControl.Designer.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\ScintillaZoomPercentage.cs" Link="ScintillaZoomPercentage.cs" />
+		<Compile Include="..\ScintillaTabbedTextControl\WheelScrollButtons.cs" Link="WheelScrollButtons.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="..\ScintillaTabbedTextControl\FileTabButton.resx" Link="FileTabButton.resx" />
+		<EmbeddedResource Include="..\ScintillaTabbedTextControl\ScintillaTabbedTextControl.resx" Link="ScintillaTabbedTextControl.resx" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Scintilla.NET" Version="5.3.2" />
+		<PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.14" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="NoFocusButton.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="NoFocusButton.Designer.cs">
+			<DependentUpon>NoFocusButton.cs</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\vpksoft_logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 </Project>
