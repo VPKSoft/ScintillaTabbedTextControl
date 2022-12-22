@@ -16,4 +16,6 @@ The package ending with .NET is depended upon the new Scintilla 5 series [Scinti
 ### Thanks to
 * [JetBrains](https://www.jetbrains.com/?from=ScintillaTabbedTextControl) for their open source license(s).
 
-[![JetBrains](http://www.vpksoft.net/site/External/JetBrains/jetbrains.svg)](https://www.jetbrains.com/?from=ScintillaTabbedTextControl)
+
+[![image](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
+](https://www.jetbrains.com/?from=ScintillaTabbedTextControl)
