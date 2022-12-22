@@ -20,12 +20,6 @@
 		<PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugType>full</DebugType>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
-	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
 		<Compile Include="..\ScintillaTabbedTextControl\FileTabButton.Designer.cs" Link="FileTabButton.Designer.cs" />
