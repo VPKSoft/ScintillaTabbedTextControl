@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows;net7-windows</TargetFrameworks>
 		<AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyTitle>
 		<Product>VPKSoft.ScintillaTabbedTextControl.NET</Product>
 		<Copyright>Copyright © VPKSoft 2022</Copyright>
@@ -11,7 +11,7 @@
 		<PackageProjectUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/VPKSoft/ScintillaTabbedTextControl</RepositoryUrl>
 		<PackageIcon>vpksoft_logo.png</PackageIcon>
-		<Version>1.1.13</Version>
+		<Version>1.1.14</Version>
 		<AssemblyName>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyName>
 		<RootNamespace>VPKSoft.ScintillaTabbedTextControl</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -19,12 +19,6 @@
 		<PackageTags>wrapper scintilla ScintillaNET winforms control tabpage tab</PackageTags>
 		<PackageReleaseNotes>See: https://github.com/VPKSoft/ScintillaTabbedTextControl</PackageReleaseNotes>
 		<UseWindowsForms>true</UseWindowsForms>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugType>full</DebugType>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="..\ScintillaTabbedTextControl\FileTabButton.cs" Link="FileTabButton.cs" />
