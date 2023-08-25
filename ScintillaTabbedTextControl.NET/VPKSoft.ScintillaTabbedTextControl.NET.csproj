@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.1;net47;net5.0-windows;net6-windows;net7-windows</TargetFrameworks>
 		<AssemblyTitle>VPKSoft.ScintillaTabbedTextControl.NET</AssemblyTitle>
@@ -27,7 +27,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Scintilla.NET" Version="5.3.2.7" />
-		<PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.15" />
+		<PackageReference Include="VPKSoft.ScintillaLexers.NET" Version="1.1.16" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
